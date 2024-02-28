@@ -55,10 +55,19 @@
 
                 rust-bin = nixpkgs.rust-bin.stable.latest.complete;
 
-                risc0-rust-tarball = builtins.fetchurl {
-                    url = "https://github.com/risc0/rust/releases/download/v2024-01-31.1/rust-toolchain-x86_64-unknown-linux-gnu.tar.gz";
-                    sha256 = "sha256:05k8d47zcrascjwwas9pnzg6qz5ambxvfh485flxsn6l7hxq3jf0";
-                };
+                risc0-rust-tarball =
+                    if ! builtins.elem system ["aarch64-darwin" "x86_64-darwin"]
+                    then
+                        builtins.fetchurl {
+                            url = "https://github.com/risc0/rust/releases/download/v2024-01-31.1/rust-toolchain-aarch64-apple-darwin.tar.gz";
+                            sha256 = "sha256:01gd1jcw23mbxil8bz5jqkr4ywdg0isypv6b7q083i27xy1fdhf0";
+                        }
+                    else
+                        builtins.fetchurl {
+                            url = "https://github.com/risc0/rust/releases/download/v2024-01-31.1/rust-toolchain-x86_64-unknown-linux-gnu.tar.gz";
+                            sha256 = "sha256:05k8d47zcrascjwwas9pnzg6qz5ambxvfh485flxsn6l7hxq3jf0";
+                        }
+                ;
 
                 risc0-rust = import ./nix/risc0.nix {
                     inherit nixpkgs rust-bin risc0-rust-tarball;

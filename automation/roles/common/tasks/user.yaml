@@ -1,0 +1,15 @@
+- name: create sovereign group
+  become: true
+  become_user: root
+  group:
+    name: sovereign
+    state: present
+
+- name: create sovereign user
+  become: true
+  become_user: root
+  user:
+    name: sovereign
+    create_home: yes
+    groups: sovereign
+    shell: /bin/bash

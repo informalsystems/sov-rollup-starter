@@ -1,0 +1,9 @@
+---
+# Supply a valid network
+# testnet, mainnet
+cluster: testnet
+
+org_name: "celestiaorg"
+repo_name: "celestia-node"
+repo_dir: "celestia-node"
+da_store: "/mnt/da"

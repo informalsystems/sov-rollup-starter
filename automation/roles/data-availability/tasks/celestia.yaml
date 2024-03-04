@@ -1,0 +1,106 @@
+- name: Ensure celestia-node repo is at specific tag
+  git:
+    repo: 'https://github.com/{{ org_name }}/{{ repo_name }}.git'
+    dest: /home/sovereign/{{ repo_dir }}
+    version: "tags/v0.12.4"
+  become: true
+  become_user: sovereign
+
+- name: celestia da folder
+  file:
+    path: "{{ da_store }}/data"
+    state: directory
+    owner: sovereign
+    group: sovereign
+  become: true
+  become_user: root
+
+- name: Build celestia-node
+  command: make build
+  args:
+    chdir: /home/sovereign/celestia-node
+  environment:
+    PATH: "/usr/local/go/bin:{{ ansible_env.PATH }}"
+  become: true
+  become_user: sovereign
+
+- name: Install celestia-node
+  command: make install
+  args:
+    chdir: /home/sovereign/celestia-node
+  become: true
+  become_user: root
+
+- name: Build cel-key
+  command: make cel-key
+  environment:
+    PATH: "/usr/local/go/bin:{{ ansible_env.PATH }}"
+  args:
+    chdir: /home/sovereign/celestia-node
+  become: true
+  become_user: sovereign
+
+- name: Install cel-key
+  command: cp cel-key /usr/local/bin/
+  args:
+    chdir: /home/sovereign/celestia-node
+  become: true
+  become_user: root
+
+- name: Ensure keyring directory exists
+  ansible.builtin.file:
+    path: "{{ keyring_path }}"
+    state: directory
+    owner: sovereign
+    group: sovereign
+    mode: '0755'
+  become: true
+
+- name: Copy key info file to target directory
+  ansible.builtin.copy:
+    src: "{{ key_info_path }}"
+    dest: "{{ keyring_path }}/testkey.info"
+    owner: sovereign
+    group: sovereign
+    mode: '0644'
+  become: true
+
+- name: Copy key address file to target directory
+  ansible.builtin.copy:
+    src: "{{ key_address_path }}"
+    dest: "{{ keyring_path }}/a7cda1485916c07215afcbdd108b5ada240b7d43.address"
+    owner: sovereign
+    group: sovereign
+    mode: '0644'
+  become: true
+
+- name: Copy configuration file to remote server
+  ansible.builtin.copy:
+    src: config.toml
+    dest: "{{ da_store }}"
+    owner: sovereign
+    group: sovereign
+    mode: '0644'
+  become: true
+
+- name: Render celestia-lightd systemd service file
+  ansible.builtin.template:
+    src: celestia-lightd.service.j2
+    dest: /etc/systemd/system/celestia-lightd.service
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Reload systemd to recognize celestia-lightd service
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  become: true
+
+- name: Start celestia-lightd service
+  ansible.builtin.systemd:
+    name: celestia-lightd
+    state: started
+    enabled: yes
+  become: true
+

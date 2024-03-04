@@ -1,0 +1,7 @@
+- include_vars: "../defaults/{{ cluster }}/variables.yaml"
+
+- name: git update
+  import_tasks: git.yaml
+
+- name: logrotate
+  include_tasks: rotate.yaml

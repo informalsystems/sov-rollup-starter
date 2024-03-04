@@ -1,0 +1,12 @@
+[Unit]
+Description=celestia-lightd light node
+After=network-online.target
+
+[Service]
+User=sovereign
+ExecStart=/usr/local/bin/celestia light start --core.ip {{ core_ip }} --p2p.network {{ p2p_network }} --node.store {{ da_store }} --keyring.backend test --keyring.accname {{ key_name }}
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,5 @@
+---
+raw_disk_list: ["/dev/nvme1n1"]
+setup_disks: true
+swap_mb: 32000
+

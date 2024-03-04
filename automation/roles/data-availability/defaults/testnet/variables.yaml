@@ -1,0 +1,8 @@
+---
+version: "tags/v0.12.4"
+core_ip: "full.consensus.mocha-4.celestia-mocha.com"
+p2p_network: "mocha"
+key_name: "testkey"
+key_info_path: "./{{ key_name }}.info"
+key_address_path: "./a7cda1485916c07215afcbdd108b5ada240b7d43.address"
+keyring_path: "{{ da_store }}/keys/keyring-test"

@@ -1,0 +1,70 @@
+- name: Install a list of packages
+  become: true
+  become_user: root
+  apt:
+    update_cache: yes
+    pkg:
+    - build-essential
+    - pkg-config
+    - libudev-dev
+    - cmake
+    - libclang-dev
+    - libssl-dev
+    - gparted
+    - nload
+    - python3-pip
+    - net-tools
+    - logind
+    - curl
+    - git
+    - chrony
+    - htop
+    - acl
+    - tar
+    - wget
+    - aria2
+    - clang
+    - jq
+    - make
+    - ncdu
+      
+- name: some python utils
+  become: true
+  become_user: sovereign
+  ansible.builtin.pip:
+    name:
+      - tqdm
+      - requests
+      - pynacl
+      - base58
+    executable: pip3
+      
+- name: check if cargo is installed
+  become: true
+  become_user: sovereign
+  become_method: sudo
+  shell: test -f /home/sovereign/.cargo/env && source /home/sovereign/.cargo/env && command -v cargo
+  args:
+    executable: /bin/bash
+  register: cargo_exists
+  ignore_errors: yes
+
+- name: Download Installer
+  when: cargo_exists is failed
+  become: true
+  become_user: sovereign
+  become_method: sudo
+  get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/sh.rustup.rs
+    mode: '0755'
+    force: 'yes'
+
+- name: install rust/cargo
+  become: true
+  become_user: sovereign
+  become_method: sudo
+  when: cargo_exists is failed
+  shell: /tmp/sh.rustup.rs -y
+  args:
+    executable: /bin/bash

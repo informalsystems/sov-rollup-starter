@@ -1,4 +1,4 @@
-- name: create logrotate sol
+- name: create logrotate for sovereign
   become: true
   become_user: root
   file:

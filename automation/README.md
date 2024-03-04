@@ -1,1 +1,1 @@
-ansible-playbook setup.yaml -i '35.93.68.140,' -u ubuntu --private-key ~/.ssh/rohan-oregon.pem -e 'ansible_ssh_common_args="-o ForwardAgent=yes"'
+ansible-playbook setup.yaml -i '35.92.87.17,' -u ubuntu --private-key ~/.ssh/rohan-oregon.pem -e 'ansible_ssh_common_args="-o ForwardAgent=yes"'

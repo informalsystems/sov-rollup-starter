@@ -2,5 +2,6 @@
 - name: "playbook runner"
   hosts: all
   roles:
-#    - "./roles/common"
+    - "./roles/common"
     - "./roles/data-availability"
+    - "./roles/rollup"

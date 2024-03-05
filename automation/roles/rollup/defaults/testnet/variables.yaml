@@ -1,3 +1,6 @@
 ---
-commit_hash: "30e8f74c9919e5fcb23f15e68c3094bbff5d49e1"
+commit_hash: "45c9ae0f4985b84eec1a8b6440a06aabfa2d231d"
+rollup_config_path: /home/sovereign/{{repo_dir}}/celestia_rollup_config.toml
+genesis_path: /home/sovereign/{{repo_dir}}/test-data/genesis/celestia
+kernel_genesis_path: /home/sovereign/{{repo_dir}}/test-data/genesis/celestia/chain_state.json
 

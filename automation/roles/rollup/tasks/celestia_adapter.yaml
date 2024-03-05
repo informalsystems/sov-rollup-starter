@@ -1,0 +1,45 @@
+- name: Celestia authenticate
+  become: true
+  become_user: sovereign
+  ansible.builtin.command:
+    cmd: "celestia light auth admin --node.store /mnt/da --p2p.network {{p2p_network}}"
+  register: command_output
+
+- name: Render config with auth
+  become: true
+  become_user: sovereign
+  ansible.builtin.template:
+    src: "celestia_rollup_config.toml.j2"
+    dest: "/home/sovereign/rollup_config.toml"
+  vars:
+    celestia_auth_token: "{{ command_output.stdout }}"
+
+- name: Get key address from JSON output
+  become: true
+  become_user: sovereign
+  ansible.builtin.command:
+    cmd: "cel-key list --keyring-dir /mnt/da/keys/ --output json"
+  register: key_list_output
+  changed_when: false
+
+- name: Parse JSON and extract address
+  ansible.builtin.set_fact:
+    key_address: "{{ (key_list_output.stdout | from_json)[0].address }}"
+
+- name: Rust import FromStr
+  become: true
+  become_user: ubuntu
+  ansible.builtin.lineinfile:
+    path: "/home/ubuntu/{{repo_dir}}/crates/rollup/src/celestia_rollup.rs"
+    insertafter: '^use stf_starter::Runtime;$'
+    line: 'use std::str::FromStr;'
+    state: present
+
+- name: Replace sequencer address in Rust file
+  become: true
+  become_user: ubuntu
+  ansible.builtin.replace:
+    path: "/home/ubuntu/{{repo_dir}}/crates/rollup/src/celestia_rollup.rs"
+    regexp: 'let sequencer = Address::.*;'
+    replace: 'let sequencer = Address::from_str("{{ key_address }}").unwrap();'
+    backup: no

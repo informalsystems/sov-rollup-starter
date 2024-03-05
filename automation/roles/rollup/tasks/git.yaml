@@ -1,23 +1,9 @@
-- name: Checkout repo to tmp using agent
+- name: Checkout repo to
   become: true
   become_user: ubuntu
   git:
     repo: "git@github.com:/{{ org_name }}/{{ repo_name }}.git"
-    dest: "/tmp/{{ repo_dir }}"
+    dest: "/home/ubuntu/{{ repo_dir }}"
     version: "{{ commit_hash }}"
     accept_hostkey: yes
     force: yes
-
-- name: Move repository to sovereign user's home directory
-  become: true
-  ansible.builtin.command:
-    cmd: sudo mv /tmp/{{ repo_name }} /home/sovereign/{{ repo_dir }}
-
-- name: Change ownership to sovereign user
-  become: true
-  ansible.builtin.file:
-    path: /home/sovereign/{{ repo_dir }}
-    owner: sovereign
-    group: sovereign
-    state: directory
-    recurse: yes

@@ -1,7 +1,7 @@
 - name: Build sovereign rollup binary
   become: true
-  become_user: sovereign
-  shell: source /home/sovereign/.cargo/env && cargo build --release --bin {{rollup_bin}} --no-default-features --features {{da_feature}}
+  become_user: ubuntu
+  shell: source /home/ubuntu/.cargo/env && cargo build --release --bin {{rollup_bin}} --no-default-features --features {{da_feature}}
   args:
-    chdir: /home/sovereign/{{repo_dir}}
+    chdir: /home/ubuntu/{{repo_dir}}
     executable: /bin/bash

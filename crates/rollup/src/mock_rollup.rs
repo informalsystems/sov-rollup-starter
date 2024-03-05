@@ -4,6 +4,7 @@
 use std::sync::{Arc, RwLock};
 
 use async_trait::async_trait;
+use sov_consensus_state_tracker::ConsensusStateTracker;
 use sov_db::ledger_db::LedgerDB;
 use sov_mock_da::{MockDaConfig, MockDaService, MockDaSpec};
 use sov_modules_api::default_context::{DefaultContext, ZkDefaultContext};
@@ -52,8 +53,16 @@ impl RollupBlueprint for MockRollup {
     type NativeRuntime = Runtime<Self::NativeContext, Self::DaSpec>;
 
     /// Kernels.
-    type NativeKernel = BasicKernel<Self::NativeContext, Self::DaSpec>;
-    type ZkKernel = BasicKernel<Self::ZkContext, Self::DaSpec>;
+    type NativeKernel = ConsensusStateTracker<
+        BasicKernel<Self::NativeContext, Self::DaSpec>,
+        Self::NativeContext,
+        Self::DaSpec,
+    >;
+    type ZkKernel = ConsensusStateTracker<
+        BasicKernel<Self::ZkContext, Self::DaSpec>,
+        Self::ZkContext,
+        Self::DaSpec,
+    >;
 
     /// Prover service.
     type ProverService = ParallelProverService<

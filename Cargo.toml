@@ -37,9 +37,11 @@ sov-cli                         = { path = "./vendor/sovereign-sdk/module-system
 sov-mock-da                     = { path = "./vendor/sovereign-sdk/adapters/mock-da" }
 sov-celestia-adapter            = { path = "./vendor/sovereign-sdk/adapters/celestia" }
 sov-prover-storage-manager      = { path = "./vendor/sovereign-sdk/full-node/sov-prover-storage-manager" }
+sov-modules-core                = { path = "./vendor/sovereign-sdk/module-system/sov-modules-core" }
 
-sov-ibc                         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "d2b5c8e" }
-sov-ibc-transfer                = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "d2b5c8e" }
+sov-ibc                         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "3b78bf1" }
+sov-ibc-transfer                = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "3b78bf1" }
+sov-consensus-state-tracker     = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "3b78bf1" }
 
 stf-starter = { path = "./crates/stf" }
 

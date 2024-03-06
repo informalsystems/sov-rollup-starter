@@ -7,7 +7,7 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-User=solana
+User=sovereign
 LimitNOFILE=1000000
 LogRateLimitIntervalSec=0
 Environment="PATH=/home/sovereign/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/snap/bin:/home/sovereign/.local/bin/:/home/sovereign/.local/bin/:/home/sovereign/.local/bin/"

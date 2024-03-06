@@ -9,3 +9,4 @@ repo_dir: "sov-rollup-starter-wip"
 rollup_bin: "node"
 da_feature: "celestia_da"
 rollup_da_start_height: 1300000
+genesis_folder: "/home/sovereign/genesis"

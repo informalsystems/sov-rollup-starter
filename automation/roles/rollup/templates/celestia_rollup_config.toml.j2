@@ -16,11 +16,11 @@ path = "/mnt/rollup"
 # any blocks before this height
 [runner]
 start_height = {{ rollup_da_start_height }}
-da_polling_interval_ms = 1000
+da_polling_interval_ms = 500
 
 [runner.rpc_config]
 # the host and port to bind the rpc server for
-bind_host = "127.0.0.1"
+bind_host = "0.0.0.0"
 bind_port = 12345
 
 [prover_service]

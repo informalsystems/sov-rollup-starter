@@ -26,6 +26,15 @@
   ansible.builtin.set_fact:
     key_address: "{{ (key_list_output.stdout | from_json)[0].address }}"
 
+- name: Render sequencer config with address
+  become: true
+  become_user: sovereign
+  ansible.builtin.template:
+    src: "sequencer_registry.json.j2"
+    dest: "{{genesis_folder}}/sequencer_registry.json"
+  vars:
+    sequencer_da_address: "{{ key_address }}"
+
 - name: Rust import FromStr
   become: true
   become_user: ubuntu
@@ -41,5 +50,5 @@
   ansible.builtin.replace:
     path: "/home/ubuntu/{{repo_dir}}/crates/rollup/src/celestia_rollup.rs"
     regexp: 'let sequencer = Address::.*;'
-    replace: 'let sequencer = Address::from_str("{{ key_address }}").unwrap();'
+    replace: 'let sequencer = Address::from_str("{{ sequencer_rollup_address }}").unwrap();'
     backup: no

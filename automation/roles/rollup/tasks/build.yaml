@@ -5,3 +5,18 @@
   args:
     chdir: /home/ubuntu/{{repo_dir}}
     executable: /bin/bash
+
+- name: Copy node binary to sovereign's home directory on remote
+  ansible.builtin.shell:
+    cmd: cp /home/ubuntu/{{ repo_dir }}/target/release/node /home/sovereign/node
+  become: true
+  become_user: root
+
+- name: Set owner, group, and permissions on the node binary
+  ansible.builtin.file:
+    path: /home/sovereign/node
+    owner: sovereign
+    group: sovereign
+    mode: '0755'
+  become: true
+  become_user: root

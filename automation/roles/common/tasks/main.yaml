@@ -12,11 +12,11 @@
 - name: tune host
   include_tasks: tuner.yaml
 
-- name: folders
-  include_tasks: dirs.yaml
-
 - name: setup disks
   include_tasks: disks.yaml
+
+- name: folders
+  include_tasks: dirs.yaml
 
 - name: swap
   include_tasks: swap.yaml

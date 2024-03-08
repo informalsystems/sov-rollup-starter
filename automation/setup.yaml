@@ -3,5 +3,5 @@
   hosts: all
   roles:
     - "./roles/common"
-    - "./roles/data-availability"
-    - "./roles/rollup"
+#    - "./roles/data-availability"
+#    - "./roles/rollup"

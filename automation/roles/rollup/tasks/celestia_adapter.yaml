@@ -41,5 +41,5 @@
   ansible.builtin.replace:
     path: "/home/ubuntu/{{repo_dir}}/crates/rollup/src/celestia_rollup.rs"
     regexp: 'CelestiaAddress::from_str.*'
-    replace: 'CelestiaAddress::from_str("{{ sequencer_rollup_address }}")?;'
+    replace: 'CelestiaAddress::from_str("{{ key_address }}")?;'
     backup: no

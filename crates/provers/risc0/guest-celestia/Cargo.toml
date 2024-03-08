@@ -16,12 +16,12 @@ risc0-zkvm-platform = "0.20"
 
 stf-starter = { path = "../../../stf" }
 
-sov-rollup-interface = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "5a144d60eefaf9ce166bbfd66324b959aa4ae82b" }
-sov-celestia-adapter = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "5a144d60eefaf9ce166bbfd66324b959aa4ae82b" }
-sov-modules-api = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "5a144d60eefaf9ce166bbfd66324b959aa4ae82b" }
-sov-modules-stf-blueprint = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "5a144d60eefaf9ce166bbfd66324b959aa4ae82b" }
-sov-risc0-adapter = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "5a144d60eefaf9ce166bbfd66324b959aa4ae82b" }
-sov-state = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "5a144d60eefaf9ce166bbfd66324b959aa4ae82b" }
+sov-rollup-interface = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "3f94ceccae8f84eb191deeb97ce65a1af3c9fd1b" }
+sov-celestia-adapter = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "3f94ceccae8f84eb191deeb97ce65a1af3c9fd1b" }
+sov-modules-api = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "3f94ceccae8f84eb191deeb97ce65a1af3c9fd1b" }
+sov-modules-stf-blueprint = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "3f94ceccae8f84eb191deeb97ce65a1af3c9fd1b" }
+sov-risc0-adapter = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "3f94ceccae8f84eb191deeb97ce65a1af3c9fd1b" }
+sov-state = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "3f94ceccae8f84eb191deeb97ce65a1af3c9fd1b" }
 
 [patch.crates-io]
 sha2 = { git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.8-risczero.0" }

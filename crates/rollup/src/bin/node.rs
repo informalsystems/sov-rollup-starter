@@ -70,13 +70,32 @@ async fn main() -> Result<(), anyhow::Error> {
     let genesis_paths = args.genesis_paths.as_str();
     let kernel_genesis_paths = args.kernel_genesis_paths.as_str();
 
+    let prover_config = if option_env!("CI").is_some() {
+        Some(RollupProverConfig::Execute)
+    } else if let Some(prover) = option_env!("SOV_PROVER_MODE") {
+        match prover {
+            "simulate" => Some(RollupProverConfig::Simulate),
+            "execute" => Some(RollupProverConfig::Execute),
+            "prove" => Some(RollupProverConfig::Prove),
+            _ => {
+                tracing::warn!(
+                    prover_mode = prover,
+                    "Unknown sov prover mode, using 'Skip' default"
+                );
+                Some(RollupProverConfig::Skip)
+            }
+        }
+    } else {
+        None
+    };
+
     let rollup = new_rollup(
         &GenesisPaths::from_dir(genesis_paths),
         &BasicKernelGenesisPaths {
             chain_state: kernel_genesis_paths.into(),
         },
         rollup_config_path,
-        RollupProverConfig::Execute,
+        prover_config,
     )
     .await?;
     rollup.run().await
@@ -87,7 +106,7 @@ async fn new_rollup(
     rt_genesis_paths: &GenesisPaths,
     kernel_genesis_paths: &BasicKernelGenesisPaths,
     rollup_config_path: &str,
-    prover_config: RollupProverConfig,
+    prover_config: Option<RollupProverConfig>,
 ) -> Result<Rollup<MockRollup>, anyhow::Error> {
     info!("Reading rollup config from {rollup_config_path:?}");
 
@@ -118,7 +137,7 @@ async fn new_rollup(
     rt_genesis_paths: &GenesisPaths,
     kernel_genesis_paths: &BasicKernelGenesisPaths,
     rollup_config_path: &str,
-    prover_config: RollupProverConfig,
+    prover_config: Option<RollupProverConfig>
 ) -> Result<Rollup<CelestiaRollup>, anyhow::Error> {
     info!(
         "Starting celestia rollup with config {}",

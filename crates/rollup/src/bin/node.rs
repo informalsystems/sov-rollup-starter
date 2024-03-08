@@ -70,13 +70,32 @@ async fn main() -> Result<(), anyhow::Error> {
     let genesis_paths = args.genesis_paths.as_str();
     let kernel_genesis_paths = args.kernel_genesis_paths.as_str();
 
+    let prover_config = if option_env!("CI").is_some() {
+        Some(RollupProverConfig::Execute)
+    } else if let Some(prover) = option_env!("SOV_PROVER_MODE") {
+        match prover {
+            "simulate" => Some(RollupProverConfig::Simulate),
+            "execute" => Some(RollupProverConfig::Execute),
+            "prove" => Some(RollupProverConfig::Prove),
+            _ => {
+                tracing::warn!(
+                    prover_mode = prover,
+                    "Unknown sov prover mode, using 'Skip' default"
+                );
+                Some(RollupProverConfig::Skip)
+            }
+        }
+    } else {
+        None
+    };
+
     let rollup = new_rollup(
         &GenesisPaths::from_dir(genesis_paths),
         &BasicKernelGenesisPaths {
             chain_state: kernel_genesis_paths.into(),
         },
         rollup_config_path,
-        None,
+        prover_config,
     )
     .await?;
     rollup.run().await

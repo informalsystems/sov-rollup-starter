@@ -5,9 +5,8 @@ use std::sync::{Arc, RwLock};
 
 use async_trait::async_trait;
 use sov_db::ledger_db::LedgerDB;
-use sov_mock_da::{MockDaConfig, MockDaService, MockDaSpec};
+use sov_mock_da::{MockAddress, MockDaConfig, MockDaService, MockDaSpec};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
-use sov_modules_api::Address;
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;
 use sov_modules_stf_blueprint::kernels::basic::BasicKernel;
@@ -15,7 +14,7 @@ use sov_modules_stf_blueprint::StfBlueprint;
 use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
 use sov_risc0_adapter::Risc0Verifier;
-use sov_rollup_interface::zk::{ZkvmGuest, ZkvmHost};
+use sov_rollup_interface::zk::{ZkvmGuest, ZkvmHost, aggregated_proof::CodeCommitment};
 use sov_state::config::Config as StorageConfig;
 use sov_state::Storage;
 use sov_state::{DefaultStorageSpec, ZkStorage};
@@ -80,7 +79,7 @@ impl RollupBlueprint for MockRollup {
         da_service: &Self::DaService,
     ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
         // TODO set the sequencer address
-        let sequencer = Address::new([0; 32]);
+        let sequencer = MockAddress::new([0; 32]);
 
         #[allow(unused_mut)]
         let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<
@@ -124,6 +123,7 @@ impl RollupBlueprint for MockRollup {
             prover_config,
             zk_storage,
             rollup_config.prover_service,
+            CodeCommitment::default()
         )
     }
 

@@ -1,11 +1,13 @@
 #![deny(missing_docs)]
 //! StarterRollup provides a minimal self-contained rollup implementation
 
+use std::str::FromStr;
 use std::sync::{Arc, RwLock};
 use async_trait::async_trait;
 use sov_celestia_adapter::types::Namespace;
 use sov_celestia_adapter::verifier::{CelestiaSpec, CelestiaVerifier, RollupParams};
 use sov_celestia_adapter::{CelestiaConfig, CelestiaService};
+use sov_celestia_adapter::verifier::address::CelestiaAddress;
 use sov_modules_api::Address;
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
@@ -77,7 +79,8 @@ impl RollupBlueprint for CelestiaRollup {
         da_service: &Self::DaService,
     ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
         // TODO set the sequencer address
-        let sequencer = Address::new([0; 32]);
+        let sequencer =
+            CelestiaAddress::from_str("celestia1a68m2l85zn5xh0l07clk4rfvnezhywc53g8x7s")?;
 
         #[allow(unused_mut)]
         let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<

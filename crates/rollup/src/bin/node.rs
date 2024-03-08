@@ -76,7 +76,7 @@ async fn main() -> Result<(), anyhow::Error> {
             chain_state: kernel_genesis_paths.into(),
         },
         rollup_config_path,
-        RollupProverConfig::Execute,
+        None,
     )
     .await?;
     rollup.run().await
@@ -87,7 +87,7 @@ async fn new_rollup(
     rt_genesis_paths: &GenesisPaths,
     kernel_genesis_paths: &BasicKernelGenesisPaths,
     rollup_config_path: &str,
-    prover_config: RollupProverConfig,
+    prover_config: Option<RollupProverConfig>,
 ) -> Result<Rollup<MockRollup>, anyhow::Error> {
     info!("Reading rollup config from {rollup_config_path:?}");
 
@@ -118,7 +118,7 @@ async fn new_rollup(
     rt_genesis_paths: &GenesisPaths,
     kernel_genesis_paths: &BasicKernelGenesisPaths,
     rollup_config_path: &str,
-    prover_config: RollupProverConfig,
+    prover_config: Option<RollupProverConfig>
 ) -> Result<Rollup<CelestiaRollup>, anyhow::Error> {
     info!(
         "Starting celestia rollup with config {}",

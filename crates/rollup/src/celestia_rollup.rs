@@ -1,12 +1,13 @@
 #![deny(missing_docs)]
 //! StarterRollup provides a minimal self-contained rollup implementation
 
+use std::str::FromStr;
 use std::sync::{Arc, RwLock};
 use async_trait::async_trait;
 use sov_celestia_adapter::types::Namespace;
 use sov_celestia_adapter::verifier::{CelestiaSpec, CelestiaVerifier, RollupParams};
 use sov_celestia_adapter::{CelestiaConfig, CelestiaService};
-use sov_modules_api::Address;
+use sov_celestia_adapter::verifier::address::CelestiaAddress;
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;
@@ -16,6 +17,7 @@ use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
 use sov_risc0_adapter::Risc0Verifier;
 use sov_rollup_interface::zk::{ZkvmGuest, ZkvmHost};
+use sov_rollup_interface::zk::aggregated_proof::CodeCommitment;
 use sov_state::config::Config as StorageConfig;
 use sov_state::Storage;
 use sov_state::{DefaultStorageSpec, ZkStorage};
@@ -77,7 +79,8 @@ impl RollupBlueprint for CelestiaRollup {
         da_service: &Self::DaService,
     ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
         // TODO set the sequencer address
-        let sequencer = Address::new([0; 32]);
+        let sequencer =
+            CelestiaAddress::from_str("celestia1a68m2l85zn5xh0l07clk4rfvnezhywc53g8x7s")?;
 
         #[allow(unused_mut)]
         let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<
@@ -131,6 +134,7 @@ impl RollupBlueprint for CelestiaRollup {
             prover_config,
             zk_storage,
             rollup_config.prover_service,
+            CodeCommitment::default(),
         )
     }
 

@@ -1,0 +1,17 @@
+- name: Replace namespace address in Rust file
+  become: true
+  become_user: ubuntu
+  ansible.builtin.replace:
+    path: "/home/ubuntu/{{repo_dir}}/crates/rollup/src/celestia_rollup.rs"
+    regexp: 'const ROLLUP_NAMESPACE.*'
+    replace: 'const ROLLUP_NAMESPACE: Namespace = Namespace::const_v0(*b"{{ rollup_namespace_prefix }}");'
+    backup: no
+
+- name: Replace proof namespace address in Rust file
+  become: true
+  become_user: ubuntu
+  ansible.builtin.replace:
+    path: "/home/ubuntu/{{repo_dir}}/crates/rollup/src/celestia_rollup.rs"
+    regexp: 'const ROLLUP_PROOF_NAMESPACE.*'
+    replace: 'const ROLLUP_PROOF_NAMESPACE: Namespace = Namespace::const_v0(*b"{{ rollup_proof_namespace_prefix }}");'
+    backup: no

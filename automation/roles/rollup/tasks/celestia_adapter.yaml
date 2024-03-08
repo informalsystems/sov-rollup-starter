@@ -35,20 +35,11 @@
   vars:
     sequencer_da_address: "{{ key_address }}"
 
-- name: Rust import FromStr
-  become: true
-  become_user: ubuntu
-  ansible.builtin.lineinfile:
-    path: "/home/ubuntu/{{repo_dir}}/crates/rollup/src/celestia_rollup.rs"
-    insertafter: '^use stf_starter::Runtime;$'
-    line: 'use std::str::FromStr;'
-    state: present
-
 - name: Replace sequencer address in Rust file
   become: true
   become_user: ubuntu
   ansible.builtin.replace:
     path: "/home/ubuntu/{{repo_dir}}/crates/rollup/src/celestia_rollup.rs"
-    regexp: 'let sequencer = Address::.*;'
-    replace: 'let sequencer = Address::from_str("{{ sequencer_rollup_address }}").unwrap();'
+    regexp: 'CelestiaAddress::from_str.*'
+    replace: 'CelestiaAddress::from_str("{{ sequencer_rollup_address }}")?;'
     backup: no

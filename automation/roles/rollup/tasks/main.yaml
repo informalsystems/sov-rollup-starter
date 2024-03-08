@@ -13,5 +13,8 @@
 - name: celestia adapter setup
   include_tasks: celestia_adapter.yaml
 
+- name: namespace setup
+  include_tasks: namespace.yaml
+
 - name: build rollup binary
   include_tasks: build.yaml

@@ -53,18 +53,35 @@ struct Args {
     /// The path to the kernel genesis config.
     #[arg(long, default_value = DEFAULT_KERNEL_GENESIS_PATH)]
     kernel_genesis_paths: String,
+
+    /// The optional path to the log file.
+    #[arg(long, default_value = None)]
+    log_dir: Option<String>,
 }
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
-    // Initializing logging
-    tracing_subscriber::registry()
-        .with(fmt::layer())
-        //.with(EnvFilter::from_default_env())
-        .with(EnvFilter::from_str("info,hyper=info").unwrap())
-        .init();
-
     let args = Args::parse();
+
+    match args.log_dir {
+        Some(path) => {
+            let file_appender = tracing_appender::rolling::daily(&path, "rollup.log");
+            let (non_blocking, _guard) = tracing_appender::non_blocking(file_appender);
+
+            tracing_subscriber::registry()
+                .with(fmt::layer()
+                    .with_writer(non_blocking))
+                .with(EnvFilter::from_str("info,hyper=info").unwrap())
+                .init();
+        },
+        None => {
+            tracing_subscriber::registry()
+                .with(fmt::layer()) // Default to standard out
+                .with(EnvFilter::from_str("info,hyper=info").unwrap())
+                .init();
+        },
+    }
+
     let rollup_config_path = args.rollup_config_path.as_str();
 
     let genesis_paths = args.genesis_paths.as_str();

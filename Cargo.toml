@@ -47,6 +47,7 @@ clap = { version = "4.4.10", features = ["derive"] }
 async-trait = "0.1.71"
 borsh = { version = "0.10.3", features = ["rc", "bytes"] }
 tracing = "0.1.40"
+tracing-appender = "0.2"
 tokio = { version = "1", features = ["full"] }
 tempfile = "3.5"
 jsonrpsee = { version = "0.20.1", features = ["jsonrpsee-types"] }

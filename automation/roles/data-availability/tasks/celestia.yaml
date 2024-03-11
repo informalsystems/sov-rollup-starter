@@ -59,7 +59,7 @@
 - name: Copy key info file to target directory
   ansible.builtin.copy:
     src: "{{ key_info_path }}"
-    dest: "{{ keyring_path }}/testkey.info"
+    dest: "{{ keyring_path }}/{{ key_filename }}"
     owner: sovereign
     group: sovereign
     mode: '0644'
@@ -68,7 +68,7 @@
 - name: Copy key address file to target directory
   ansible.builtin.copy:
     src: "{{ key_address_path }}"
-    dest: "{{ keyring_path }}/a7cda1485916c07215afcbdd108b5ada240b7d43.address"
+    dest: "{{ keyring_path }}/{{ key_address_filename }}"
     owner: sovereign
     group: sovereign
     mode: '0644'

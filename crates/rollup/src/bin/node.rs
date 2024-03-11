@@ -18,6 +18,7 @@ use sov_stf_runner::{from_toml_path, RollupConfig};
 use std::str::FromStr;
 use stf_starter::genesis_config::GenesisPaths;
 use tracing::info;
+use tracing_appender::non_blocking::WorkerGuard;
 use tracing_subscriber::prelude::*;
 use tracing_subscriber::{fmt, EnvFilter};
 
@@ -59,28 +60,37 @@ struct Args {
     log_dir: Option<String>,
 }
 
+fn init_logging(log_dir: Option<String>) -> Option<WorkerGuard> {
+    let (file_layer, guard) = if let Some(path) = log_dir {
+        let file_appender = tracing_appender::rolling::daily(&path, "rollup.log");
+        let (non_blocking, guard) = tracing_appender::non_blocking(file_appender);
+        (Some(
+            fmt::layer()
+                .with_writer(non_blocking)
+        ), Some(guard))
+    } else {
+        (None,None)
+    };
+
+    let stdout_layer = fmt::layer().with_writer(std::io::stdout) ;
+    let filter_layer = EnvFilter::from_str("info,hyper=info").unwrap();
+    let subscriber = tracing_subscriber::registry()
+        .with(stdout_layer)
+        .with(filter_layer);
+
+    if let Some(layer) = file_layer {
+        subscriber.with(layer).init();
+    } else {
+        subscriber.init();
+    }
+    guard
+}
+
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
     let args = Args::parse();
 
-    match args.log_dir {
-        Some(path) => {
-            let file_appender = tracing_appender::rolling::daily(&path, "rollup.log");
-            let (non_blocking, _guard) = tracing_appender::non_blocking(file_appender);
-
-            tracing_subscriber::registry()
-                .with(fmt::layer()
-                    .with_writer(non_blocking))
-                .with(EnvFilter::from_str("info,hyper=info").unwrap())
-                .init();
-        },
-        None => {
-            tracing_subscriber::registry()
-                .with(fmt::layer()) // Default to standard out
-                .with(EnvFilter::from_str("info,hyper=info").unwrap())
-                .init();
-        },
-    }
+    let _guard = init_logging(args.log_dir);
 
     let rollup_config_path = args.rollup_config_path.as_str();
 

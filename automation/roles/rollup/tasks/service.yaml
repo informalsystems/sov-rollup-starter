@@ -8,12 +8,12 @@
   become: true
 
 - name: Copy rollup shell file to remote server
-  ansible.builtin.copy:
-    src: rollup.sh
+  ansible.builtin.template:
+    src: rollup.sh.j2
     dest: /home/sovereign/rollup.sh
     owner: sovereign
     group: sovereign
-    mode: '0644'
+    mode: '0755'
   become: true
 
 - name: Reload systemd to recognize rollup service
@@ -21,9 +21,9 @@
     daemon_reload: yes
   become: true
 
-#- name: Start rollup service
-#  ansible.builtin.systemd:
-#    name: rollup
-#    state: started
-#    enabled: yes
-#  become: true
+- name: Start rollup service
+  ansible.builtin.systemd:
+    name: rollup
+    state: started
+    enabled: yes
+  become: true

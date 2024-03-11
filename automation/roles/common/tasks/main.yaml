@@ -20,3 +20,9 @@
 
 - name: swap
   include_tasks: swap.yaml
+
+- name: prometheus agent for monitoring
+  include_tasks: prometheus_agent.yaml
+
+- name: node exporter
+  include_tasks: node_exporter.yaml

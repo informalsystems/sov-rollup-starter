@@ -2,3 +2,6 @@
 raw_disk_list: ["/dev/nvme1n1", "/dev/nvme2n1"]
 setup_disks: true
 swap_mb: 32000
+aws_prometheus_remote_write_url: "https://aps-workspaces.us-east-1.amazonaws.com/workspaces/ws-112093cd-2aee-4617-ab97-10e00698e139/api/v1/remote_write"
+aws_region: "us-east-1"
+aws_prometheus_monitoring_label: "sov1"

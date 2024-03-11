@@ -23,7 +23,7 @@ until grep -q -i RPC $output
 do       
   if ! ps $background_process_pid > /dev/null 
   then
-    echo "The background process died died" >&2
+    echo "The background process died" >&2
     exit 1
   fi
   echo -n "."

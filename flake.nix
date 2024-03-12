@@ -10,12 +10,7 @@
 
         sovereign-sdk-src = {
             flake = false;
-            url = git+ssh://git@github.com/informalsystems/sovereign-sdk-wip?rev=5a144d60eefaf9ce166bbfd66324b959aa4ae82b;
-        };
-
-        risc0-cycle-macros-src = {
-            flake = false;
-            url = github:Sovereign-Labs/risc0-cycle-macros?rev=98948b8ee0e3edffcee7f3bd95a9d93c5c0941af;
+            url = git+ssh://git@github.com/informalsystems/sovereign-sdk-wip?rev=3f94ceccae8f84eb191deeb97ce65a1af3c9fd1b;
         };
 
         celestia-app-src = {
@@ -61,8 +56,8 @@
                 rust-bin = nixpkgs.rust-bin.stable.latest.complete;
 
                 risc0-rust-tarball = builtins.fetchurl {
-                    url = "https://github.com/risc0/rust/releases/download/v2024-01-31.1/rust-toolchain-x86_64-unknown-linux-gnu.tar.gz";
-                    sha256 = "sha256:05k8d47zcrascjwwas9pnzg6qz5ambxvfh485flxsn6l7hxq3jf0";
+                    url = "https://github.com/risc0/rust/releases/download/v2024-02-08.1/rust-toolchain-x86_64-unknown-linux-gnu.tar.gz";
+                    sha256 = "sha256:1v4i19wpj9z2zpn2wdf7w1nw5ridwi1linzy0g93wiy09pmz64j9";
                 };
 
                 risc0-circuit = builtins.fetchurl {
@@ -76,7 +71,7 @@
 
                 rollup-packages = import ./nix/rollup.nix {
                     inherit nixpkgs rust-bin risc0-rust risc0-circuit;
-                    inherit (inputs) sovereign-sdk-src risc0-cycle-macros-src;
+                    inherit (inputs) sovereign-sdk-src;
                 };
 
                 gaia = import ./nix/gaia.nix {

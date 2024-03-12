@@ -30,7 +30,7 @@ sov-sequencer-registry          = { path = "./vendor/sovereign-sdk/module-system
 sov-modules-stf-blueprint       = { path = "./vendor/sovereign-sdk/module-system/sov-modules-stf-blueprint" }
 sov-modules-rollup-blueprint    = { path = "./vendor/sovereign-sdk/module-system/sov-modules-rollup-blueprint" }
 sov-stf-runner                  = { path = "./vendor/sovereign-sdk/full-node/sov-stf-runner" }
-sov-db                          = { path = "./vendor/sovereign-sdk/full-node/db/sov-db" }
+sov-db                          = { path = "./vendor/sovereign-sdk/full-node/sov-db" }
 sov-sequencer                   = { path = "./vendor/sovereign-sdk/full-node/sov-sequencer" }
 sov-rollup-interface            = { path = "./vendor/sovereign-sdk/rollup-interface" }
 sov-risc0-adapter               = { path = "./vendor/sovereign-sdk/adapters/risc0" }
@@ -40,8 +40,8 @@ sov-celestia-adapter            = { path = "./vendor/sovereign-sdk/adapters/cele
 sov-prover-storage-manager      = { path = "./vendor/sovereign-sdk/full-node/sov-prover-storage-manager" }
 sov-mock-zkvm                   = { path = "./vendor/sovereign-sdk/adapters/mock-zkvm" }
 
-sov-ibc                         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "e67de8" }
-sov-ibc-transfer                = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "e67de8" }
+sov-ibc                         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "7e41c9b" }
+sov-ibc-transfer                = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "7e41c9b" }
 
 stf-starter = { path = "./crates/stf" }
 

@@ -119,23 +119,6 @@
         "type": "github"
       }
     },
-    "risc0-cycle-macros-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1707815844,
-        "narHash": "sha256-tl6TvAUghcJvlnbD1iYH4mHjgSEtNKsAYN9ZZP69pyc=",
-        "owner": "Sovereign-Labs",
-        "repo": "risc0-cycle-macros",
-        "rev": "98948b8ee0e3edffcee7f3bd95a9d93c5c0941af",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Sovereign-Labs",
-        "repo": "risc0-cycle-macros",
-        "rev": "98948b8ee0e3edffcee7f3bd95a9d93c5c0941af",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "celestia-app-src": "celestia-app-src",
@@ -143,7 +126,6 @@
         "flake-utils": "flake-utils",
         "gaia-src": "gaia-src",
         "nixpkgs": "nixpkgs",
-        "risc0-cycle-macros-src": "risc0-cycle-macros-src",
         "rust-overlay": "rust-overlay",
         "sovereign-sdk-src": "sovereign-sdk-src"
       }
@@ -170,16 +152,16 @@
     "sovereign-sdk-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1708644201,
-        "narHash": "sha256-NN1uomkyqAxRyXkAvOl809gUhwXJON0WPFe1WZAinMI=",
+        "lastModified": 1709835864,
+        "narHash": "sha256-k9jWxhyIaYYS7tFe2el3g3t323oT3JZJPpm69DEz8oM=",
         "ref": "refs/heads/nightly",
-        "rev": "5a144d60eefaf9ce166bbfd66324b959aa4ae82b",
-        "revCount": 818,
+        "rev": "3f94ceccae8f84eb191deeb97ce65a1af3c9fd1b",
+        "revCount": 859,
         "type": "git",
         "url": "ssh://git@github.com/informalsystems/sovereign-sdk-wip"
       },
       "original": {
-        "rev": "5a144d60eefaf9ce166bbfd66324b959aa4ae82b",
+        "rev": "3f94ceccae8f84eb191deeb97ce65a1af3c9fd1b",
         "type": "git",
         "url": "ssh://git@github.com/informalsystems/sovereign-sdk-wip"
       }

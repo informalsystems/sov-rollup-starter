@@ -8,7 +8,7 @@ path = "../../rollup-starter-data"
 # We define the rollup's genesis to occur at block number `start_height`. The rollup will ignore
 # any blocks before this height
 [runner]
-start_height = 1
+genesis_height = 0
 da_polling_interval_ms = 1000
 
 [runner.rpc_config]

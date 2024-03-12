@@ -3,7 +3,6 @@
 ,   rust-bin
 ,   risc0-rust
 ,   sovereign-sdk-src
-,   risc0-cycle-macros-src
 ,   risc0-circuit
 }:
 let
@@ -16,7 +15,6 @@ let
             mkdir -p $out/crates $out/vendor
             cp -r . $out/crates
             cp -r ${sovereign-sdk-src} $out/vendor/sovereign-sdk
-            cp -r ${risc0-cycle-macros-src} $out/vendor/risc0-cycle-macros
             cp ${../Cargo.toml} $out/Cargo.toml
             cp ${../constants.json} $out/constants.json
         '';
@@ -32,7 +30,6 @@ let
             mkdir -p $out/crates $out/vendor
             cp -r . $out/crates
             cp -r ${sovereign-sdk-src} $out/vendor/sovereign-sdk
-            cp -r ${risc0-cycle-macros-src} $out/vendor/risc0-cycle-macros
             cp ${../Cargo.toml} $out/Cargo.toml
             cp ${../Cargo.lock} $out/Cargo.lock
             cp ${../constants.json} $out/constants.json
@@ -53,10 +50,10 @@ let
                 "crypto-bigint-0.5.2" = "sha256-9rh8z3vwOQ7/mtzVbyADoRWgTzARF/nkhBwfKb7+A6I=";
                 "curve25519-dalek-4.1.0" = "sha256-H8YMea3AIcUn9NGRfataNjCTzCK4NAjo4ZhWuPfT6ts=";
                 "sha2-0.10.8" = "sha256-vuFQFlbDXEW+n9+Nx2VeWanggCSd6NZ+GVEDFS9qZ2M=";
-                "ibc-app-transfer-0.50.0" = "sha256-8iWoYw9xX1D/Z+H7IVUP4AoEI4LjL3jzseAOvPBDFbU=";
-                "ibc-proto-0.41.0" = "sha256-OXqtIFDK5KdYW39EkNGGtfuDvOAMjmxzfnSpm1NWpRc=";
-                "risc0-cycle-utils-0.3.0" = "sha256-tl6TvAUghcJvlnbD1iYH4mHjgSEtNKsAYN9ZZP69pyc=";
-                "sov-celestia-client-0.1.0" = "sha256-5o3GYYXfpcqI5qyCSzIKbYmm/wj2Zs+k+6WoVctvfW0=";
+                "ibc-app-transfer-0.50.0" = "sha256-PakLJz3xIKXfW6iC4mB4KutOfAgn8jC/8t5epysZE5g=";
+                "ibc-proto-0.41.0" = "sha256-Q3JS+hAYivBZvtlgEM11qDp55d9clNztASNQE505oX8=";
+                "risc0-cycle-utils-0.3.0" = "sha256-5dA62v1eqfyZBny4s3YlC2Tty7Yfd/OAVGfTlLBgypk=";
+                "sov-celestia-client-0.1.0" = "sha256-P7Sqf9fhKaf8ZaccYiW83YImaPfefWLDF7HXSYcMQMs=";
             };
         };
 
@@ -94,14 +91,14 @@ let
                 "celestia-proto-0.1.0" = "sha256-iUgrctxdJUyhfrEQ0zoVj5AKIqgj/jQVNli5/K2nxK0=";
                 "crypto-bigint-0.5.2" = "sha256-9rh8z3vwOQ7/mtzVbyADoRWgTzARF/nkhBwfKb7+A6I=";
                 "curve25519-dalek-4.1.0" = "sha256-H8YMea3AIcUn9NGRfataNjCTzCK4NAjo4ZhWuPfT6ts=";
-                "ibc-app-transfer-0.50.0" = "sha256-8iWoYw9xX1D/Z+H7IVUP4AoEI4LjL3jzseAOvPBDFbU=";
-                "ibc-proto-0.41.0" = "sha256-OXqtIFDK5KdYW39EkNGGtfuDvOAMjmxzfnSpm1NWpRc=";
+                "ibc-app-transfer-0.50.0" = "sha256-PakLJz3xIKXfW6iC4mB4KutOfAgn8jC/8t5epysZE5g=";
+                "ibc-proto-0.41.0" = "sha256-Q3JS+hAYivBZvtlgEM11qDp55d9clNztASNQE505oX8=";
                 "jmt-0.9.0" = "sha256-pq1v6FXS//6Dh+fdysQIVp+RVLHdXrW5aDx3263O1rs=";
                 "nmt-rs-0.1.0" = "sha256-jcHbqyIKk8ZDDjSz+ot5YDxROOnrpM4TRmNFVfNniwU=";
                 "sha2-0.10.8" = "sha256-vuFQFlbDXEW+n9+Nx2VeWanggCSd6NZ+GVEDFS9qZ2M=";
-                "sov-celestia-client-0.1.0" = "sha256-5o3GYYXfpcqI5qyCSzIKbYmm/wj2Zs+k+6WoVctvfW0=";
+                "sov-celestia-client-0.1.0" = "sha256-P7Sqf9fhKaf8ZaccYiW83YImaPfefWLDF7HXSYcMQMs=";
                 "tendermint-0.32.0" = "sha256-FtY7a+hBvQryATrs3mykCWFRe8ABTT6cuf5oh9IBElQ=";
-                "risc0-cycle-utils-0.3.0" = "sha256-tl6TvAUghcJvlnbD1iYH4mHjgSEtNKsAYN9ZZP69pyc=";
+                "risc0-cycle-utils-0.3.0" = "sha256-5dA62v1eqfyZBny4s3YlC2Tty7Yfd/OAVGfTlLBgypk=";
             };
         };
 
@@ -142,10 +139,11 @@ let
                 "tendermint-0.32.0" = "sha256-FtY7a+hBvQryATrs3mykCWFRe8ABTT6cuf5oh9IBElQ=";
                 "crypto-bigint-0.5.2" = "sha256-9rh8z3vwOQ7/mtzVbyADoRWgTzARF/nkhBwfKb7+A6I=";
                 "curve25519-dalek-4.1.0" = "sha256-H8YMea3AIcUn9NGRfataNjCTzCK4NAjo4ZhWuPfT6ts=";
-                "ibc-0.50.0" = "sha256-8iWoYw9xX1D/Z+H7IVUP4AoEI4LjL3jzseAOvPBDFbU=";
-                "ibc-proto-0.41.0" = "sha256-OXqtIFDK5KdYW39EkNGGtfuDvOAMjmxzfnSpm1NWpRc=";
-                "sov-celestia-client-0.1.0" = "sha256-5o3GYYXfpcqI5qyCSzIKbYmm/wj2Zs+k+6WoVctvfW0=";
-                "risc0-cycle-utils-0.3.0" = "sha256-tl6TvAUghcJvlnbD1iYH4mHjgSEtNKsAYN9ZZP69pyc=";
+                "ibc-0.50.0" = "sha256-PakLJz3xIKXfW6iC4mB4KutOfAgn8jC/8t5epysZE5g=";
+                "ibc-proto-0.41.0" = "sha256-Q3JS+hAYivBZvtlgEM11qDp55d9clNztASNQE505oX8=";
+                "sov-celestia-client-0.1.0" = "sha256-P7Sqf9fhKaf8ZaccYiW83YImaPfefWLDF7HXSYcMQMs=";
+                "risc0-cycle-utils-0.3.0" = "sha256-5dA62v1eqfyZBny4s3YlC2Tty7Yfd/OAVGfTlLBgypk=";
+                "rockbound-1.0.0" = "sha256-x3yO3BcDdRPmz/p7qnLj+SKgi3meSniTraklWvzULco=";
             };
         };
 

@@ -17,7 +17,6 @@ use sov_modules_api::{
 };
 use sov_modules_stf_blueprint::SequencerOutcome;
 use sov_sequencer_registry::SequencerRegistry;
-use sov_state::Storage;
 use tracing::info;
 
 impl<S: Spec, Da: DaSpec> GasEnforcer<S, Da> for Runtime<S, Da> {
@@ -180,11 +179,12 @@ impl<S: Spec, Da: DaSpec> ApplyBatchHooks<Da> for Runtime<S, Da> {
 
 impl<S: Spec, Da: DaSpec> SlotHooks for Runtime<S, Da> {
     type Spec = S;
-
     fn begin_slot_hook(
         &self,
-        _pre_state_root: &<<Self::Spec as Spec>::Storage as Storage>::Root,
-        _versioned_working_set: &mut sov_modules_api::VersionedStateReadWriter<StateCheckpoint<S>>,
+        _pre_state_root: <Self::Spec as Spec>::VisibleHash,
+        _versioned_working_set: &mut sov_modules_api::VersionedStateReadWriter<
+            StateCheckpoint<Self::Spec>,
+        >,
     ) {
     }
 
@@ -196,8 +196,8 @@ impl<S: Spec, Da: sov_modules_api::DaSpec> FinalizeHook for Runtime<S, Da> {
 
     fn finalize_hook(
         &self,
-        _root_hash: &<<Self::Spec as Spec>::Storage as Storage>::Root,
-        _accessory_working_set: &mut AccessoryStateCheckpoint<S>,
+        _root_hash: <Self::Spec as Spec>::VisibleHash,
+        _accessory_working_set: &mut AccessoryStateCheckpoint<Self::Spec>,
     ) {
     }
 }

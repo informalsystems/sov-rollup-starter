@@ -8,6 +8,7 @@ use sov_celestia_adapter::types::Namespace;
 use sov_celestia_adapter::verifier::{CelestiaSpec, CelestiaVerifier, RollupParams};
 use sov_celestia_adapter::{CelestiaConfig, CelestiaService};
 use sov_celestia_adapter::verifier::address::CelestiaAddress;
+use sov_db::sequencer_db::SequencerDB;
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;
@@ -76,6 +77,7 @@ impl RollupBlueprint for CelestiaRollup {
         &self,
         storage: Arc<RwLock<<Self::NativeSpec as sov_modules_api::Spec>::Storage>>,
         ledger_db: &sov_db::ledger_db::LedgerDB,
+        sequencer_db: &SequencerDB,
         da_service: &Self::DaService,
     ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
         // TODO set the sequencer address
@@ -87,7 +89,7 @@ impl RollupBlueprint for CelestiaRollup {
             Self::NativeRuntime,
             Self::NativeSpec,
             Self::DaService,
-        >(storage, ledger_db, da_service, sequencer)?;
+        >(storage, ledger_db, sequencer_db, da_service, sequencer)?;
 
         #[cfg(feature = "experimental")]
         crate::eth::register_ethereum::<Self::DaService>(

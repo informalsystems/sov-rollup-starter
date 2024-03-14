@@ -49,10 +49,8 @@ pub(crate) fn get_genesis_config<S: Spec, Da: DaSpec>(
 fn validate_config<S: Spec, Da: DaSpec>(
     genesis_config: <Runtime<S, Da> as RuntimeTrait<S, Da>>::GenesisConfig,
 ) -> Result<<Runtime<S, Da> as RuntimeTrait<S, Da>>::GenesisConfig, anyhow::Error> {
-    let token_address = &sov_bank::get_genesis_token_address::<S>(
-        &genesis_config.bank.tokens[0].token_name,
-        genesis_config.bank.tokens[0].salt,
-    );
+    let token_address = &genesis_config.bank.tokens[0].token_address;
+
 
     let coins_token_addr = &genesis_config
         .sequencer_registry

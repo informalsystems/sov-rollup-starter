@@ -29,6 +29,8 @@ sov-sequencer = { workspace = true }
 sov-rollup-interface = { workspace = true }
 sov-mock-da = { workspace = true, features = ["native"], optional=true }
 sov-celestia-adapter = { workspace = true, features = ["native"], optional=true }
+prometheus_exporter = { workspace = true, optional=true }
+prometheus = { workspace = true, optional=true }
 
 anyhow = { workspace = true }
 async-trait = { workspace = true }

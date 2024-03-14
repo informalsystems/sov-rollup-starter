@@ -41,6 +41,8 @@ stf-starter = { path = "./crates/stf" }
 serde = { version = "1.0.192", features = ["derive", "rc"] }
 serde_json = { version = "1.0" }
 
+prometheus_exporter = "0.8.5"
+prometheus = "0.13.3"
 
 anyhow = "1.0.68"
 clap = { version = "4.4.10", features = ["derive"] }

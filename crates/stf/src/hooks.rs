@@ -12,11 +12,13 @@ use sov_modules_api::runtime::capabilities::{
 };
 use sov_modules_api::transaction::Transaction;
 use sov_modules_api::{
-    AccessoryStateCheckpoint, BlobReaderTrait, Context, Gas, DaSpec, Spec, StateCheckpoint, WorkingSet,
+    BlobReaderTrait, Context, Gas, DaSpec, Spec, StateCheckpoint, WorkingSet,
+    StateReaderAndWriter
 };
 use sov_modules_stf_blueprint::SequencerOutcome;
 use sov_sequencer_registry::SequencerRegistry;
 use tracing::info;
+use sov_modules_api::namespaces::Accessory;
 
 impl<S: Spec, Da: DaSpec> GasEnforcer<S, Da> for Runtime<S, Da> {
     /// The transaction type that the gas enforcer knows how to parse
@@ -193,8 +195,23 @@ impl<S: Spec, Da: sov_modules_api::DaSpec> FinalizeHook for Runtime<S, Da> {
 
     fn finalize_hook(
         &self,
-        _root_hash: <Self::Spec as Spec>::VisibleHash,
-        _accessory_working_set: &mut AccessoryStateCheckpoint<Self::Spec>,
+        _root_hash: S::VisibleHash,
+        _accessory_working_set: &mut impl StateReaderAndWriter<Accessory>,
     ) {
     }
 }
+
+
+//
+// impl<S: Spec, Da: sov_modules_api::DaSpec> FinalizeHook for Runtime<S, Da> {
+//     type Spec = S;
+//
+//     fn finalize_hook(
+//         &self,
+//         #[allow(unused_variables)] root_hash: S::VisibleHash,
+//         #[allow(unused_variables)] accessory_state: &mut impl StateReaderAndWriter<Accessory>,
+//     ) {
+//         #[cfg(all(feature = "experimental", feature = "native"))]
+//         self.evm.finalize_hook(root_hash, accessory_state);
+//     }
+// }

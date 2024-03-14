@@ -20,6 +20,10 @@ $ make clean-db
 
 #### 3. Start the rollup node:
 
+```sh,test-ci
+export SOV_PROVER_MODE=execute 
+```
+
 This will compile and start the rollup node:
 
 ```shell,test-ci,bashtestmd:long-running,bashtestmd:wait-until=RPC
@@ -127,9 +131,9 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method"
 ```
 
 ## Enabling the prover
-By default, demo-rollup disables proving (i.e. the default behavior is `SOV_PROVER_CONFIG=skip`). If we want to enable proving, several options are available:
+By default, demo-rollup disables proving (i.e. the default behavior is. If we want to enable proving, several options are available:
 
-* `export SOV_PROVER_CONFIG=skip` Skips verification logic.
-* `export SOV_PROVER_CONFIG=simulate` Run the rollup verification logic inside the current process.
-* `export SOV_PROVER_CONFIG=execute` Run the rollup verifier in a zkVM executor.
-* `export SOV_PROVER_CONFIG=prove` Run the rollup verifier and create a SNARK of execution.
+* `export SOV_PROVER_MODE=skip` Skips verification logic.
+* `export SOV_PROVER_MODE=simulate` Run the rollup verification logic inside the current process.
+* `export SOV_PROVER_MODE=execute` Run the rollup verifier in a zkVM executor.
+* `export SOV_PROVER_MODE=prove` Run the rollup verifier and create a SNARK of execution.

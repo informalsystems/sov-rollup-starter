@@ -1,8 +1,6 @@
 #![deny(missing_docs)]
 //! StarterRollup provides a minimal self-contained rollup implementation
 
-use std::sync::{Arc, RwLock};
-
 use async_trait::async_trait;
 use sov_db::ledger_db::LedgerDB;
 use sov_db::sequencer_db::SequencerDB;
@@ -22,6 +20,7 @@ use sov_state::{DefaultStorageSpec, ZkStorage};
 use sov_stf_runner::ParallelProverService;
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
+use tokio::sync::watch;
 use stf_starter::Runtime;
 
 /// Rollup with [`MockDaService`].
@@ -75,7 +74,7 @@ impl RollupBlueprint for MockRollup {
     /// This function generates RPC methods for the rollup, allowing for extension with custom endpoints.
     fn create_rpc_methods(
         &self,
-        storage: Arc<RwLock<<Self::NativeSpec as Spec>::Storage>>,
+        storage: watch::Receiver<<Self::NativeSpec as Spec>::Storage>,
         ledger_db: &LedgerDB,
         sequencer_db: &SequencerDB,
         da_service: &Self::DaService,

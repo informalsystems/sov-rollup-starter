@@ -25,6 +25,7 @@ use sov_state::{DefaultStorageSpec, ZkStorage};
 use sov_stf_runner::ParallelProverService;
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
+use tokio::sync::watch;
 use stf_starter::Runtime;
 
 /// The namespace for the rollup on Celestia.
@@ -75,7 +76,7 @@ impl RollupBlueprint for CelestiaRollup {
 
     fn create_rpc_methods(
         &self,
-        storage: Arc<RwLock<<Self::NativeSpec as sov_modules_api::Spec>::Storage>>,
+        storage: watch::Receiver<<Self::NativeSpec as Spec>::Storage>,
         ledger_db: &sov_db::ledger_db::LedgerDB,
         sequencer_db: &SequencerDB,
         da_service: &Self::DaService,

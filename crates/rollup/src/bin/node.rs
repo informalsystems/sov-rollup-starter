@@ -58,6 +58,10 @@ struct Args {
     /// The optional path to the log file.
     #[arg(long, default_value = None)]
     log_dir: Option<String>,
+
+    /// The optional path to the log file.
+    #[arg(long, default_value_t = 9845)]
+    metrics: u64,
 }
 
 fn init_logging(log_dir: Option<String>) -> Option<WorkerGuard> {
@@ -91,6 +95,10 @@ async fn main() -> Result<(), anyhow::Error> {
     let args = Args::parse();
 
     let _guard = init_logging(args.log_dir);
+
+    let metrics_port = args.metrics;
+    let address = format!("127.0.0.1:{}", metrics_port);
+    prometheus_exporter::start(address.parse().unwrap()).expect("Could not start prometheus server");
 
     let rollup_config_path = args.rollup_config_path.as_str();
 

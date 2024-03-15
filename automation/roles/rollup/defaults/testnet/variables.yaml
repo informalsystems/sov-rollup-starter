@@ -1,6 +1,6 @@
 ---
 commit_hash: "627cef1594ad65cfe4e730b4e2fa80f28139ba63"
 sequencer_rollup_address: "sov1l6n2cku82yfqld30lanm2nfw43n2auc8clw7r5u5m6s7p8jrm4zqrr8r94"
-rollup_namespace_prefix: "sov-roll01"
-rollup_proof_namespace_prefix: "sov-prov01"
-sequencer_genesis_address: "celestia1x47mrdlvlwxh9rmdyw7m6pzlqtxuhxcfn24yn9"
+rollup_namespace_prefix: "sov-roll02"
+rollup_proof_namespace_prefix: "sov-prov02"
+sequencer_genesis_address: "celestia1d658ymavqenc9a84x4rvt88rat9jn9p8uw2ekf"

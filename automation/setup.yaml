@@ -1,7 +1,12 @@
 ---
-- name: "playbook runner"
+- name: "Playbook Runner"
   hosts: all
+  vars:
+    run_rollup_only: false
+    wipe: false
   roles:
-    - "./roles/common"
-    - "./roles/data-availability"
-    - "./roles/rollup"
+    - role: "./roles/common"
+      when: not run_rollup_only
+    - role: "./roles/data-availability"
+      when: not run_rollup_only
+    - role: "./roles/rollup"

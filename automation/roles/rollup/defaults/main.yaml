@@ -11,3 +11,4 @@ da_feature: "celestia_da"
 rollup_da_start_height: 1387232
 genesis_folder: "/home/sovereign/genesis"
 rollup_log_dir: "/mnt/logs"
+wipe: false

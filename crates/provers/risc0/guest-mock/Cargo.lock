@@ -209,13 +209,13 @@ checksum = "96d30a06541fbafbc7f82ed10c06164cfbd2c401138f6addd8404629c4b16711"
 
 [[package]]
 name = "async-trait"
-version = "0.1.77"
+version = "0.1.78"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c980ee35e870bd1a4d2c8294d4c04d0499e67bca1e4b5cefcc693c2fa00caea9"
+checksum = "461abc97219de0eaaf81fe3ef974a540158f3d079c2ab200f891f1a2ef201e85"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.53",
 ]
 
 [[package]]
@@ -361,7 +361,7 @@ checksum = "4da9a32f3fed317401fa3c862968128267c3106685286e15d5aaa3d7389c2f60"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.53",
 ]
 
 [[package]]
@@ -458,7 +458,7 @@ source = "git+https://github.com/risc0/curve25519-dalek?tag=curve25519-4.1.0-ris
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.53",
 ]
 
 [[package]]
@@ -839,7 +839,7 @@ checksum = "ed3955f1a9c7c0c15e092f9c887db08b1fc683305fdf6eb6684f22555355e202"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.53",
 ]
 
 [[package]]
@@ -971,7 +971,7 @@ dependencies = [
  "itertools 0.11.0",
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.53",
 ]
 
 [[package]]
@@ -1240,7 +1240,7 @@ checksum = "7eb0b34b42edc17f6b7cac84a52a1c5f0e1bb2227e997ca9011ea3dd34e8610b"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.53",
 ]
 
 [[package]]
@@ -1306,7 +1306,7 @@ dependencies = [
 [[package]]
 name = "sov-accounts"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1319,7 +1319,7 @@ dependencies = [
 [[package]]
 name = "sov-bank"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1333,7 +1333,7 @@ dependencies = [
 [[package]]
 name = "sov-blob-storage"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "bincode",
@@ -1350,7 +1350,7 @@ dependencies = [
 [[package]]
 name = "sov-chain-state"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1364,12 +1364,12 @@ dependencies = [
 [[package]]
 name = "sov-metrics"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 
 [[package]]
 name = "sov-mock-da"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -1385,7 +1385,7 @@ dependencies = [
 [[package]]
 name = "sov-modules-api"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "bech32",
@@ -1405,7 +1405,7 @@ dependencies = [
 [[package]]
 name = "sov-modules-core"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "bech32",
@@ -1426,7 +1426,7 @@ dependencies = [
 [[package]]
 name = "sov-modules-macros"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1440,7 +1440,7 @@ dependencies = [
 [[package]]
 name = "sov-modules-stf-blueprint"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1459,7 +1459,7 @@ dependencies = [
 [[package]]
 name = "sov-risc0-adapter"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "bincode",
@@ -1480,7 +1480,7 @@ dependencies = [
 [[package]]
 name = "sov-rollup-interface"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -1500,7 +1500,7 @@ dependencies = [
 [[package]]
 name = "sov-sequencer-registry"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1513,7 +1513,7 @@ dependencies = [
 [[package]]
 name = "sov-state"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "bcs",
@@ -1533,7 +1533,7 @@ dependencies = [
 [[package]]
 name = "sov-stf-runner"
 version = "0.3.0"
-source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=b6d9fdf393530314d230e4cf227089ff184fac19#b6d9fdf393530314d230e4cf227089ff184fac19"
+source = "git+ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git?rev=9e4234b6b9b33ea28f16cc45e62247a205ea22f9#9e4234b6b9b33ea28f16cc45e62247a205ea22f9"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1594,9 +1594,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "2.0.52"
+version = "2.0.53"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b699d15b36d1f02c3e7c69f8ffef53de37aefae075d8488d4ba1a7788d574a07"
+checksum = "7383cd0e49fff4b6b90ca5670bfd3e9d6a733b3f90c686605aa7eec8c4996032"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1620,7 +1620,7 @@ checksum = "c61f3ba182994efc43764a46c018c347bc492c79f024e705f46567b418f6d4f7"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.53",
 ]
 
 [[package]]
@@ -1667,7 +1667,7 @@ checksum = "34704c8d6ebcbc939824180af020566b01a7c01f80641264eba0999f6c2b6be7"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.53",
 ]
 
 [[package]]
@@ -1742,7 +1742,7 @@ checksum = "9ce1b18ccd8e73a9321186f97e46f9f04b778851177567b1975109d26a08d2a6"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.53",
 ]
 
 [[package]]
@@ -1762,5 +1762,5 @@ checksum = "ce36e65b0d2999d2aafac989fb249189a141aee1f53c612c1f37d72631959f69"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.53",
 ]

@@ -8,7 +8,7 @@ repo_name: "sov-rollup-starter-wip"
 repo_dir: "sov-rollup-starter-wip"
 rollup_bin: "node"
 da_feature: "celestia_da"
-rollup_da_start_height: 1387232
+rollup_da_start_height: 1407265
 genesis_folder: "/home/sovereign/genesis"
 rollup_log_dir: "/mnt/logs"
 wipe: false

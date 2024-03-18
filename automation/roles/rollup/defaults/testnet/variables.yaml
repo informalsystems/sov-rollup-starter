@@ -1,5 +1,5 @@
 ---
-commit_hash: "7c83bbe7765af5545e025f2fd671ffa6f7006260"
+commit_hash: "376054d22363acc0930e0f894b6fb7786bf4579a"
 sequencer_rollup_address: "sov1l6n2cku82yfqld30lanm2nfw43n2auc8clw7r5u5m6s7p8jrm4zqrr8r94"
 rollup_namespace_prefix: "sov-roll02"
 rollup_proof_namespace_prefix: "sov-prov02"

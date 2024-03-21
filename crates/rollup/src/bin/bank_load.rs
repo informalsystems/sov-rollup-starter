@@ -17,6 +17,7 @@ use sov_cli::wallet_state::PrivateKeyAndAddress;
 use sov_sequencer::utils::SimpleClient;
 use rand::Rng;
 use tokio::signal;
+use tokio::time::{sleep, Duration};
 
 pub type TestSpec = sov_modules_api::default_spec::DefaultSpec<Risc0Verifier>;
 pub type TestPrivateKey = <<TestSpec as Spec>::CryptoSpec as CryptoSpec>::PrivateKey;
@@ -175,7 +176,8 @@ async fn main() -> anyhow::Result<()>{
                         println!("Submitted {} txns",num_submitted)
                     }
                     Err(e) => {
-                        println!("{:?}",e)
+                        println!("{:?}",e);
+                        sleep(Duration::from_secs(5)).await;
                     }
                 }
             }

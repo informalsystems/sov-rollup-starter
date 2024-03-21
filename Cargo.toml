@@ -4,8 +4,10 @@ resolver = "2"
 
 members = [
     "crates/rollup",
-    "crates/stf",
+    "crates/stf"
 ]
+
+exclude = ["scripts/bank_load"]
 
 [workspace.package]
 version = "0.3.0"

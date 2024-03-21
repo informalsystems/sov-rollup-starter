@@ -22,7 +22,7 @@ sov-sequencer-registry = { workspace = true, features = ["native"] }
 sov-modules-rollup-blueprint = { workspace = true }
 sov-modules-stf-blueprint = { workspace = true, features = ["native"] }
 sov-stf-runner = { workspace = true, features = ["native"] }
-sov-cli = { workspace = true, optional = true }
+sov-cli = { workspace = true}
 
 sov-db = { workspace = true }
 sov-sequencer = { workspace = true }
@@ -38,7 +38,7 @@ serde = { workspace = true }
 tracing = { workspace = true }
 serde_json = { workspace = true }
 jsonrpsee = { workspace = true }
-tokio = { workspace = true }
+tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }
 prometheus_exporter = { workspace = true }
 
 risc0-starter = { path = "../provers/risc0" }
@@ -47,6 +47,8 @@ sov-risc0-adapter = { workspace = true, features = ["native"] }
 
 # binary dependencies
 tracing-subscriber = { version = "0.3.17", features = ["env-filter"] }
+bytes = "1.5.0"
+rand = "0.8.5"
 
 [dev-dependencies]
 tempfile = { workspace = true }
@@ -64,3 +66,7 @@ path = "src/bin/node.rs"
 [[bin]]
 name = "starter-cli-wallet"
 path = "src/bin/starter_cli_wallet.rs"
+
+[[bin]]
+name = "bank-load"
+path = "src/bin/bank_load.rs"

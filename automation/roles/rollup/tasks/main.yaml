@@ -13,6 +13,9 @@
 - name: namespace setup
   include_tasks: namespace.yaml
 
+- name: rollup service
+  include_tasks: service_stop.yaml
+
 - name: build rollup binary
   include_tasks: build.yaml
 

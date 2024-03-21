@@ -2,7 +2,6 @@
 //! StarterRollup provides a minimal self-contained rollup implementation
 
 use std::str::FromStr;
-use std::sync::{Arc, RwLock};
 use async_trait::async_trait;
 use sov_celestia_adapter::types::Namespace;
 use sov_celestia_adapter::verifier::{CelestiaSpec, CelestiaVerifier, RollupParams};

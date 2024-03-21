@@ -1,10 +1,20 @@
 ---
+# Github tag or commit
 version: "tags/v0.12.4"
+# `core_ip` to pass for celestia light client
 core_ip: "full.consensus.mocha-4.celestia-mocha.com"
+# Celestia testnet to connect to
 p2p_network: "mocha"
+
+# Key information. Refer to `Key Generation` section of the README
 key_name: "sov001"
-key_filename: "{{key_name}}.info"
 key_address_filename: "6ea8726fac066782f4f53546c59ce3eacb299427.address"
+
+key_filename: "{{key_name}}.info"
+
+# Local path to celestia keys
 key_info_path: "../.keys/{{ key_name }}/{{ key_filename }}"
 key_address_path: "../.keys/{{ key_name }}/{{ key_address_filename }}"
+
+# Remote path. Does not need to be changed unless key management is different
 keyring_path: "{{ da_store }}/keys/keyring-test"

@@ -77,7 +77,7 @@ fn init_logging(log_dir: Option<String>) -> Option<WorkerGuard> {
     };
 
     let stdout_layer = fmt::layer().with_writer(std::io::stdout) ;
-    let filter_layer = EnvFilter::from_str("info,hyper=info").unwrap();
+    let filter_layer = EnvFilter::from_str("debug").unwrap();
     let subscriber = tracing_subscriber::registry()
         .with(stdout_layer)
         .with(filter_layer);

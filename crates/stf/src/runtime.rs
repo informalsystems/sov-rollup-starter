@@ -80,7 +80,7 @@ where
 
     #[cfg(feature = "native")]
     fn rpc_methods(
-        storage: std::sync::Arc<std::sync::RwLock<<S as Spec>::Storage>>,
+        storage: tokio::sync::watch::Receiver<S::Storage>,
     ) -> jsonrpsee::RpcModule<()> {
         get_rpc_methods::<S, Da>(storage)
     }

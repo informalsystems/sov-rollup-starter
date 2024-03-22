@@ -64,11 +64,11 @@ impl<S: Spec, Da: DaSpec> TransactionDeduplicator<S, Da> for Runtime<S, Da> {
     fn check_uniqueness(
         &self,
         tx: &Self::Tx,
-        context: &Context<S>,
+        _context: &Context<S>,
         state_checkpoint: &mut StateCheckpoint<S>,
     ) -> Result<(), anyhow::Error> {
         self.accounts
-            .check_uniqueness(tx, context, state_checkpoint)
+            .check_uniqueness(tx, state_checkpoint)
     }
 
     /// Marks a transaction as having been executed, preventing it from executing again.

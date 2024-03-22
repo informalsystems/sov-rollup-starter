@@ -4,7 +4,7 @@
 use async_trait::async_trait;
 use sov_db::ledger_db::LedgerDB;
 use sov_db::sequencer_db::SequencerDB;
-use sov_mock_da::{MockAddress, MockDaConfig, MockDaService, MockDaSpec};
+use sov_mock_da::{MockDaConfig, MockDaService, MockDaSpec};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;
@@ -78,16 +78,14 @@ impl RollupBlueprint for MockRollup {
         ledger_db: &LedgerDB,
         sequencer_db: &SequencerDB,
         da_service: &Self::DaService,
+        rollup_config: &RollupConfig<Self::DaConfig>,
     ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
-        // TODO set the sequencer address
-        let sequencer = MockAddress::new([0; 32]);
-
         #[allow(unused_mut)]
         let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<
             Self::NativeRuntime,
             Self::NativeSpec,
             Self::DaService,
-        >(storage, ledger_db, sequencer_db, da_service, sequencer)?;
+        >(storage, ledger_db, sequencer_db, da_service, rollup_config.da.sender_address)?;
 
         #[cfg(feature = "experimental")]
         crate::eth::register_ethereum::<Self::DaService>(

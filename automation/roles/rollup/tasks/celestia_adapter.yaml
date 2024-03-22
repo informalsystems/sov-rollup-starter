@@ -35,12 +35,3 @@
   vars:
     celestia_auth_token: "{{ command_output.stdout }}"
     sequencer_self_address: "{{ key_address }}"
-
-- name: Replace sequencer address in Rust file
-  become: true
-  become_user: ubuntu
-  ansible.builtin.replace:
-    path: "/home/ubuntu/{{repo_dir}}/crates/rollup/src/celestia_rollup.rs"
-    regexp: 'CelestiaAddress::from_str.*'
-    replace: 'CelestiaAddress::from_str("{{ key_address }}")?;'
-    backup: no

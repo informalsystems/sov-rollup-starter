@@ -1,7 +1,10 @@
 use anyhow::Context;
 use stf_starter::runtime::RuntimeCall;
 use sov_modules_api::transaction::Transaction;
-use sov_celestia_adapter::verifier::CelestiaSpec;
+#[cfg(feature = "celestia_da")]
+use sov_celestia_adapter::verifier::CelestiaSpec as DaSpec;
+#[cfg(not(feature = "celestia_da"))]
+use sov_mock_da::verifier::MockDaSpec as DaSpec;
 use sov_risc0_adapter::Risc0Verifier;
 use sov_modules_api::{PrivateKey, Spec, CryptoSpec, AddressBech32};
 use sov_bank::CallMessage;
@@ -122,7 +125,7 @@ fn build_transfer_token_tx(
     nonce: u64,
 ) -> Transaction<TestSpec> {
     let msg =
-        RuntimeCall::<TestSpec, CelestiaSpec>::bank(CallMessage::<TestSpec>::Transfer {
+        RuntimeCall::<TestSpec, DaSpec>::bank(CallMessage::<TestSpec>::Transfer {
             to: recipient,
             coins: Coins {
                 amount: 1,

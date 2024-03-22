@@ -1,13 +1,13 @@
 ---
 # git commit hash for the repository (check rollup/defaults/main.yaml for repo org and name)
-commit_hash: "fe6314f2e33792527a14d3e8483ab0be175c8bd5"
+commit_hash: "a02bb017310ff748e25b0ce2243d23e37272650f"
 # DA namespace to post transaction blobs to
-rollup_namespace_prefix: "sov-roll02"
+rollup_namespace_prefix: "sov-roll03"
 # DA namespace to post proof blobs to
-rollup_proof_namespace_prefix: "sov-prov02"
+rollup_proof_namespace_prefix: "sov-prov03"
 # The DA address for sequencer
-sequencer_self_da_address: "celestia1d658ymavqenc9a84x4rvt88rat9jn9p8uw2ekf"
+sequencer_self_da_address: "celestia1htg5dypcqqq5msdgjrd3e0djw2xldekmgzl3x6"
 # The DA address for genesis
-sequencer_genesis_da_address: "celestia1d658ymavqenc9a84x4rvt88rat9jn9p8uw2ekf"
+sequencer_genesis_da_address: "celestia1htg5dypcqqq5msdgjrd3e0djw2xldekmgzl3x6"
 # The rollup address for genesis
 sequencer_genesis_rollup_address: "sov1l6n2cku82yfqld30lanm2nfw43n2auc8clw7r5u5m6s7p8jrm4zqrr8r94"

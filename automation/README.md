@@ -101,8 +101,10 @@ make cel-key
 * Create `.keys` folder at the root of the repository
 ```
 cd sov-rollup-starter-wip
-mkdir .keys
-mv ~/.celestia-light-mocha-4/keys/keyring-test/* .keys/
+mkdir -p .keys
+mkdir -p .keys/<key_name>
+cp ~/.celestia-light-mocha-4/keys/keyring-test/<key_name>.info ../sov-rollup-starter-wip/.keys/<key_name>/
+cp ~/.celestia-light-mocha-4/keys/keyring-test/<key_address>.address ../sov-rollup-starter-wip/.keys/<key_name>/
 ```
 * If the files are moved to the above location, nothing else needs to be changed in testnet variables file
 * Ensure that the address for the key you generated has funds to post data to the testnet

@@ -77,7 +77,7 @@ impl RollupBlueprint for CelestiaRollup {
         ledger_db: &sov_db::ledger_db::LedgerDB,
         sequencer_db: &SequencerDB,
         da_service: &Self::DaService,
-        rollup_config: &RollupConfig<Self::DaConfig>,
+        rollup_config: &RollupConfig<Self::DaConfig>
     ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
         let sequencer = rollup_config.da.own_celestia_address.clone();
 

@@ -78,8 +78,9 @@ impl RollupBlueprint for MockRollup {
         ledger_db: &LedgerDB,
         sequencer_db: &SequencerDB,
         da_service: &Self::DaService,
-        rollup_config: &RollupConfig<Self::DaConfig>,
+        rollup_config: &RollupConfig<Self::DaConfig>
     ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
+
         #[allow(unused_mut)]
         let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<
             Self::NativeRuntime,

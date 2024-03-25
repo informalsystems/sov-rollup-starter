@@ -20,9 +20,9 @@ This is a one time step to generate the celestia keypair that will be used to po
 ```
 brew install ansible
 ```
-* go1.22.0 - install for your specific architecture from https://go.dev/dl/
+* go1.21.1 - install for your specific architecture from https://go.dev/dl/
 ```
-https://go.dev/dl/go1.22.0.darwin-arm64.pkg
+https://go.dev/dl/go1.21.1.darwin-arm64.pkg
 ```
 
 ### Ansible variables to edit

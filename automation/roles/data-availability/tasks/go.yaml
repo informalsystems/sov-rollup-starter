@@ -1,6 +1,6 @@
 - name: Set Go version variable
   set_fact:
-    go_version: "1.22.0"
+    go_version: "1.21.1"
 
 - name: Check if Go is installed
   become: true

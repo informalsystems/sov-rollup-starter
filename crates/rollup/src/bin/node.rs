@@ -65,29 +65,22 @@ struct Args {
 }
 
 fn init_logging(log_dir: Option<String>) -> Option<WorkerGuard> {
-    let (file_layer, guard) = if let Some(path) = log_dir {
-        let file_appender = tracing_appender::rolling::daily(&path, "rollup.log");
-        let (non_blocking, guard) = tracing_appender::non_blocking(file_appender);
-        (Some(
-            fmt::layer()
-                .with_writer(non_blocking)
-        ), Some(guard))
-    } else {
-        (None,None)
-    };
-
     let stdout_layer = fmt::layer().with_writer(std::io::stdout) ;
     let filter_layer = EnvFilter::from_str("debug,hyper=info,risc0_zkvm=warn,sov_prover_storage_manager=info,jmt=info,sov_celestia_adapter=info").unwrap();
     let subscriber = tracing_subscriber::registry()
         .with(stdout_layer)
         .with(filter_layer);
 
-    if let Some(layer) = file_layer {
-        subscriber.with(layer).init();
+    if let Some(path) = log_dir {
+        let file_appender = tracing_appender::rolling::daily(&path, "rollup.log");
+        let (non_blocking, guard) = tracing_appender::non_blocking(file_appender);
+        subscriber.with(fmt::layer()
+            .with_writer(non_blocking)).init();
+        Some(guard)
     } else {
         subscriber.init();
+        None
     }
-    guard
 }
 
 #[tokio::main]

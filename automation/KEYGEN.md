@@ -1,14 +1,14 @@
 ### Celestia DA key generation
 * This is a one time process to generate a celestia keypair for the sequencer to post blobs to the celestia DA layer
-* Ensure go (version 1.22.0) is installed locally
+* Ensure go (version 1.21.1) is installed locally
 * Ensure dependencies are installed for celestia - https://docs.celestia.org/nodes/environment#install-dependencies
 * Checkout `celestia-node`
 ```
 git clone https://github.com/celestiaorg/celestia-node.git
 ```
-* Checkout the correct version `tags/v0.13.1`
+* Checkout the correct version `tags/v0.12.4`
 ```
-git checkout tags/v0.13.1
+git checkout tags/v0.12.4
 ```
 * Build the celestia keygen tool
 ```

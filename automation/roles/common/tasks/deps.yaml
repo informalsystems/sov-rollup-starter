@@ -41,6 +41,7 @@
       - base58
     executable: pip3
 
+# Temporary workaround for https://github.com/Sovereign-Labs/sovereign-sdk-wip/pull/192
 - name: Download libssl package
   ansible.builtin.get_url:
     url: http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.22_amd64.deb

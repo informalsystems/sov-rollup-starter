@@ -7,8 +7,8 @@ core_ip: "full.consensus.mocha-4.celestia-mocha.com"
 p2p_network: "mocha"
 
 # Key information. Refer to `Key Generation` section of the README
-key_name: "sov004"
-key_address_filename: "905e80b0116d6650ced462b5e6d48e01af5003b0.address"
+key_name: "sov005"
+key_address_filename: "42aee5e3edc3a5373f042cd102de19705bc0545c.address"
 
 key_filename: "{{key_name}}.info"
 

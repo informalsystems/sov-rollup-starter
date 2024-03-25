@@ -20,6 +20,6 @@ key_address_path: "../.keys/{{ key_name }}/{{ key_address_filename }}"
 keyring_path: "{{ da_store }}/keys/keyring-test"
 
 # Define this variable to prevent celestia from syncing from genesis
-da_start_from: 1458700
+da_start_from: 1461058
 # RPC url to fetch the trusted blockhash from, since syncing from a specific height requires setting the start hash
 celestia_rpc_url: "https://rpc.celestia-mocha.com"

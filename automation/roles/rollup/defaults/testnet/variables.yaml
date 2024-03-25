@@ -12,4 +12,4 @@ sequencer_genesis_da_address: "celestia1g2hwtcldcwjnw0cy9ngs9hsewpduq4zuehqlqh"
 # The rollup address for genesis
 sequencer_genesis_rollup_address: "sov1l6n2cku82yfqld30lanm2nfw43n2auc8clw7r5u5m6s7p8jrm4zqrr8r94"
 # Rollup start height
-rollup_da_start_height: 1458705
+rollup_da_start_height: 1461258

@@ -10,7 +10,7 @@ This is a one time step to generate the celestia keypair that will be used to po
 * AWS `c5ad.4xlarge`
   * 16 cores
   * 2 x NVME SSD
-  * 32 GB 
+  * 32 GB RAM
 * Ubuntu 22.04
 * Open security group
 

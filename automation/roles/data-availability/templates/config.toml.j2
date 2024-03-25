@@ -81,7 +81,7 @@
   SamplingRange = 100
   ConcurrencyLimit = 16
   BackgroundStoreInterval = "10m0s"
-  SampleFrom = 1
+  SampleFrom = {{ da_start_from | default(1) }}
   SampleTimeout = "2m40s"
   SamplingWindow = "0s"
 

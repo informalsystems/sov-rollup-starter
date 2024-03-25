@@ -11,4 +11,4 @@ aws_prometheus_remote_write_url: "https://aps-workspaces.us-east-1.amazonaws.com
 # Region for AWS managed prometheus
 aws_region: "us-east-1"
 # Label for filtering data in grafana
-aws_prometheus_monitoring_label: "sov003"
+aws_prometheus_monitoring_label: "sov004"

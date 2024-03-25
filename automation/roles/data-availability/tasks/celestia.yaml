@@ -2,7 +2,7 @@
   git:
     repo: 'https://github.com/{{ org_name }}/{{ repo_name }}.git'
     dest: /home/sovereign/{{ repo_dir }}
-    version: "tags/v0.12.4"
+    version: "{{ version }}"
   become: true
   become_user: sovereign
 
@@ -75,9 +75,9 @@
   become: true
 
 - name: Copy configuration file to remote server
-  ansible.builtin.copy:
-    src: config.toml
-    dest: "{{ da_store }}"
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: "{{ da_store }}/config.toml"
     owner: sovereign
     group: sovereign
     mode: '0644'

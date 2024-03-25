@@ -2,11 +2,14 @@
 - name: "Playbook Runner"
   hosts: all
   vars:
-    run_rollup_only: false
+    switches: ""
     wipe: false
+  pre_tasks:
+    - import_tasks: preconditions.yaml
   roles:
     - role: "./roles/common"
-      when: not run_rollup_only
+      when: "'c' in switches"
     - role: "./roles/data-availability"
-      when: not run_rollup_only
+      when: "'d' in switches"
     - role: "./roles/rollup"
+      when: "'r' in switches"

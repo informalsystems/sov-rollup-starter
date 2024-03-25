@@ -13,8 +13,6 @@ repo_dir: "sov-rollup-starter-wip"
 rollup_bin: "node"
 # Feature for the DA adapter. Default is `celestia-da`
 da_feature: "celestia_da"
-# Rollup start height
-rollup_da_start_height: 1407265
 # Folder on the remote machine that has the genesis configuration
 genesis_folder: "/home/sovereign/genesis"
 rollup_log_dir: "/mnt/logs"

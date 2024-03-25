@@ -1,14 +1,14 @@
 ---
 # Github tag or commit
-version: "tags/v0.12.4"
+version: "tags/v0.13.1"
 # `core_ip` to pass for celestia light client
 core_ip: "full.consensus.mocha-4.celestia-mocha.com"
 # Celestia testnet to connect to
 p2p_network: "mocha"
 
 # Key information. Refer to `Key Generation` section of the README
-key_name: "sov03"
-key_address_filename: "bad146903800014dc1a890db1cbdb2728df6e6db.address"
+key_name: "sov004"
+key_address_filename: "905e80b0116d6650ced462b5e6d48e01af5003b0.address"
 
 key_filename: "{{key_name}}.info"
 
@@ -18,3 +18,8 @@ key_address_path: "../.keys/{{ key_name }}/{{ key_address_filename }}"
 
 # Remote path. Does not need to be changed unless key management is different
 keyring_path: "{{ da_store }}/keys/keyring-test"
+
+# Define this variable to prevent celestia from syncing from genesis
+da_start_from: 1458700
+# RPC url to fetch the trusted blockhash from, since syncing from a specific height requires setting the start hash
+celestia_rpc_url: "https://rpc.celestia-mocha.com"

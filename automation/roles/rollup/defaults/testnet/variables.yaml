@@ -1,13 +1,15 @@
 ---
 # git commit hash for the repository (check rollup/defaults/main.yaml for repo org and name)
 commit_hash: "a02bb017310ff748e25b0ce2243d23e37272650f"
-# DA namespace to post transaction blobs to
+# DA namespace to post transaction blobs to. [NOTE: Length cannot change. TODO: add a check for this]
 rollup_namespace_prefix: "sov-roll03"
-# DA namespace to post proof blobs to
+# DA namespace to post proof blobs to. [NOTE: Length cannot change. TODO: add a check for this]
 rollup_proof_namespace_prefix: "sov-prov03"
 # The DA address for sequencer
-sequencer_self_da_address: "celestia1htg5dypcqqq5msdgjrd3e0djw2xldekmgzl3x6"
+sequencer_self_da_address: "celestia1jp0gpvq3d4n9pnk5v267d4ywqxh4qqas7lwm62"
 # The DA address for genesis
-sequencer_genesis_da_address: "celestia1htg5dypcqqq5msdgjrd3e0djw2xldekmgzl3x6"
+sequencer_genesis_da_address: "celestia1jp0gpvq3d4n9pnk5v267d4ywqxh4qqas7lwm62"
 # The rollup address for genesis
 sequencer_genesis_rollup_address: "sov1l6n2cku82yfqld30lanm2nfw43n2auc8clw7r5u5m6s7p8jrm4zqrr8r94"
+# Rollup start height
+rollup_da_start_height: 1458705

@@ -1,0 +1,121 @@
+- name: Install a list of packages
+  become: true
+  become_user: root
+  apt:
+    update_cache: yes
+    pkg:
+    - build-essential
+    - pkg-config
+    - libudev-dev
+    - cmake
+    - libclang-dev
+    - libssl-dev
+    - gparted
+    - nload
+    - python3-pip
+    - net-tools
+    - logind
+    - curl
+    - git
+    - chrony
+    - htop
+    - acl
+    - tar
+    - wget
+    - aria2
+    - clang
+    - jq
+    - make
+    - ncdu
+    - protobuf-compiler
+    - ninja-build
+      
+- name: some python utils
+  become: true
+  become_user: sovereign
+  ansible.builtin.pip:
+    name:
+      - tqdm
+      - requests
+      - pynacl
+      - base58
+    executable: pip3
+
+# Temporary workaround for https://github.com/Sovereign-Labs/sovereign-sdk-wip/pull/192
+- name: Download libssl package
+  ansible.builtin.get_url:
+    url: http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.22_amd64.deb
+    dest: "/tmp/libssl1.1_1.1.1f-1ubuntu2.22_amd64.deb"
+
+- name: Install libssl package
+  ansible.builtin.command:
+    cmd: dpkg -i /tmp/libssl1.1_1.1.1f-1ubuntu2.22_amd64.deb
+  become: true
+      
+- name: check if cargo is installed
+  become: true
+  become_user: ubuntu
+  become_method: sudo
+  shell: test -f /home/ubuntu/.cargo/env && source /home/ubuntu/.cargo/env && command -v cargo
+  args:
+    executable: /bin/bash
+  register: cargo_exists
+  ignore_errors: yes
+
+- name: Download Installer
+  when: cargo_exists is failed
+  become: true
+  become_user: ubuntu
+  become_method: sudo
+  get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/sh.rustup.rs
+    mode: '0755'
+    force: 'yes'
+
+- name: install rust/cargo
+  become: true
+  become_user: ubuntu
+  become_method: sudo
+  when: cargo_exists is failed
+  shell: /tmp/sh.rustup.rs -y
+  args:
+    executable: /bin/bash
+
+- name: Check if risc0 toolchain is installed
+  ansible.builtin.shell: RUSTUP_TOOLCHAIN=risc0 /home/ubuntu/.cargo/bin/cargo version
+  register: risc0_version_check
+  ignore_errors: true
+  become: true
+  become_user: ubuntu
+  become_method: sudo
+  args:
+    executable: /bin/bash
+
+- name: Install cargo tools and risc0 if not present
+  block:
+    - name: install cargo binstall
+      become: true
+      become_user: ubuntu
+      become_method: sudo
+      shell: /home/ubuntu/.cargo/bin/cargo install cargo-binstall
+      args:
+        executable: /bin/bash
+
+    - name: install cargo risc0
+      become: true
+      become_user: ubuntu
+      become_method: sudo
+      shell: /home/ubuntu/.cargo/bin/cargo binstall cargo-risczero -y
+      args:
+        executable: /bin/bash
+
+    - name: install cargo risc0
+      become: true
+      become_user: ubuntu
+      become_method: sudo
+      shell: /home/ubuntu/.cargo/bin/cargo risczero install --version v2024-02-08.1
+      args:
+        executable: /bin/bash
+  when: risc0_version_check.rc != 0
+

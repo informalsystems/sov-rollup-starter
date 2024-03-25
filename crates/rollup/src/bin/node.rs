@@ -18,6 +18,7 @@ use sov_stf_runner::{from_toml_path, RollupConfig};
 use std::str::FromStr;
 use stf_starter::genesis_config::GenesisPaths;
 use tracing::info;
+use tracing_appender::non_blocking::WorkerGuard;
 use tracing_subscriber::prelude::*;
 use tracing_subscriber::{fmt, EnvFilter};
 
@@ -53,18 +54,45 @@ struct Args {
     /// The path to the kernel genesis config.
     #[arg(long, default_value = DEFAULT_KERNEL_GENESIS_PATH)]
     kernel_genesis_paths: String,
+
+    /// The optional path to the log file.
+    #[arg(long, default_value = None)]
+    log_dir: Option<String>,
+
+    /// The optional path to the log file.
+    #[arg(long, default_value_t = 9845)]
+    metrics: u64,
+}
+
+fn init_logging(log_dir: Option<String>) -> Option<WorkerGuard> {
+    let stdout_layer = fmt::layer().with_writer(std::io::stdout) ;
+    let filter_layer = EnvFilter::from_str("debug,hyper=info,risc0_zkvm=warn,sov_prover_storage_manager=info,jmt=info,sov_celestia_adapter=info").unwrap();
+    let subscriber = tracing_subscriber::registry()
+        .with(stdout_layer)
+        .with(filter_layer);
+
+    if let Some(path) = log_dir {
+        let file_appender = tracing_appender::rolling::daily(&path, "rollup.log");
+        let (non_blocking, guard) = tracing_appender::non_blocking(file_appender);
+        subscriber.with(fmt::layer()
+            .with_writer(non_blocking)).init();
+        Some(guard)
+    } else {
+        subscriber.init();
+        None
+    }
 }
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
-    // Initializing logging
-    tracing_subscriber::registry()
-        .with(fmt::layer())
-        //.with(EnvFilter::from_default_env())
-        .with(EnvFilter::from_str("info,hyper=info").unwrap())
-        .init();
-
     let args = Args::parse();
+
+    let _guard = init_logging(args.log_dir);
+
+    let metrics_port = args.metrics;
+    let address = format!("127.0.0.1:{}", metrics_port);
+    prometheus_exporter::start(address.parse().unwrap()).expect("Could not start prometheus server");
+
     let rollup_config_path = args.rollup_config_path.as_str();
 
     let genesis_paths = args.genesis_paths.as_str();

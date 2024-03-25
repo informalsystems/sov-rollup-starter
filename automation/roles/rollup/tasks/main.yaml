@@ -1,0 +1,23 @@
+- include_vars: "../defaults/{{ cluster }}/variables.yaml"
+- include_vars: "../../data-availability/defaults/{{ cluster }}/variables.yaml"
+
+- name: git update
+  import_tasks: git.yaml
+
+- name: genesis
+  import_tasks: genesis.yaml
+
+- name: celestia adapter setup
+  include_tasks: celestia_adapter.yaml
+
+- name: namespace setup
+  include_tasks: namespace.yaml
+
+- name: rollup service
+  include_tasks: service_stop.yaml
+
+- name: build rollup binary
+  include_tasks: build.yaml
+
+- name: rollup service
+  include_tasks: service.yaml

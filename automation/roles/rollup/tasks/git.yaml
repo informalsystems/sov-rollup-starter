@@ -2,8 +2,8 @@
   become: true
   become_user: ubuntu
   git:
-    repo: "git@github.com:/{{ org_name }}/{{ repo_name }}.git"
-    dest: "/home/ubuntu/{{ repo_dir }}"
-    version: "{{ commit_hash }}"
+    repo: "git@github.com:/{{ rollup_org_name }}/{{ rollup_repo_name }}.git"
+    dest: "/home/ubuntu/{{ rollup_repo_dir }}"
+    version: "{{ rollup_commit_hash }}"
     accept_hostkey: yes
     force: yes

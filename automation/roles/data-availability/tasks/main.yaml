@@ -1,4 +1,4 @@
-- include_vars: "../defaults/{{ cluster }}/variables.yaml"
+- include_vars: "../defaults/{{ da_cluster }}/variables.yaml"
 
 - name: Check if celestia-lightd service is running
   ansible.builtin.systemd:

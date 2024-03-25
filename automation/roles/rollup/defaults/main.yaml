@@ -4,11 +4,11 @@
 cluster: testnet
 
 # Github organization name
-org_name: "Sovereign-Labs"
+rollup_org_name: "Sovereign-Labs"
 # Github repository name
-repo_name: "sov-rollup-starter-wip"
+rollup_repo_name: "sov-rollup-starter-wip"
 # Local directory to clone the github repo into
-repo_dir: "sov-rollup-starter-wip"
+rollup_repo_dir: "sov-rollup-starter-wip"
 # Rollup binary name. Default is `node`
 rollup_bin: "node"
 # Feature for the DA adapter. Default is `celestia-da`

@@ -1,8 +1,8 @@
 - name: Ensure celestia-node repo is at specific tag
   git:
-    repo: 'https://github.com/{{ org_name }}/{{ repo_name }}.git'
+    repo: 'https://github.com/{{ da_org_name }}/{{ da_repo_name }}.git'
     dest: /home/sovereign/{{ repo_dir }}
-    version: "{{ version }}"
+    version: "{{ da_version }}"
   become: true
   become_user: sovereign
 

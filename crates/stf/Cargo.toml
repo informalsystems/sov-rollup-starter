@@ -29,6 +29,7 @@ serde_json = { workspace = true }
 jsonrpsee = { workspace = true, features = ["jsonrpsee-types"], optional = true }
 borsh = { workspace = true, features = ["rc", "bytes"] }
 clap = { workspace = true, features = ["derive"], optional = true }
+tokio = { workspace = true, features = ["sync"], optional = true }
 
 [features]
 default = []
@@ -45,4 +46,5 @@ native = [
     "jsonrpsee",
     "sov-sequencer",
     "clap",
+    "tokio"
 ]

@@ -1,0 +1,15 @@
+---
+- name: "Playbook Runner"
+  hosts: all
+  vars:
+    switches: ""
+    wipe: false
+  pre_tasks:
+    - import_tasks: preconditions.yaml
+  roles:
+    - role: "./roles/common"
+      when: "'c' in switches"
+    - role: "./roles/data-availability"
+      when: "'d' in switches"
+    - role: "./roles/rollup"
+      when: "'r' in switches"

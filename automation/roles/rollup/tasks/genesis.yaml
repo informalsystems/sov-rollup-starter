@@ -1,0 +1,17 @@
+- name: Genesis folder
+  file:
+    path: /home/sovereign/genesis
+    state: directory
+    owner: sovereign
+    group: sovereign
+  become: true
+  become_user: root
+
+- name: Synchronize genesis folder to remote
+  ansible.builtin.synchronize:
+    src: "{{ role_path }}/files/celestia_genesis/"
+    dest: "{{ genesis_folder }}"
+    delete: no
+    recursive: yes
+  become: true
+  become_user: sovereign

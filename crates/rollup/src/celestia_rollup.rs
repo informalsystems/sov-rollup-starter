@@ -6,6 +6,7 @@ use sov_celestia_adapter::types::Namespace;
 use sov_celestia_adapter::verifier::address::CelestiaAddress;
 use sov_celestia_adapter::verifier::{CelestiaSpec, CelestiaVerifier, RollupParams};
 use sov_celestia_adapter::{CelestiaConfig, CelestiaService};
+use sov_db::sequencer_db::SequencerDB;
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;
@@ -25,6 +26,7 @@ use sov_stf_runner::RollupProverConfig;
 use std::str::FromStr;
 use std::sync::{Arc, RwLock};
 use stf_starter::Runtime;
+use tokio::sync::watch;
 
 /// The namespace for the rollup on Celestia.
 const ROLLUP_NAMESPACE: Namespace = Namespace::const_v0(*b"sov-celest");
@@ -74,20 +76,20 @@ impl RollupBlueprint for CelestiaRollup {
 
     fn create_rpc_methods(
         &self,
-        storage: Arc<RwLock<<Self::NativeSpec as sov_modules_api::Spec>::Storage>>,
+        storage: watch::Receiver<<Self::NativeSpec as Spec>::Storage>,
         ledger_db: &sov_db::ledger_db::LedgerDB,
+        sequencer_db: &SequencerDB,
         da_service: &Self::DaService,
+        rollup_config: &RollupConfig<Self::DaConfig>,
     ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
-        // TODO set the sequencer address
-        let sequencer =
-            CelestiaAddress::from_str("celestia1a68m2l85zn5xh0l07clk4rfvnezhywc53g8x7s")?;
+        let sequencer = rollup_config.da.own_celestia_address.clone();
 
         #[allow(unused_mut)]
         let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<
             Self::NativeRuntime,
             Self::NativeSpec,
             Self::DaService,
-        >(storage, ledger_db, da_service, sequencer)?;
+        >(storage, ledger_db, sequencer_db, da_service, sequencer)?;
 
         #[cfg(feature = "experimental")]
         crate::eth::register_ethereum::<Self::DaService>(

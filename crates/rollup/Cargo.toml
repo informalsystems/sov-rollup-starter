@@ -27,8 +27,6 @@ sov-cli = { workspace = true}
 sov-db = { workspace = true }
 sov-sequencer = { workspace = true }
 sov-rollup-interface = { workspace = true }
-sov-mock-da = { workspace = true, features = ["native"], optional=true }
-sov-celestia-adapter = { workspace = true, features = ["native"], optional=true }
 
 anyhow = { workspace = true }
 async-trait = { workspace = true }
@@ -44,6 +42,7 @@ prometheus_exporter = { workspace = true }
 risc0-starter = { path = "../provers/risc0" }
 stf-starter = { path = "../stf", features = ["native"] }
 sov-risc0-adapter = { workspace = true, features = ["native"] }
+sov-consensus-state-tracker = { workspace = true, optional = true }
 
 # binary dependencies
 tracing-subscriber = { version = "0.3.17", features = ["env-filter"] }
@@ -56,8 +55,8 @@ sov-mock-zkvm = { workspace = true, features = ["native"] }
 
 [features]
 default = ["mock_da"] # set mock_da as the default feature
-mock_da = ["sov-mock-da"]
-celestia_da = ["sov-celestia-adapter"]
+mock_da = ["sov-consensus-state-tracker/mock-da"]
+celestia_da = ["sov-consensus-state-tracker/celestia-da"]
 test = ["mock_da"]
 
 [[bin]]

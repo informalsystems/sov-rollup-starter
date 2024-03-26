@@ -3401,7 +3401,7 @@ version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "681030a937600a36906c185595136d26abfebb4aa9c65701cefcaf8578bb982b"
 dependencies = [
- "proc-macro-crate 3.1.0",
+ "proc-macro-crate 2.0.0",
  "proc-macro2",
  "quote",
  "syn 2.0.53",
@@ -3671,15 +3671,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7e8366a6159044a37876a2b9817124296703c586a5c92e2c53751fa06d8d43e8"
 dependencies = [
  "toml_edit 0.20.7",
-]
-
-[[package]]
-name = "proc-macro-crate"
-version = "3.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d37c51ca738a55da99dc0c4a34860fd675453b8b36209178c2249bb13651284"
-dependencies = [
- "toml_edit 0.21.1",
 ]
 
 [[package]]
@@ -4957,6 +4948,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-adapter"
 version = "0.3.0"
+source = "git+ssh://git@github.com/informalsystems/sovereign-sdk-wip.git?rev=cf048cd59#cf048cd59789209bb9c37effddd20efe19375bca"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -5049,6 +5041,30 @@ dependencies = [
  "sov-bank",
  "sov-modules-api",
  "sov-rollup-interface",
+]
+
+[[package]]
+name = "sov-consensus-state-tracker"
+version = "0.1.0"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=5a8a685#5a8a685e136f91006f0689c257594f00b11f95cd"
+dependencies = [
+ "anyhow",
+ "base64 0.21.7",
+ "borsh",
+ "ibc-app-transfer",
+ "ibc-core",
+ "prost",
+ "serde",
+ "sov-celestia-adapter",
+ "sov-celestia-client",
+ "sov-ibc",
+ "sov-mock-da 0.3.0 (git+ssh://git@github.com/informalsystems/sovereign-sdk-wip.git?rev=cf048cd59)",
+ "sov-modules-api",
+ "sov-modules-core",
+ "sov-rollup-interface",
+ "tendermint 0.34.1",
+ "thiserror",
+ "uint",
 ]
 
 [[package]]
@@ -5159,6 +5175,24 @@ dependencies = [
 [[package]]
 name = "sov-mock-da"
 version = "0.3.0"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "borsh",
+ "bytes",
+ "futures",
+ "hex",
+ "serde",
+ "sha2 0.10.8",
+ "sov-rollup-interface",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "sov-mock-da"
+version = "0.3.0"
+source = "git+ssh://git@github.com/informalsystems/sovereign-sdk-wip.git?rev=cf048cd59#cf048cd59789209bb9c37effddd20efe19375bca"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -5361,11 +5395,10 @@ dependencies = [
  "serde_json",
  "sov-accounts",
  "sov-bank",
- "sov-celestia-adapter",
  "sov-cli",
+ "sov-consensus-state-tracker",
  "sov-db",
  "sov-ledger-rpc",
- "sov-mock-da",
  "sov-mock-zkvm",
  "sov-modules-api",
  "sov-modules-rollup-blueprint",
@@ -5486,7 +5519,7 @@ dependencies = [
  "sov-attester-incentives",
  "sov-bank",
  "sov-chain-state",
- "sov-mock-da",
+ "sov-mock-da 0.3.0",
  "sov-mock-zkvm",
  "sov-modules-api",
  "sov-modules-stf-blueprint",
@@ -5557,7 +5590,6 @@ dependencies = [
  "sov-bank",
  "sov-ibc",
  "sov-ibc-transfer",
- "sov-mock-da",
  "sov-modules-api",
  "sov-modules-stf-blueprint",
  "sov-rollup-interface",
@@ -6015,17 +6047,6 @@ name = "toml_edit"
 version = "0.20.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "70f427fce4d84c72b5b732388bf4a9f4531b53f74e2887e3ecb2481f68f66d81"
-dependencies = [
- "indexmap 2.2.5",
- "toml_datetime",
- "winnow 0.5.40",
-]
-
-[[package]]
-name = "toml_edit"
-version = "0.21.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6a8534fd7f78b5405e860340ad6575217ce99f38d4d5c8f2442cb5ecb50090e1"
 dependencies = [
  "indexmap 2.2.5",
  "toml_datetime",

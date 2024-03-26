@@ -7,4 +7,5 @@
 docker/credentials/*
 !docker/credentials/bridge-0.addr
 !docker/credentials/bridge-0.key
+.keys
 result

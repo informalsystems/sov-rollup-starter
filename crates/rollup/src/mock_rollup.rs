@@ -1,11 +1,10 @@
 #![deny(missing_docs)]
 //! StarterRollup provides a minimal self-contained rollup implementation
 
-use std::sync::{Arc, RwLock};
-
 use async_trait::async_trait;
 use sov_db::ledger_db::LedgerDB;
-use sov_mock_da::{MockAddress, MockDaConfig, MockDaService, MockDaSpec};
+use sov_db::sequencer_db::SequencerDB;
+use sov_mock_da::{MockDaConfig, MockDaService, MockDaSpec};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;
@@ -14,7 +13,7 @@ use sov_modules_stf_blueprint::StfBlueprint;
 use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
 use sov_risc0_adapter::Risc0Verifier;
-use sov_rollup_interface::zk::{ZkvmGuest, ZkvmHost, aggregated_proof::CodeCommitment};
+use sov_rollup_interface::zk::{aggregated_proof::CodeCommitment, ZkvmGuest, ZkvmHost};
 use sov_state::config::Config as StorageConfig;
 use sov_state::Storage;
 use sov_state::{DefaultStorageSpec, ZkStorage};
@@ -22,6 +21,7 @@ use sov_stf_runner::ParallelProverService;
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
 use stf_starter::Runtime;
+use tokio::sync::watch;
 
 /// Rollup with [`MockDaService`].
 pub struct MockRollup {}
@@ -74,19 +74,24 @@ impl RollupBlueprint for MockRollup {
     /// This function generates RPC methods for the rollup, allowing for extension with custom endpoints.
     fn create_rpc_methods(
         &self,
-        storage: Arc<RwLock<<Self::NativeSpec as Spec>::Storage>>,
+        storage: watch::Receiver<<Self::NativeSpec as Spec>::Storage>,
         ledger_db: &LedgerDB,
+        sequencer_db: &SequencerDB,
         da_service: &Self::DaService,
+        rollup_config: &RollupConfig<Self::DaConfig>,
     ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
-        // TODO set the sequencer address
-        let sequencer = MockAddress::new([0; 32]);
-
         #[allow(unused_mut)]
         let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<
             Self::NativeRuntime,
             Self::NativeSpec,
             Self::DaService,
-        >(storage, ledger_db, da_service, sequencer)?;
+        >(
+            storage,
+            ledger_db,
+            sequencer_db,
+            da_service,
+            rollup_config.da.sender_address,
+        )?;
 
         #[cfg(feature = "experimental")]
         crate::eth::register_ethereum::<Self::DaService>(
@@ -123,7 +128,7 @@ impl RollupBlueprint for MockRollup {
             prover_config,
             zk_storage,
             rollup_config.prover_service,
-            CodeCommitment::default()
+            CodeCommitment::default(),
         )
     }
 

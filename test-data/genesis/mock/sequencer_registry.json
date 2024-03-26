@@ -3,7 +3,7 @@
   "seq_da_address": "0000000000000000000000000000000000000000000000000000000000000000",
   "coins_to_lock": {
     "amount": 50,
-    "token_address": "sov1zsnx7n2wjvtkr0ttscfgt06pjca3v2e6stxeu49qwynavmk7a8xqlxkkjp"
+    "token_address": "sov1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq0xu3qn"
   },
   "is_preferred_sequencer": true
 }

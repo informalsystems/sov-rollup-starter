@@ -7,13 +7,13 @@
 use super::runtime::Runtime;
 use sov_modules_api::batch::BatchWithId;
 use sov_modules_api::hooks::{ApplyBatchHooks, FinalizeHook, SlotHooks, TxHooks};
+use sov_modules_api::namespaces::Accessory;
 use sov_modules_api::runtime::capabilities::{
     ContextResolver, GasEnforcer, TransactionDeduplicator,
 };
 use sov_modules_api::transaction::Transaction;
 use sov_modules_api::{
-    AccessoryStateCheckpoint, BlobReaderTrait, Context, DaSpec, Gas, Spec, StateCheckpoint,
-    WorkingSet,
+    BlobReaderTrait, Context, DaSpec, Gas, Spec, StateCheckpoint, StateReaderAndWriter, WorkingSet,
 };
 use sov_modules_stf_blueprint::SequencerOutcome;
 use sov_sequencer_registry::SequencerRegistry;
@@ -63,11 +63,10 @@ impl<S: Spec, Da: DaSpec> TransactionDeduplicator<S, Da> for Runtime<S, Da> {
     fn check_uniqueness(
         &self,
         tx: &Self::Tx,
-        context: &Context<S>,
+        _context: &Context<S>,
         state_checkpoint: &mut StateCheckpoint<S>,
     ) -> Result<(), anyhow::Error> {
-        self.accounts
-            .check_uniqueness(tx, context, state_checkpoint)
+        self.accounts.check_uniqueness(tx, state_checkpoint)
     }
 
     /// Marks a transaction as having been executed, preventing it from executing again.
@@ -196,8 +195,8 @@ impl<S: Spec, Da: sov_modules_api::DaSpec> FinalizeHook for Runtime<S, Da> {
 
     fn finalize_hook(
         &self,
-        _root_hash: <Self::Spec as Spec>::VisibleHash,
-        _accessory_working_set: &mut AccessoryStateCheckpoint<Self::Spec>,
+        _root_hash: S::VisibleHash,
+        _accessory_working_set: &mut impl StateReaderAndWriter<Accessory>,
     ) {
     }
 }

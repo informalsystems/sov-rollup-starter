@@ -4,12 +4,12 @@ resolver = "2"
 
 members = [
     "crates/rollup",
-    "crates/stf",
+    "crates/stf"
 ]
 
 exclude = [
     "vendor/sovereign-sdk",
-    "vendor/risc0-cycle-macros"
+    "scripts/bank_load"
 ]
 
 [workspace.package]
@@ -34,25 +34,29 @@ sov-db                          = { path = "./vendor/sovereign-sdk/full-node/sov
 sov-sequencer                   = { path = "./vendor/sovereign-sdk/full-node/sov-sequencer" }
 sov-rollup-interface            = { path = "./vendor/sovereign-sdk/rollup-interface" }
 sov-risc0-adapter               = { path = "./vendor/sovereign-sdk/adapters/risc0" }
+sov-mock-zkvm                   = { path = "./vendor/sovereign-sdk/adapters/mock-zkvm" }
 sov-cli                         = { path = "./vendor/sovereign-sdk/module-system/sov-cli" }
 sov-mock-da                     = { path = "./vendor/sovereign-sdk/adapters/mock-da" }
 sov-celestia-adapter            = { path = "./vendor/sovereign-sdk/adapters/celestia" }
 sov-prover-storage-manager      = { path = "./vendor/sovereign-sdk/full-node/sov-prover-storage-manager" }
-sov-mock-zkvm                   = { path = "./vendor/sovereign-sdk/adapters/mock-zkvm" }
 
-sov-ibc                         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "7e41c9b" }
-sov-ibc-transfer                = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "7e41c9b" }
+sov-ibc                         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "5a8a685" }
+sov-ibc-transfer                = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "5a8a685" }
 
 stf-starter = { path = "./crates/stf" }
 
 serde = { version = "1.0.196", features = ["derive", "rc"] }
 serde_json = { version = "1.0" }
 
+prometheus_exporter = "0.8.5"
+prometheus = "0.13.3"
+
 anyhow = "1.0.68"
 clap = { version = "4.4.10", features = ["derive"] }
 async-trait = "0.1.71"
 borsh = { version = "0.10.3", features = ["rc", "bytes"] }
 tracing = "0.1.40"
+tracing-appender = "0.2"
 tokio = { version = "1", features = ["full"] }
 tempfile = "3.5"
 jsonrpsee = { version = "0.20.1", features = ["jsonrpsee-types"] }

@@ -152,16 +152,16 @@
     "sovereign-sdk-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1709835864,
-        "narHash": "sha256-k9jWxhyIaYYS7tFe2el3g3t323oT3JZJPpm69DEz8oM=",
+        "lastModified": 1711047242,
+        "narHash": "sha256-mL/226hWuFEpnaiK/NhnCnjGwqpxT0MejQAz4M4fFe0=",
         "ref": "refs/heads/nightly",
-        "rev": "3f94ceccae8f84eb191deeb97ce65a1af3c9fd1b",
-        "revCount": 859,
+        "rev": "cf048cd59789209bb9c37effddd20efe19375bca",
+        "revCount": 886,
         "type": "git",
         "url": "ssh://git@github.com/informalsystems/sovereign-sdk-wip"
       },
       "original": {
-        "rev": "3f94ceccae8f84eb191deeb97ce65a1af3c9fd1b",
+        "rev": "cf048cd59789209bb9c37effddd20efe19375bca",
         "type": "git",
         "url": "ssh://git@github.com/informalsystems/sovereign-sdk-wip"
       }

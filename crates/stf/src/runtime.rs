@@ -69,7 +69,7 @@ pub struct Runtime<S: Spec, Da: DaSpec> {
     /// The bank module is responsible for minting, transferring, and burning tokens
     pub bank: sov_bank::Bank<S>,
     /// The `ibc` module is responsible for creating clients, connections and channels and managing IBC packets
-    pub ibc: sov_ibc::Ibc<S, Da>,
+    pub ibc: sov_ibc::Ibc<S>,
     /// The `ibc_transfer` module is responsible for managing IBC transfers
     pub ibc_transfer: sov_ibc_transfer::IbcTransfer<S>,
     /// The sequencer registry module is responsible for authorizing users to sequencer rollup transactions
@@ -87,9 +87,7 @@ where
     type GenesisPaths = GenesisPaths;
 
     #[cfg(feature = "native")]
-    fn rpc_methods(
-        storage: std::sync::Arc<std::sync::RwLock<<S as Spec>::Storage>>,
-    ) -> jsonrpsee::RpcModule<()> {
+    fn rpc_methods(storage: tokio::sync::watch::Receiver<S::Storage>) -> jsonrpsee::RpcModule<()> {
         get_rpc_methods::<S, Da>(storage)
     }
 

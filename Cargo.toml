@@ -38,9 +38,9 @@ sov-mock-zkvm                   = { path = "./vendor/sovereign-sdk/adapters/mock
 sov-cli                         = { path = "./vendor/sovereign-sdk/module-system/sov-cli" }
 sov-prover-storage-manager      = { path = "./vendor/sovereign-sdk/full-node/sov-prover-storage-manager" }
 
-sov-ibc                         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "5a8a685" }
-sov-ibc-transfer                = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "5a8a685" }
-sov-consensus-state-tracker     = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "5a8a685" }
+sov-ibc                         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "4c9bf15" }
+sov-ibc-transfer                = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "4c9bf15" }
+sov-consensus-state-tracker     = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "4c9bf15" }
 
 stf-starter = { path = "./crates/stf" }
 

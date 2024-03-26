@@ -97,6 +97,7 @@ let
                 "risc0-cycle-utils-0.3.0" = "sha256-5dA62v1eqfyZBny4s3YlC2Tty7Yfd/OAVGfTlLBgypk=";
                 "ibc-app-transfer-0.51.0" = "sha256-Z3zgk29JLE+pygKsbmIntVQFvC56Rg35UKKDgZH8AS4=";
                 "sov-celestia-client-0.1.0" = "sha256-PLNKgZ92SqX5q9CXE9Hff5RZ9yU6JiaWpxSTNUvUBkI=";
+                "sov-celestia-adapter-0.3.0" = "";
             };
         };
 

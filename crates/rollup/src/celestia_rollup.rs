@@ -23,8 +23,6 @@ use sov_state::{DefaultStorageSpec, ZkStorage};
 use sov_stf_runner::ParallelProverService;
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
-use std::str::FromStr;
-use std::sync::{Arc, RwLock};
 use stf_starter::Runtime;
 use tokio::sync::watch;
 

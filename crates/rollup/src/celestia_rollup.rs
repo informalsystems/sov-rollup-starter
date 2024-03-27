@@ -3,10 +3,10 @@
 
 use async_trait::async_trait;
 use sov_consensus_state_tracker::types::Namespace;
-use sov_consensus_state_tracker::verifier::address::CelestiaAddress;
 use sov_consensus_state_tracker::verifier::{CelestiaSpec, CelestiaVerifier, RollupParams};
 use sov_consensus_state_tracker::ConsensusStateTracker;
 use sov_consensus_state_tracker::{CelestiaConfig, CelestiaService};
+use sov_db::sequencer_db::SequencerDB;
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;

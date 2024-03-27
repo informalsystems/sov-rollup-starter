@@ -51,7 +51,7 @@ let
                 "curve25519-dalek-4.1.0" = "sha256-H8YMea3AIcUn9NGRfataNjCTzCK4NAjo4ZhWuPfT6ts=";
                 "sha2-0.10.8" = "sha256-vuFQFlbDXEW+n9+Nx2VeWanggCSd6NZ+GVEDFS9qZ2M=";
                 "risc0-cycle-utils-0.3.0" = "sha256-5dA62v1eqfyZBny4s3YlC2Tty7Yfd/OAVGfTlLBgypk=";
-                "sov-celestia-client-0.1.0" = "sha256-Z3SvuWKPz+fPwHn1Nsj6cHUdrLzVOx+PkZS6D6558Sc=";
+                "sov-celestia-client-0.1.0" = "sha256-2z2KQY1Txo6SqneXxG3nR8x4smbR+Nqv5cTqG0P3TXE=";
             };
         };
 
@@ -94,7 +94,7 @@ let
                 "sha2-0.10.8" = "sha256-vuFQFlbDXEW+n9+Nx2VeWanggCSd6NZ+GVEDFS9qZ2M=";
                 "tendermint-0.32.0" = "sha256-FtY7a+hBvQryATrs3mykCWFRe8ABTT6cuf5oh9IBElQ=";
                 "risc0-cycle-utils-0.3.0" = "sha256-5dA62v1eqfyZBny4s3YlC2Tty7Yfd/OAVGfTlLBgypk=";
-                "sov-celestia-client-0.1.0" = "sha256-Z3SvuWKPz+fPwHn1Nsj6cHUdrLzVOx+PkZS6D6558Sc=";
+                "sov-celestia-client-0.1.0" = "sha256-2z2KQY1Txo6SqneXxG3nR8x4smbR+Nqv5cTqG0P3TXE=";
             };
         };
 
@@ -137,7 +137,7 @@ let
                 "curve25519-dalek-4.1.0" = "sha256-H8YMea3AIcUn9NGRfataNjCTzCK4NAjo4ZhWuPfT6ts=";
                 "risc0-cycle-utils-0.3.0" = "sha256-5dA62v1eqfyZBny4s3YlC2Tty7Yfd/OAVGfTlLBgypk=";
                 "rockbound-1.0.0" = "sha256-xTaeBndRb/bYe+tySChDKsh4f9pywAExsdgJExCQiy8=";
-                "sov-celestia-client-0.1.0" = "sha256-Z3SvuWKPz+fPwHn1Nsj6cHUdrLzVOx+PkZS6D6558Sc=";
+                "sov-celestia-client-0.1.0" = "sha256-2z2KQY1Txo6SqneXxG3nR8x4smbR+Nqv5cTqG0P3TXE=";
             };
         };
 

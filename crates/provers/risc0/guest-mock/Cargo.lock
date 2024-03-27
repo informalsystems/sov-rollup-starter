@@ -2021,7 +2021,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=4c9bf15#4c9bf15730c2e8587df8a4aa26534fa8b73e7f7b"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=97aacfb#97aacfb514bfb05638d4c042eb20ad9b38a73624"
 dependencies = [
  "derive_more",
  "ibc-client-tendermint",
@@ -2038,7 +2038,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=4c9bf15#4c9bf15730c2e8587df8a4aa26534fa8b73e7f7b"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=97aacfb#97aacfb514bfb05638d4c042eb20ad9b38a73624"
 dependencies = [
  "base64",
  "bytes",
@@ -2071,7 +2071,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=4c9bf15#4c9bf15730c2e8587df8a4aa26534fa8b73e7f7b"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=97aacfb#97aacfb514bfb05638d4c042eb20ad9b38a73624"
 dependencies = [
  "ahash",
  "anyhow",
@@ -2098,7 +2098,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-proto"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=4c9bf15#4c9bf15730c2e8587df8a4aa26534fa8b73e7f7b"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=97aacfb#97aacfb514bfb05638d4c042eb20ad9b38a73624"
 dependencies = [
  "ibc-proto",
  "informalsystems-pbjson",
@@ -2110,7 +2110,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-transfer"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=4c9bf15#4c9bf15730c2e8587df8a4aa26534fa8b73e7f7b"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=97aacfb#97aacfb514bfb05638d4c042eb20ad9b38a73624"
 dependencies = [
  "anyhow",
  "base64",

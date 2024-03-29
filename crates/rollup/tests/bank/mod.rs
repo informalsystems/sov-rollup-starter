@@ -7,16 +7,16 @@ use jsonrpsee::rpc_params;
 use sov_mock_da::{MockDaSpec,MockDaConfig, MockAddress};
 use sov_modules_api::transaction::Transaction;
 use sov_modules_api::{PrivateKey, Spec, CryptoSpec};
-use sov_modules_stf_blueprint::kernels::basic::BasicKernelGenesisPaths;
+use sov_kernels::basic::BasicKernelGenesisPaths;
 use sov_sequencer::utils::SimpleClient;
 use sov_stf_runner::RollupProverConfig;
 use stf_starter::genesis_config::GenesisPaths;
 use stf_starter::RuntimeCall;
 
 const TOKEN_SALT: u64 = 0;
-const TOKEN_NAME: &str = "test_token";
+const TOKEN_NAME: &str = "sov-token";
 
-type TestSpec = sov_modules_api::default_spec::DefaultSpec<sov_mock_zkvm::MockZkVerifier>;
+type TestSpec = sov_modules_api::default_spec::DefaultSpec<sov_mock_zkvm::MockZkVerifier, sov_mock_zkvm::MockZkVerifier>;
 type DefaultPrivateKey = <<TestSpec as Spec>::CryptoSpec as CryptoSpec>::PrivateKey;
 
 #[tokio::test]
@@ -53,7 +53,7 @@ async fn send_test_create_token_tx(rpc_address: SocketAddr) -> Result<(), anyhow
     let key = DefaultPrivateKey::generate();
     let user_address: <TestSpec as Spec>::Address = key.to_address();
 
-    let token_address = sov_bank::get_token_address::<TestSpec>(
+    let token_id = sov_bank::get_token_id::<TestSpec>(
         TOKEN_NAME,
         &user_address,
         TOKEN_SALT,
@@ -103,7 +103,7 @@ async fn send_test_create_token_tx(rpc_address: SocketAddr) -> Result<(), anyhow
         client.http(),
         None,
         user_address,
-        token_address,
+        token_id,
     )
     .await?;
     assert_eq!(balance_response.amount.unwrap_or_default(), 1000);

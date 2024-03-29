@@ -5,7 +5,8 @@
 use sov_celestia_adapter::types::Namespace;
 use sov_celestia_adapter::verifier::CelestiaVerifier;
 use sov_modules_api::default_spec::ZkDefaultSpec;
-use sov_modules_stf_blueprint::kernels::basic::BasicKernel;
+use sov_kernels::basic::BasicKernel;
+use sov_mock_zkvm::MockZkVerifier;
 use sov_modules_stf_blueprint::StfBlueprint;
 use sov_risc0_adapter::guest::Risc0Guest;
 use sov_risc0_adapter::Risc0Verifier;
@@ -22,7 +23,7 @@ pub fn main() {
     let guest = Risc0Guest::new();
     let storage = ZkStorage::new();
     let stf: StfBlueprint<
-        ZkDefaultSpec<Risc0Verifier>,
+        ZkDefaultSpec<Risc0Verifier, MockZkVerifier>,
         _,
         Risc0Verifier,
         Runtime<_, _>,

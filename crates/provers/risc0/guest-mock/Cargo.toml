@@ -16,12 +16,14 @@ risc0-zkvm-platform = "0.20"
 serde = { version = "1.0.188", features = ["derive", "rc"] }
 
 
-sov-rollup-interface = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "cf048cd59789209bb9c37effddd20efe19375bca" }
-sov-mock-da = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "cf048cd59789209bb9c37effddd20efe19375bca" }
-sov-modules-stf-blueprint = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "cf048cd59789209bb9c37effddd20efe19375bca" }
-sov-modules-api = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "cf048cd59789209bb9c37effddd20efe19375bca" }
-sov-risc0-adapter = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "cf048cd59789209bb9c37effddd20efe19375bca" }
-sov-state = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "cf048cd59789209bb9c37effddd20efe19375bca" }
+sov-rollup-interface = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "20bfd68c8c740b447d51eb50381b5590102258bb" }
+sov-mock-da = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "20bfd68c8c740b447d51eb50381b5590102258bb" }
+sov-modules-stf-blueprint = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "20bfd68c8c740b447d51eb50381b5590102258bb" }
+sov-modules-api = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "20bfd68c8c740b447d51eb50381b5590102258bb" }
+sov-risc0-adapter = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "20bfd68c8c740b447d51eb50381b5590102258bb" }
+sov-state = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "20bfd68c8c740b447d51eb50381b5590102258bb" }
+sov-mock-zkvm = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "20bfd68c8c740b447d51eb50381b5590102258bb" }
+sov-kernels = { git = "ssh://git@github.com/Sovereign-Labs/sovereign-sdk-wip.git", rev = "20bfd68c8c740b447d51eb50381b5590102258bb" }
 
 stf-starter = { path = "../../../stf" }
 

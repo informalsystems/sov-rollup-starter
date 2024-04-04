@@ -16,7 +16,6 @@ sov-bank = { workspace = true }
 sov-ibc = { workspace = true, features = ["serde"] }
 sov-ibc-transfer = { workspace = true, features = ["serde"] }
 sov-sequencer-registry = { workspace = true }
-sov-mock-da = { workspace = true }
 sov-modules-stf-blueprint = { workspace = true }
 sov-stf-runner = { workspace = true }
 sov-sequencer = { workspace = true, optional = true }
@@ -40,7 +39,8 @@ native = [
     "sov-ibc/native",
     "sov-ibc-transfer/native",
     "sov-sequencer-registry/native",
-    "sov-mock-da/native",
+	"sov-rollup-interface/native",
+	"sov-state/native",
     "sov-modules-stf-blueprint/native",
     "sov-stf-runner/native",
     "jsonrpsee",
@@ -48,3 +48,4 @@ native = [
     "clap",
     "tokio"
 ]
+

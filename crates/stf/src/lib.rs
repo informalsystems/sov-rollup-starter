@@ -16,5 +16,3 @@ pub type StfVerifier<DA, Vm, ZkSpec, RT, K> = StateTransitionVerifier<
     DA,
     Vm,
 >;
-
-pub use sov_mock_da::MockDaSpec;

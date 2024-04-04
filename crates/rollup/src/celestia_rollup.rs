@@ -2,10 +2,10 @@
 //! StarterRollup provides a minimal self-contained rollup implementation
 
 use async_trait::async_trait;
-use sov_celestia_adapter::types::Namespace;
-use sov_celestia_adapter::verifier::address::CelestiaAddress;
-use sov_celestia_adapter::verifier::{CelestiaSpec, CelestiaVerifier, RollupParams};
-use sov_celestia_adapter::{CelestiaConfig, CelestiaService};
+use sov_consensus_state_tracker::types::Namespace;
+use sov_consensus_state_tracker::verifier::{CelestiaSpec, CelestiaVerifier, RollupParams};
+use sov_consensus_state_tracker::ConsensusStateTracker;
+use sov_consensus_state_tracker::{CelestiaConfig, CelestiaService};
 use sov_db::sequencer_db::SequencerDB;
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
@@ -23,8 +23,6 @@ use sov_state::{DefaultStorageSpec, ZkStorage};
 use sov_stf_runner::ParallelProverService;
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
-use std::str::FromStr;
-use std::sync::{Arc, RwLock};
 use stf_starter::Runtime;
 use tokio::sync::watch;
 
@@ -57,8 +55,13 @@ impl RollupBlueprint for CelestiaRollup {
 
     type NativeRuntime = Runtime<Self::NativeSpec, Self::DaSpec>;
 
-    type NativeKernel = BasicKernel<Self::NativeSpec, Self::DaSpec>;
-    type ZkKernel = BasicKernel<Self::ZkSpec, Self::DaSpec>;
+    type NativeKernel = ConsensusStateTracker<
+        BasicKernel<Self::NativeSpec, Self::DaSpec>,
+        Self::NativeSpec,
+        Self::DaSpec,
+    >;
+    type ZkKernel =
+        ConsensusStateTracker<BasicKernel<Self::ZkSpec, Self::DaSpec>, Self::ZkSpec, Self::DaSpec>;
 
     type ProverService = ParallelProverService<
         <<Self::NativeSpec as Spec>::Storage as Storage>::Root,

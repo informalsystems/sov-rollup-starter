@@ -9,3 +9,4 @@ docker/credentials/*
 !docker/credentials/bridge-0.key
 .keys
 result
+.vscode

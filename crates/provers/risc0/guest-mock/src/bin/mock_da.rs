@@ -7,9 +7,9 @@ use sov_modules_api::default_spec::ZkDefaultSpec;
 use sov_modules_stf_blueprint::kernels::basic::BasicKernel;
 use sov_modules_stf_blueprint::StfBlueprint;
 use sov_risc0_adapter::guest::Risc0Guest;
+use sov_risc0_adapter::Risc0Verifier;
 use sov_state::ZkStorage;
 use stf_starter::runtime::Runtime;
-use sov_risc0_adapter::Risc0Verifier;
 use stf_starter::StfVerifier;
 
 #[cfg(feature = "bench")]
@@ -36,7 +36,7 @@ pub fn main() {
     let guest = Risc0Guest::new();
     let storage = ZkStorage::new();
     #[cfg(feature = "bench")]
-        let start_cycles = risc0_zkvm_platform::syscall::sys_cycle_count();
+    let start_cycles = risc0_zkvm_platform::syscall::sys_cycle_count();
 
     let stf: StfBlueprint<ZkDefaultSpec<Risc0Verifier>, _, _, Runtime<_, _>, BasicKernel<_, _>> =
         StfBlueprint::new();

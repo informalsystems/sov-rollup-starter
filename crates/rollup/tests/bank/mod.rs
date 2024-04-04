@@ -4,7 +4,7 @@ use super::test_helpers::start_rollup;
 use borsh::BorshSerialize;
 use jsonrpsee::core::client::{Subscription, SubscriptionClientT};
 use jsonrpsee::rpc_params;
-use sov_mock_da::{MockAddress, MockDaConfig, MockDaSpec};
+use sov_consensus_state_tracker::{MockAddress, MockDaConfig, MockDaSpec};
 use sov_modules_api::transaction::Transaction;
 use sov_modules_api::{CryptoSpec, PrivateKey, Spec};
 use sov_modules_stf_blueprint::kernels::basic::BasicKernelGenesisPaths;

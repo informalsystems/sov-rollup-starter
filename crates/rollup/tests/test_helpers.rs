@@ -1,6 +1,6 @@
 use std::net::SocketAddr;
 
-use sov_mock_da::MockDaConfig;
+use sov_consensus_state_tracker::MockDaConfig;
 use sov_modules_rollup_blueprint::RollupBlueprint;
 use sov_modules_stf_blueprint::kernels::basic::BasicKernelGenesisConfig;
 use sov_modules_stf_blueprint::kernels::basic::BasicKernelGenesisPaths;

@@ -2,9 +2,10 @@
 //! StarterRollup provides a minimal self-contained rollup implementation
 
 use async_trait::async_trait;
+use sov_consensus_state_tracker::{MockDaConfig, MockDaService, MockDaSpec};
+
 use sov_db::ledger_db::LedgerDB;
 use sov_db::sequencer_db::SequencerDB;
-use sov_mock_da::{MockDaConfig, MockDaService, MockDaSpec};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;

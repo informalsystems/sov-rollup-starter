@@ -7,22 +7,22 @@ use sov_consensus_state_tracker::verifier::{CelestiaSpec, CelestiaVerifier, Roll
 use sov_consensus_state_tracker::ConsensusStateTracker;
 use sov_consensus_state_tracker::{CelestiaConfig, CelestiaService};
 use sov_db::sequencer_db::SequencerDB;
+use sov_kernels::basic::BasicKernel;
+use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;
-use sov_kernels::basic::BasicKernel;
-use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
 use sov_modules_stf_blueprint::StfBlueprint;
 use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
-use sov_rollup_interface::zk::{Zkvm, ZkvmGuest, ZkvmHost};
 use sov_rollup_interface::zk::aggregated_proof::CodeCommitment;
+use sov_rollup_interface::zk::{Zkvm, ZkvmGuest, ZkvmHost};
 use sov_state::config::Config as StorageConfig;
 use sov_state::Storage;
 use sov_state::{DefaultStorageSpec, ZkStorage};
-use sov_stf_runner::{ParallelProverService, ProverService};
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
+use sov_stf_runner::{ParallelProverService, ProverService};
 use stf_starter::Runtime;
 use tokio::sync::watch;
 

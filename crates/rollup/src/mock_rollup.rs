@@ -6,22 +6,21 @@ use sov_consensus_state_tracker::{MockDaConfig, MockDaService, MockDaSpec};
 
 use sov_db::ledger_db::LedgerDB;
 use sov_db::sequencer_db::SequencerDB;
-use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
-use sov_modules_api::{Spec,Zkvm};
-use sov_modules_rollup_blueprint::RollupBlueprint;
 use sov_kernels::basic::BasicKernel;
+use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
+use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
+use sov_modules_api::{Spec, Zkvm};
+use sov_modules_rollup_blueprint::RollupBlueprint;
 use sov_modules_stf_blueprint::StfBlueprint;
 use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
-use sov_risc0_adapter::Risc0Verifier;
 use sov_rollup_interface::zk::{aggregated_proof::CodeCommitment, ZkvmGuest, ZkvmHost};
-use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
 use sov_state::config::Config as StorageConfig;
 use sov_state::Storage;
 use sov_state::{DefaultStorageSpec, ZkStorage};
-use sov_stf_runner::{ParallelProverService,ProverService};
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
+use sov_stf_runner::{ParallelProverService, ProverService};
 use stf_starter::Runtime;
 use tokio::sync::watch;
 

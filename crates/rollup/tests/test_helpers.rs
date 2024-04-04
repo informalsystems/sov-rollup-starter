@@ -1,8 +1,8 @@
 use std::net::SocketAddr;
 
 use sov_consensus_state_tracker::MockDaConfig;
-use sov_modules_rollup_blueprint::RollupBlueprint;
 use sov_kernels::basic::{BasicKernelGenesisConfig, BasicKernelGenesisPaths};
+use sov_modules_rollup_blueprint::RollupBlueprint;
 use sov_rollup_starter::mock_rollup::MockRollup;
 use sov_stf_runner::ProverServiceConfig;
 use sov_stf_runner::RollupProverConfig;

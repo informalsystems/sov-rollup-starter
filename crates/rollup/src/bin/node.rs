@@ -6,9 +6,9 @@ use clap::Parser;
 use sov_consensus_state_tracker::CelestiaConfig;
 #[cfg(feature = "mock_da")]
 use sov_consensus_state_tracker::MockDaConfig;
+use sov_kernels::basic::BasicKernelGenesisConfig;
+use sov_kernels::basic::BasicKernelGenesisPaths;
 use sov_modules_rollup_blueprint::{Rollup, RollupBlueprint};
-use sov_modules_stf_blueprint::kernels::basic::BasicKernelGenesisConfig;
-use sov_modules_stf_blueprint::kernels::basic::BasicKernelGenesisPaths;
 #[cfg(feature = "celestia_da")]
 use sov_rollup_starter::celestia_rollup::CelestiaRollup;
 #[cfg(feature = "mock_da")]

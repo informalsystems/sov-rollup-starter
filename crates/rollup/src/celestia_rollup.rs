@@ -7,22 +7,22 @@ use sov_consensus_state_tracker::verifier::{CelestiaSpec, CelestiaVerifier, Roll
 use sov_consensus_state_tracker::ConsensusStateTracker;
 use sov_consensus_state_tracker::{CelestiaConfig, CelestiaService};
 use sov_db::sequencer_db::SequencerDB;
+use sov_kernels::basic::BasicKernel;
+use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;
-use sov_modules_stf_blueprint::kernels::basic::BasicKernel;
 use sov_modules_stf_blueprint::StfBlueprint;
 use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
-use sov_risc0_adapter::Risc0Verifier;
 use sov_rollup_interface::zk::aggregated_proof::CodeCommitment;
-use sov_rollup_interface::zk::{ZkvmGuest, ZkvmHost};
+use sov_rollup_interface::zk::{Zkvm, ZkvmGuest, ZkvmHost};
 use sov_state::config::Config as StorageConfig;
 use sov_state::Storage;
 use sov_state::{DefaultStorageSpec, ZkStorage};
-use sov_stf_runner::ParallelProverService;
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
+use sov_stf_runner::{ParallelProverService, ProverService};
 use stf_starter::Runtime;
 use tokio::sync::watch;
 
@@ -42,13 +42,21 @@ impl RollupBlueprint for CelestiaRollup {
     type DaService = CelestiaService;
     type DaSpec = CelestiaSpec;
     type DaConfig = CelestiaConfig;
-    type Vm = Risc0Host<'static>;
+    /// Inner Zkvm representing the rollup circuit
+    type InnerZkvmHost = Risc0Host<'static>;
+    /// Outer Zkvm representing the circuit verifier for recursion
+    type OuterZkvmHost = MockZkvm;
 
     /// Spec for the Zero Knowledge environment.
-    type ZkSpec = ZkDefaultSpec<Risc0Verifier>;
-
+    type ZkSpec = ZkDefaultSpec<
+        <<Self::InnerZkvmHost as ZkvmHost>::Guest as ZkvmGuest>::Verifier,
+        <<Self::OuterZkvmHost as ZkvmHost>::Guest as ZkvmGuest>::Verifier,
+    >;
     /// Spec for the Native environment.
-    type NativeSpec = DefaultSpec<Risc0Verifier>;
+    type NativeSpec = DefaultSpec<
+        <<Self::InnerZkvmHost as ZkvmHost>::Guest as ZkvmGuest>::Verifier,
+        <<Self::OuterZkvmHost as ZkvmHost>::Guest as ZkvmGuest>::Verifier,
+    >;
 
     type StorageManager = ProverStorageManager<CelestiaSpec, DefaultStorageSpec>;
     type ZkRuntime = Runtime<Self::ZkSpec, Self::DaSpec>;
@@ -67,15 +75,22 @@ impl RollupBlueprint for CelestiaRollup {
         <<Self::NativeSpec as Spec>::Storage as Storage>::Root,
         <<Self::NativeSpec as Spec>::Storage as Storage>::Witness,
         Self::DaService,
-        Self::Vm,
+        Self::InnerZkvmHost,
+        Self::OuterZkvmHost,
         StfBlueprint<
             Self::ZkSpec,
             Self::DaSpec,
-            <<Self::Vm as ZkvmHost>::Guest as ZkvmGuest>::Verifier,
+            <<Self::InnerZkvmHost as ZkvmHost>::Guest as ZkvmGuest>::Verifier,
             Self::ZkRuntime,
             Self::ZkKernel,
         >,
     >;
+
+    fn create_outer_code_commitment(
+        &self,
+    ) -> <<Self::ProverService as ProverService>::Verifier as Zkvm>::CodeCommitment {
+        MockCodeCommitment::default()
+    }
 
     fn create_rpc_methods(
         &self,
@@ -90,6 +105,7 @@ impl RollupBlueprint for CelestiaRollup {
         #[allow(unused_mut)]
         let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<
             Self::NativeRuntime,
+            Self::NativeKernel,
             Self::NativeSpec,
             Self::DaService,
         >(storage, ledger_db, sequencer_db, da_service, sequencer)?;
@@ -124,7 +140,8 @@ impl RollupBlueprint for CelestiaRollup {
         rollup_config: &RollupConfig<Self::DaConfig>,
         _da_service: &Self::DaService,
     ) -> Self::ProverService {
-        let vm = Risc0Host::new(risc0_starter::ROLLUP_ELF);
+        let inner_vm = Risc0Host::new(risc0_starter::ROLLUP_ELF);
+        let outer_vm = MockZkvm::new_non_blocking();
         let zk_stf = StfBlueprint::new();
         let zk_storage = ZkStorage::new();
 
@@ -133,7 +150,8 @@ impl RollupBlueprint for CelestiaRollup {
         };
 
         ParallelProverService::new_with_default_workers(
-            vm,
+            inner_vm,
+            outer_vm,
             zk_stf,
             da_verifier,
             prover_config,

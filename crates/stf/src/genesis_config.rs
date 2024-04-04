@@ -3,6 +3,7 @@ use std::path::{Path, PathBuf};
 use anyhow::{bail, Context as _};
 use sov_accounts::AccountConfig;
 use sov_bank::BankConfig;
+use sov_bank::GAS_TOKEN_ID;
 use sov_ibc::ExampleModuleConfig;
 use sov_ibc_transfer::TransferConfig;
 use sov_modules_api::{DaSpec, Spec};
@@ -57,17 +58,14 @@ pub(crate) fn get_genesis_config<S: Spec, Da: DaSpec>(
 fn validate_config<S: Spec, Da: DaSpec>(
     genesis_config: <Runtime<S, Da> as RuntimeTrait<S, Da>>::GenesisConfig,
 ) -> Result<<Runtime<S, Da> as RuntimeTrait<S, Da>>::GenesisConfig, anyhow::Error> {
-    let token_address = &genesis_config.bank.tokens[0].token_address;
+    let token_id = GAS_TOKEN_ID;
 
-    let coins_token_addr = &genesis_config
-        .sequencer_registry
-        .coins_to_lock
-        .token_address;
+    let coins_token_addr = &genesis_config.sequencer_registry.coins_to_lock.token_id;
 
-    if coins_token_addr != token_address {
+    if coins_token_addr != &token_id {
         bail!(
-            "Wrong token address in `sequencer_registry_config` expected {} but found {}",
-            token_address,
+            "Wrong token ID in `sequencer_registry_config` expected {} but found {}",
+            token_id,
             coins_token_addr
         )
     }

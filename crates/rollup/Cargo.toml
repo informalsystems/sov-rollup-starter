@@ -13,6 +13,8 @@ publish = false
 [dependencies]
 sov-modules-api = { workspace = true, features = ["native"] }
 sov-state = { workspace = true }
+sov-kernels = { workspace = true, features = ["native"] }
+sov-mock-zkvm = { workspace = true, features = ["native"] }
 tracing-appender = { workspace = true }
 sov-prover-storage-manager = { workspace = true }
 sov-accounts = { workspace = true, features = ["native"] }

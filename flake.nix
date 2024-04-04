@@ -10,7 +10,7 @@
 
         sovereign-sdk-src = {
             flake = false;
-            url = git+ssh://git@github.com/informalsystems/sovereign-sdk-wip?rev=cf048cd59789209bb9c37effddd20efe19375bca;
+            url = git+ssh://git@github.com/informalsystems/sovereign-sdk-wip?rev=20bfd68c8c740b447d51eb50381b5590102258bb;
         };
 
         celestia-app-src = {

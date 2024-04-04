@@ -9,7 +9,6 @@ members = [
 
 exclude = [
     "vendor/sovereign-sdk",
-    "scripts/bank_load"
 ]
 
 [workspace.package]
@@ -37,10 +36,11 @@ sov-risc0-adapter               = { path = "./vendor/sovereign-sdk/adapters/risc
 sov-mock-zkvm                   = { path = "./vendor/sovereign-sdk/adapters/mock-zkvm" }
 sov-cli                         = { path = "./vendor/sovereign-sdk/module-system/sov-cli" }
 sov-prover-storage-manager      = { path = "./vendor/sovereign-sdk/full-node/sov-prover-storage-manager" }
+sov-kernels                     = { path = "./vendor/sovereign-sdk/module-system/sov-kernels" }
 
-sov-ibc                         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "97aacfb" }
-sov-ibc-transfer                = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "97aacfb" }
-sov-consensus-state-tracker     = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "97aacfb" }
+sov-ibc                         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "f0481ed" }
+sov-ibc-transfer                = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "f0481ed" }
+sov-consensus-state-tracker     = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "f0481ed" }
 
 stf-starter = { path = "./crates/stf" }
 

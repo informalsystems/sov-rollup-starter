@@ -98,3 +98,4 @@ sov-celestia-adapter            = { path = "./vendor/sovereign-sdk/adapters/cele
 sov-mock-da                     = { path = "./vendor/sovereign-sdk/adapters/mock-da" }
 
 crypto-bigint                   = { git = "https://github.com/risc0/RustCrypto-crypto-bigint", tag = "v0.5.2-risc0"}
+jmt                             = { git = "https://github.com/penumbra-zone/jmt.git", rev = "1d007e11cb68aa5ca13e9a5af4a12e6439d5f7b6" }

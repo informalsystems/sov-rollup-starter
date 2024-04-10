@@ -2784,28 +2784,6 @@ checksum = "b1a46d1a171d865aa5f83f92695765caa047a9b4cbae2cbf37dbd613a793fd4c"
 [[package]]
 name = "jmt"
 version = "0.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c2950721a65dff82492e30fe67076127135d0d710aa0140f21efafda2aee7849"
-dependencies = [
- "anyhow",
- "borsh",
- "digest 0.10.7",
- "hashbrown 0.13.2",
- "hex",
- "ics23",
- "itertools 0.10.5",
- "mirai-annotations",
- "num-derive 0.3.3",
- "num-traits",
- "serde",
- "sha2 0.10.8",
- "thiserror",
- "tracing",
-]
-
-[[package]]
-name = "jmt"
-version = "0.9.0"
 source = "git+https://github.com/penumbra-zone/jmt.git?rev=1d007e11cb68aa5ca13e9a5af4a12e6439d5f7b6#1d007e11cb68aa5ca13e9a5af4a12e6439d5f7b6"
 dependencies = [
  "anyhow",
@@ -5011,7 +4989,7 @@ dependencies = [
  "ibc-client-tendermint",
  "ibc-core",
  "ics23",
- "jmt 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "jmt",
  "prost",
  "serde",
  "sha2 0.10.8",
@@ -5033,7 +5011,7 @@ dependencies = [
  "ibc-client-tendermint",
  "ibc-core",
  "ics23",
- "jmt 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "jmt",
  "prost",
  "serde",
  "sov-ibc-proto",
@@ -5109,7 +5087,7 @@ dependencies = [
  "borsh",
  "byteorder",
  "hex",
- "jmt 0.9.0 (git+https://github.com/penumbra-zone/jmt.git?rev=1d007e11cb68aa5ca13e9a5af4a12e6439d5f7b6)",
+ "jmt",
  "rockbound",
  "rocksdb",
  "serde",
@@ -5284,7 +5262,7 @@ dependencies = [
  "derive_more",
  "digest 0.10.7",
  "hex",
- "jmt 0.9.0 (git+https://github.com/penumbra-zone/jmt.git?rev=1d007e11cb68aa5ca13e9a5af4a12e6439d5f7b6)",
+ "jmt",
  "proptest",
  "schemars",
  "serde",
@@ -5497,7 +5475,7 @@ dependencies = [
  "borsh",
  "derivative",
  "hex",
- "jmt 0.9.0 (git+https://github.com/penumbra-zone/jmt.git?rev=1d007e11cb68aa5ca13e9a5af4a12e6439d5f7b6)",
+ "jmt",
  "serde",
  "serde-big-array",
  "serde_json",

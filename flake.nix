@@ -95,6 +95,8 @@
                 packages = {
                     inherit risc0-rust gaia celestia-app celestia-node;
                     inherit (rollup-packages) rollup rollup-guest-mock rollup-guest-celestia;
+
+                    openssl = nixpkgs.openssl_1_1.dev;
                 };
             });
 }

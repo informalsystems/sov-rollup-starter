@@ -14,7 +14,7 @@ sov-state = { workspace = true }
 sov-accounts = { workspace = true }
 sov-bank = { workspace = true }
 sov-ibc = { workspace = true, features = ["serde"] }
-sov-ibc-transfer = { workspace = true, features = ["serde"] }
+sov-ibc-transfer = { workspace = true }
 sov-sequencer-registry = { workspace = true }
 sov-modules-stf-blueprint = { workspace = true }
 sov-stf-runner = { workspace = true }

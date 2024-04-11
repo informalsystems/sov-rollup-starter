@@ -4982,7 +4982,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/git-dependencies-in-patch#8819802006f286d8fb1e6977f0cbe77ed52506f5"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git#4e37dc4bb88624765384d1662549c00e991acc4a"
 dependencies = [
  "borsh",
  "derive_more",
@@ -5002,9 +5002,8 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/git-dependencies-in-patch#8819802006f286d8fb1e6977f0cbe77ed52506f5"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git#4e37dc4bb88624765384d1662549c00e991acc4a"
 dependencies = [
- "base64 0.21.7",
  "bytes",
  "derive_more",
  "hex",
@@ -5015,7 +5014,6 @@ dependencies = [
  "prost",
  "serde",
  "sov-ibc-proto",
- "sov-rollup-interface",
  "tendermint 0.34.1",
  "tendermint-light-client-verifier",
  "tendermint-proto 0.34.1",
@@ -5057,10 +5055,9 @@ dependencies = [
 [[package]]
 name = "sov-consensus-state-tracker"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/git-dependencies-in-patch#8819802006f286d8fb1e6977f0cbe77ed52506f5"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git#4e37dc4bb88624765384d1662549c00e991acc4a"
 dependencies = [
  "anyhow",
- "base64 0.21.7",
  "borsh",
  "ibc-app-transfer",
  "ibc-core",
@@ -5099,7 +5096,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/git-dependencies-in-patch#8819802006f286d8fb1e6977f0cbe77ed52506f5"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git#4e37dc4bb88624765384d1662549c00e991acc4a"
 dependencies = [
  "ahash",
  "anyhow",
@@ -5129,7 +5126,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-proto"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/git-dependencies-in-patch#8819802006f286d8fb1e6977f0cbe77ed52506f5"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git#4e37dc4bb88624765384d1662549c00e991acc4a"
 dependencies = [
  "ibc-proto",
  "informalsystems-pbjson",
@@ -5141,11 +5138,11 @@ dependencies = [
 [[package]]
 name = "sov-ibc-transfer"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/git-dependencies-in-patch#8819802006f286d8fb1e6977f0cbe77ed52506f5"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git#4e37dc4bb88624765384d1662549c00e991acc4a"
 dependencies = [
  "anyhow",
- "base64 0.21.7",
  "borsh",
+ "derive_more",
  "ibc-app-transfer",
  "ibc-core",
  "jsonrpsee",

@@ -46,8 +46,9 @@ ibc-client-tendermint       = { git = "https://github.com/cosmos/ibc-rs.git", re
 ibc-app-transfer            = { git = "https://github.com/cosmos/ibc-rs.git", rev = "c579628c67" }
 ibc-primitives              = { git = "https://github.com/cosmos/ibc-rs.git", rev = "c579628c67" }
 
-sov-ibc                         = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "soares/git-dependencies-in-patch" }
-sov-ibc-transfer                = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "soares/git-dependencies-in-patch" }
+sov-ibc                     = { git = "https://github.com/informalsystems/sovereign-ibc.git" }
+sov-ibc-transfer            = { git = "https://github.com/informalsystems/sovereign-ibc.git" }
+sov-celestia-client         = { git = "https://github.com/informalsystems/sovereign-ibc.git" }
 
 sha2                            = { git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.8-risczero.0" }
 ed25519-dalek                   = { git = "https://github.com/risc0/curve25519-dalek", tag = "curve25519-4.1.0-risczero.1" }

@@ -1,12 +1,12 @@
 use std::net::SocketAddr;
 
+use sov_kernels::basic::{BasicKernelGenesisConfig, BasicKernelGenesisPaths};
 use sov_mock_da::MockDaConfig;
 use sov_modules_rollup_blueprint::RollupBlueprint;
-use sov_kernels::basic::{BasicKernelGenesisConfig, BasicKernelGenesisPaths};
 use sov_rollup_starter::mock_rollup::MockRollup;
-use sov_stf_runner::ProverServiceConfig;
 use sov_stf_runner::RollupProverConfig;
-use sov_stf_runner::{RollupConfig, RpcConfig, RunnerConfig, StorageConfig};
+use sov_stf_runner::{HttpServerConfig, ProofManagerConfig};
+use sov_stf_runner::{RollupConfig, RunnerConfig, StorageConfig};
 use stf_starter::genesis_config::GenesisPaths;
 use tokio::sync::oneshot;
 
@@ -27,13 +27,17 @@ pub async fn start_rollup(
         runner: RunnerConfig {
             genesis_height: 0,
             da_polling_interval_ms: 1000,
-            rpc_config: RpcConfig {
+            rpc_config: HttpServerConfig {
+                bind_host: "127.0.0.1".into(),
+                bind_port: 0,
+            },
+            axum_config: HttpServerConfig {
                 bind_host: "127.0.0.1".into(),
                 bind_port: 0,
             },
         },
         da: da_config,
-        prover_service: ProverServiceConfig {
+        proof_manager: ProofManagerConfig {
             aggregated_proof_block_jump: 1,
         },
     };
@@ -45,7 +49,7 @@ pub async fn start_rollup(
             &std::fs::read_to_string(&kernel_genesis_paths.chain_state)
                 .expect("Failed to read chain_state genesis config"),
         )
-            .expect("Failed to parse chain_state genesis config"),
+        .expect("Failed to parse chain_state genesis config"),
     };
 
     let rollup = mock_demo_rollup
@@ -59,7 +63,7 @@ pub async fn start_rollup(
         .unwrap();
 
     rollup
-        .run_and_report_rpc_port(Some(rpc_reporting_channel))
+        .run_and_report_addr(Some(rpc_reporting_channel), None)
         .await
         .unwrap();
 

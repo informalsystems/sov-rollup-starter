@@ -4,21 +4,22 @@
 //! - At the beginning and end of each batch ("blob")
 //! - At the beginning and end of each slot (DA layer block)
 
-use super::runtime::Runtime;
+use sov_bank::IntoPayable;
 use sov_modules_api::batch::BatchWithId;
 use sov_modules_api::hooks::{ApplyBatchHooks, FinalizeHook, SlotHooks, TxHooks};
+use sov_modules_api::namespaces::Accessory;
 use sov_modules_api::runtime::capabilities::{
-    ContextResolver, GasEnforcer, TransactionDeduplicator,
+    AuthenticationError, GasEnforcer, RawTx, RuntimeAuthenticator, RuntimeAuthorization,
 };
-use sov_modules_api::transaction::Transaction;
+use sov_modules_api::transaction::{Transaction, TransactionAndRawHash};
 use sov_modules_api::{
-    BlobReaderTrait, Context, Gas, DaSpec, Spec, StateCheckpoint, WorkingSet,
-    StateReaderAndWriter
+    Context, DaSpec, DispatchCall, Gas, ModuleInfo, Spec, StateCheckpoint, StateReaderAndWriter,
+    WorkingSet,
 };
 use sov_modules_stf_blueprint::SequencerOutcome;
 use sov_sequencer_registry::SequencerRegistry;
-use tracing::info;
-use sov_modules_api::namespaces::Accessory;
+
+use super::runtime::Runtime;
 
 impl<S: Spec, Da: DaSpec> GasEnforcer<S, Da> for Runtime<S, Da> {
     /// The transaction type that the gas enforcer knows how to parse
@@ -51,42 +52,20 @@ impl<S: Spec, Da: DaSpec> GasEnforcer<S, Da> for Runtime<S, Da> {
         gas_meter: &sov_modules_api::GasMeter<S::Gas>,
         state_checkpoint: &mut StateCheckpoint<S>,
     ) {
-        self.bank
-            .refund_remaining_gas(tx, gas_meter, context.sender(), state_checkpoint);
+        self.bank.refund_remaining_gas(
+            tx,
+            gas_meter,
+            context.sender(),
+            &self.prover_incentives.id().to_payable(),
+            &self.sequencer_registry.id().to_payable(),
+            state_checkpoint,
+        );
     }
 }
 
-impl<S: Spec, Da: DaSpec> TransactionDeduplicator<S, Da> for Runtime<S, Da> {
+impl<S: Spec, Da: DaSpec> RuntimeAuthorization<S, Da> for Runtime<S, Da> {
     /// The transaction type that the deduplicator knows how to parse.
     type Tx = Transaction<S>;
-    /// Prevents duplicate transactions from running.
-    // TODO(@preston-evans98): Use type system to prevent writing to the `StateCheckpoint` during this check
-    fn check_uniqueness(
-        &self,
-        tx: &Self::Tx,
-        _context: &Context<S>,
-        state_checkpoint: &mut StateCheckpoint<S>,
-    ) -> Result<(), anyhow::Error> {
-        self.accounts
-            .check_uniqueness(tx, state_checkpoint)
-    }
-
-    /// Marks a transaction as having been executed, preventing it from executing again.
-    fn mark_tx_attempted(
-        &self,
-        tx: &Self::Tx,
-        _sequencer: &Da::Address,
-        state_checkpoint: &mut StateCheckpoint<S>,
-    ) {
-        self.accounts.mark_tx_attempted(tx, state_checkpoint);
-    }
-}
-
-/// Resolves the context for a transaction.
-impl<S: Spec, Da: DaSpec> ContextResolver<S, Da> for Runtime<S, Da> {
-    /// The transaction type that the resolver knows how to parse.
-    type Tx = Transaction<S>;
-    /// Resolves the context for a transaction.
     fn resolve_context(
         &self,
         tx: &Self::Tx,
@@ -102,6 +81,26 @@ impl<S: Spec, Da: DaSpec> ContextResolver<S, Da> for Runtime<S, Da> {
             .ok_or(anyhow::anyhow!("Sequencer was no longer registered by the time of context resolution. This is a bug")).unwrap();
         let sender = self.accounts.resolve_sender_address(tx, working_set);
         Context::new(sender, sequencer, height)
+    }
+
+    /// Prevents duplicate transactions from running.
+    // TODO(@preston-evans98): Use type system to prevent writing to the `StateCheckpoint` during this check
+    fn check_uniqueness(
+        &self,
+        tx: &Self::Tx,
+        _context: &Context<S>,
+        state_checkpoint: &mut StateCheckpoint<S>,
+    ) -> Result<(), anyhow::Error> {
+        self.accounts.check_uniqueness(tx, state_checkpoint)
+    }
+    /// Marks a transaction as having been executed, preventing it from executing again.
+    fn mark_tx_attempted(
+        &self,
+        tx: &Self::Tx,
+        _sequencer: &Da::Address,
+        state_checkpoint: &mut StateCheckpoint<S>,
+    ) {
+        self.accounts.mark_tx_attempted(tx, state_checkpoint);
     }
 }
 
@@ -128,8 +127,7 @@ impl<S: Spec, Da: DaSpec> TxHooks for Runtime<S, Da> {
 
 impl<S: Spec, Da: DaSpec> ApplyBatchHooks<Da> for Runtime<S, Da> {
     type Spec = S;
-    type BatchResult =
-    SequencerOutcome<<<Da as DaSpec>::BlobTransaction as BlobReaderTrait>::Address>;
+    type BatchResult = SequencerOutcome;
 
     fn begin_batch_hook(
         &self,
@@ -142,37 +140,43 @@ impl<S: Spec, Da: DaSpec> ApplyBatchHooks<Da> for Runtime<S, Da> {
             .begin_batch_hook(batch, sender, working_set)
     }
 
-    fn end_batch_hook(&self, result: Self::BatchResult, state_checkpoint: &mut StateCheckpoint<S>) {
+    fn end_batch_hook(
+        &self,
+        result: Self::BatchResult,
+        sender: &Da::Address,
+        state_checkpoint: &mut StateCheckpoint<S>,
+    ) {
+        // Since we need to make sure the `StfBlueprint`
+        // doesn't depend on the module system, we need to
+        // convert the `SequencerOutcome` structures manually.
         match result {
-            SequencerOutcome::Rewarded(reward) => {
-                // TODO: Process reward here or above.
+            SequencerOutcome::Rewarded(amount) => {
+                tracing::info!(%sender, ?amount, "Rewarding sequencer");
                 <SequencerRegistry<S, Da> as ApplyBatchHooks<Da>>::end_batch_hook(
                     &self.sequencer_registry,
-                    sov_sequencer_registry::SequencerOutcome::Rewarded { amount: reward },
+                    sov_sequencer_registry::SequencerOutcome::Rewarded(amount),
+                    sender,
                     state_checkpoint,
-                )
+                );
             }
             SequencerOutcome::Ignored => {}
-            SequencerOutcome::Slashed {
-                reason,
-                sequencer_da_address,
-            } => {
-                info!(%sequencer_da_address, ?reason, "Slashing sequencer");
+            SequencerOutcome::Slashed(reason) => {
+                tracing::info!(%sender, ?reason, "Slashing sequencer");
                 <SequencerRegistry<S, Da> as ApplyBatchHooks<Da>>::end_batch_hook(
                     &self.sequencer_registry,
-                    sov_sequencer_registry::SequencerOutcome::Slashed {
-                        sequencer: sequencer_da_address,
-                    },
+                    sov_sequencer_registry::SequencerOutcome::Slashed,
+                    sender,
                     state_checkpoint,
-                )
+                );
             }
             SequencerOutcome::Penalized(amount) => {
-                info!(amount, "Penalizing sequencer");
+                tracing::info!(amount, "Penalizing sequencer");
                 <SequencerRegistry<S, Da> as ApplyBatchHooks<Da>>::end_batch_hook(
                     &self.sequencer_registry,
-                    sov_sequencer_registry::SequencerOutcome::Penalized { amount },
+                    sov_sequencer_registry::SequencerOutcome::Penalized(amount),
+                    sender,
                     state_checkpoint,
-                )
+                );
             }
         }
     }
@@ -183,14 +187,16 @@ impl<S: Spec, Da: DaSpec> SlotHooks for Runtime<S, Da> {
     fn begin_slot_hook(
         &self,
         _pre_state_root: <Self::Spec as Spec>::VisibleHash,
-        _versioned_working_set: &mut sov_modules_api::VersionedStateReadWriter<StateCheckpoint<Self::Spec>>,
+        _versioned_working_set: &mut sov_modules_api::VersionedStateReadWriter<
+            StateCheckpoint<Self::Spec>,
+        >,
     ) {
     }
 
     fn end_slot_hook(&self, _working_set: &mut StateCheckpoint<S>) {}
 }
 
-impl<S: Spec, Da: sov_modules_api::DaSpec> FinalizeHook for Runtime<S, Da> {
+impl<S: Spec, Da: DaSpec> FinalizeHook for Runtime<S, Da> {
     type Spec = S;
 
     fn finalize_hook(
@@ -198,5 +204,18 @@ impl<S: Spec, Da: sov_modules_api::DaSpec> FinalizeHook for Runtime<S, Da> {
         _root_hash: S::VisibleHash,
         _accessory_working_set: &mut impl StateReaderAndWriter<Accessory>,
     ) {
+    }
+}
+
+impl<S: Spec, Da: DaSpec> RuntimeAuthenticator for Runtime<S, Da> {
+    type Decodable = <Self as DispatchCall>::Decodable;
+
+    type Tx = TransactionAndRawHash<S>;
+
+    fn authenticate(
+        &self,
+        raw_tx: &RawTx,
+    ) -> Result<(Self::Tx, Self::Decodable), AuthenticationError> {
+        sov_modules_api::authenticate::<S, Self>(raw_tx)
     }
 }

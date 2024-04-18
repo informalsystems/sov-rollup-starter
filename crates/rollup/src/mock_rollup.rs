@@ -2,31 +2,31 @@
 //! StarterRollup provides a minimal self-contained rollup implementation
 
 use async_trait::async_trait;
-use sov_db::ledger_db::LedgerDB;
-use sov_db::sequencer_db::SequencerDB;
-use sov_mock_da::{MockDaConfig, MockDaService, MockDaSpec};
-use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
-use sov_modules_api::{Spec,Zkvm};
-use sov_modules_rollup_blueprint::RollupBlueprint;
+use sov_db::ledger_db::LedgerDb;
 use sov_kernels::basic::BasicKernel;
+use sov_mock_da::{MockDaConfig, MockDaService, MockDaSpec};
+use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
+use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
+use sov_modules_api::{Spec, Zkvm};
+use sov_modules_rollup_blueprint::RollupBlueprint;
 use sov_modules_stf_blueprint::StfBlueprint;
 use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
-use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
-use sov_rollup_interface::zk::{ZkvmGuest, ZkvmHost, aggregated_proof::CodeCommitment};
+use sov_rollup_interface::zk::{aggregated_proof::CodeCommitment, ZkvmGuest, ZkvmHost};
+use sov_sequencer::SequencerDb;
 use sov_state::config::Config as StorageConfig;
 use sov_state::Storage;
 use sov_state::{DefaultStorageSpec, ZkStorage};
-use sov_stf_runner::{ParallelProverService,ProverService};
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
-use tokio::sync::watch;
+use sov_stf_runner::{ParallelProverService, ProverService};
 use stf_starter::Runtime;
+use tokio::sync::watch;
 
 /// Rollup with [`MockDaService`].
 pub struct MockRollup {}
 
-/// This is the place, where all the rollup components come together and
+/// This is the place, where all the rollup components come together, and
 /// they can be easily swapped with alternative implementations as needed.
 #[async_trait]
 impl RollupBlueprint for MockRollup {
@@ -86,31 +86,21 @@ impl RollupBlueprint for MockRollup {
     }
 
     /// This function generates RPC methods for the rollup, allowing for extension with custom endpoints.
-    fn create_rpc_methods(
+    fn create_endpoints(
         &self,
         storage: watch::Receiver<<Self::NativeSpec as Spec>::Storage>,
-        ledger_db: &LedgerDB,
-        sequencer_db: &SequencerDB,
+        ledger_db: &LedgerDb,
+        sequencer_db: &SequencerDb,
         da_service: &Self::DaService,
-        rollup_config: &RollupConfig<Self::DaConfig>
-    ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
-
-        #[allow(unused_mut)]
-        let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<
-            Self::NativeRuntime,
-            Self::NativeKernel,
-            Self::NativeSpec,
-            Self::DaService,
-        >(storage, ledger_db, sequencer_db, da_service, rollup_config.da.sender_address)?;
-
-        #[cfg(feature = "experimental")]
-        crate::eth::register_ethereum::<Self::DaService>(
-            da_service.clone(),
+        rollup_config: &RollupConfig<Self::DaConfig>,
+    ) -> Result<(jsonrpsee::RpcModule<()>, axum::Router<()>), anyhow::Error> {
+        sov_modules_rollup_blueprint::register_endpoints::<Self>(
             storage.clone(),
-            &mut rpc_methods,
-        )?;
-
-        Ok(rpc_methods)
+            ledger_db,
+            sequencer_db,
+            da_service,
+            rollup_config.da.sender_address,
+        )
     }
 
     async fn create_da_service(
@@ -123,7 +113,7 @@ impl RollupBlueprint for MockRollup {
     async fn create_prover_service(
         &self,
         prover_config: RollupProverConfig,
-        rollup_config: &RollupConfig<Self::DaConfig>,
+        _rollup_config: &RollupConfig<Self::DaConfig>,
         _da_service: &Self::DaService,
     ) -> Self::ProverService {
         let inner_vm = Risc0Host::new(risc0_starter::MOCK_DA_ELF);
@@ -139,8 +129,7 @@ impl RollupBlueprint for MockRollup {
             da_verifier,
             prover_config,
             zk_storage,
-            rollup_config.prover_service,
-            CodeCommitment::default()
+            CodeCommitment::default(),
         )
     }
 

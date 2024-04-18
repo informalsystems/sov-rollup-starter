@@ -21,9 +21,11 @@ genesis_height = {{ rollup_da_start_height }}
 da_polling_interval_ms = 100
 
 [runner.rpc_config]
-# the host and port to bind the rpc server for
 bind_host = "0.0.0.0"
 bind_port = 12345
+[runner.axum_config]
+bind_host = "0.0.0.0"
+bind_port = 12346
 
-[prover_service]
+[proof_manager]
 aggregated_proof_block_jump = 1

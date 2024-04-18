@@ -5,28 +5,30 @@ use async_trait::async_trait;
 use sov_celestia_adapter::types::Namespace;
 use sov_celestia_adapter::verifier::{CelestiaSpec, CelestiaVerifier, RollupParams};
 use sov_celestia_adapter::{CelestiaConfig, CelestiaService};
-use sov_db::sequencer_db::SequencerDB;
+use sov_db::ledger_db::LedgerDb;
+use sov_kernels::basic::BasicKernel;
+use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;
-use sov_kernels::basic::BasicKernel;
-use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
 use sov_modules_stf_blueprint::StfBlueprint;
 use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
-use sov_rollup_interface::zk::{Zkvm, ZkvmGuest, ZkvmHost};
 use sov_rollup_interface::zk::aggregated_proof::CodeCommitment;
+use sov_rollup_interface::zk::{Zkvm, ZkvmGuest, ZkvmHost};
+use sov_sequencer::SequencerDb;
 use sov_state::config::Config as StorageConfig;
 use sov_state::Storage;
 use sov_state::{DefaultStorageSpec, ZkStorage};
-use sov_stf_runner::{ParallelProverService, ProverService};
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
-use tokio::sync::watch;
+use sov_stf_runner::{ParallelProverService, ProverService};
 use stf_starter::Runtime;
+use tokio::sync::watch;
 
-/// The namespace for the rollup on Celestia.
-const ROLLUP_NAMESPACE: Namespace = Namespace::const_v0(*b"sov-celest");
+/// The rollup stores its data in the namespace b"sov-test" on Celestia
+/// You can change this constant to point your rollup at a different namespace
+const ROLLUP_BATCH_NAMESPACE: Namespace = Namespace::const_v0(*b"sov-test-p");
 
 /// The rollup stores the zk proofs in the namespace b"sov-test-p" on Celestia.
 const ROLLUP_PROOF_NAMESPACE: Namespace = Namespace::const_v0(*b"sov-test-p");
@@ -34,7 +36,7 @@ const ROLLUP_PROOF_NAMESPACE: Namespace = Namespace::const_v0(*b"sov-test-p");
 /// Rollup with [`CelestiaDaService`].
 pub struct CelestiaRollup {}
 
-/// This is the place, where all the rollup components come together and
+/// This is the place, where all the rollup components come together, and
 /// they can be easily swapped with alternative implementations as needed.
 #[async_trait]
 impl RollupBlueprint for CelestiaRollup {
@@ -86,32 +88,22 @@ impl RollupBlueprint for CelestiaRollup {
         MockCodeCommitment::default()
     }
 
-    fn create_rpc_methods(
+    fn create_endpoints(
         &self,
         storage: watch::Receiver<<Self::NativeSpec as Spec>::Storage>,
-        ledger_db: &sov_db::ledger_db::LedgerDB,
-        sequencer_db: &SequencerDB,
+        ledger_db: &LedgerDb,
+        sequencer_db: &SequencerDb,
         da_service: &Self::DaService,
-        rollup_config: &RollupConfig<Self::DaConfig>
-    ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
+        rollup_config: &RollupConfig<Self::DaConfig>,
+    ) -> anyhow::Result<(jsonrpsee::RpcModule<()>, axum::Router<()>)> {
         let sequencer = rollup_config.da.own_celestia_address.clone();
-
-        #[allow(unused_mut)]
-        let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<
-            Self::NativeRuntime,
-            Self::NativeKernel,
-            Self::NativeSpec,
-            Self::DaService,
-        >(storage, ledger_db, sequencer_db, da_service, sequencer)?;
-
-        #[cfg(feature = "experimental")]
-        crate::eth::register_ethereum::<Self::DaService>(
-            da_service.clone(),
-            storage.clone(),
-            &mut rpc_methods,
-        )?;
-
-        Ok(rpc_methods)
+        sov_modules_rollup_blueprint::register_endpoints::<Self>(
+            storage,
+            ledger_db,
+            sequencer_db,
+            da_service,
+            sequencer,
+        )
     }
 
     async fn create_da_service(
@@ -121,7 +113,7 @@ impl RollupBlueprint for CelestiaRollup {
         CelestiaService::new(
             rollup_config.da.clone(),
             RollupParams {
-                rollup_batch_namespace: ROLLUP_NAMESPACE,
+                rollup_batch_namespace: ROLLUP_BATCH_NAMESPACE,
                 rollup_proof_namespace: ROLLUP_PROOF_NAMESPACE,
             },
         )
@@ -131,7 +123,7 @@ impl RollupBlueprint for CelestiaRollup {
     async fn create_prover_service(
         &self,
         prover_config: RollupProverConfig,
-        rollup_config: &RollupConfig<Self::DaConfig>,
+        _rollup_config: &RollupConfig<Self::DaConfig>,
         _da_service: &Self::DaService,
     ) -> Self::ProverService {
         let inner_vm = Risc0Host::new(risc0_starter::ROLLUP_ELF);
@@ -140,7 +132,8 @@ impl RollupBlueprint for CelestiaRollup {
         let zk_storage = ZkStorage::new();
 
         let da_verifier = CelestiaVerifier {
-            rollup_namespace: ROLLUP_NAMESPACE,
+            rollup_batch_namespace: ROLLUP_BATCH_NAMESPACE,
+            rollup_proof_namespace: ROLLUP_PROOF_NAMESPACE,
         };
 
         ParallelProverService::new_with_default_workers(
@@ -150,14 +143,13 @@ impl RollupBlueprint for CelestiaRollup {
             da_verifier,
             prover_config,
             zk_storage,
-            rollup_config.prover_service,
             CodeCommitment::default(),
         )
     }
 
     fn create_storage_manager(
         &self,
-        rollup_config: &sov_stf_runner::RollupConfig<Self::DaConfig>,
+        rollup_config: &RollupConfig<Self::DaConfig>,
     ) -> Result<Self::StorageManager, anyhow::Error> {
         let storage_config = StorageConfig {
             path: rollup_config.storage.path.clone(),
@@ -165,4 +157,5 @@ impl RollupBlueprint for CelestiaRollup {
         ProverStorageManager::new(storage_config)
     }
 }
+
 impl sov_modules_rollup_blueprint::WalletBlueprint for CelestiaRollup {}

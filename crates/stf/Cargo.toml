@@ -13,6 +13,7 @@ sov-modules-api = { workspace = true }
 sov-state = { workspace = true }
 sov-accounts = { workspace = true }
 sov-bank = { workspace = true }
+sov-prover-incentives = { workspace = true }
 sov-sequencer-registry = { workspace = true }
 sov-mock-da = { workspace = true }
 sov-modules-stf-blueprint = { workspace = true }
@@ -36,11 +37,12 @@ native = [
     "sov-accounts/native",
     "sov-bank/native",
     "sov-sequencer-registry/native",
+    "sov-prover-incentives/native",
     "sov-mock-da/native",
     "sov-modules-stf-blueprint/native",
     "sov-stf-runner/native",
     "jsonrpsee",
     "sov-sequencer",
     "clap",
-    "tokio"
+    "tokio",
 ]

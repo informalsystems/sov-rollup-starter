@@ -4,10 +4,10 @@ use super::test_helpers::start_rollup;
 use borsh::BorshSerialize;
 use jsonrpsee::core::client::{Subscription, SubscriptionClientT};
 use jsonrpsee::rpc_params;
-use sov_mock_da::{MockDaSpec,MockDaConfig, MockAddress};
-use sov_modules_api::transaction::Transaction;
-use sov_modules_api::{PrivateKey, Spec, CryptoSpec};
 use sov_kernels::basic::BasicKernelGenesisPaths;
+use sov_mock_da::{MockAddress, MockDaConfig, MockDaSpec};
+use sov_modules_api::transaction::{PriorityFeeBips, Transaction};
+use sov_modules_api::{CryptoSpec, PrivateKey, Spec};
 use sov_sequencer::utils::SimpleClient;
 use sov_stf_runner::RollupProverConfig;
 use stf_starter::genesis_config::GenesisPaths;
@@ -16,8 +16,12 @@ use stf_starter::RuntimeCall;
 const TOKEN_SALT: u64 = 0;
 const TOKEN_NAME: &str = "sov-token";
 
-type TestSpec = sov_modules_api::default_spec::DefaultSpec<sov_mock_zkvm::MockZkVerifier, sov_mock_zkvm::MockZkVerifier>;
+type TestSpec = sov_modules_api::default_spec::DefaultSpec<
+    sov_mock_zkvm::MockZkVerifier,
+    sov_mock_zkvm::MockZkVerifier,
+>;
 type DefaultPrivateKey = <<TestSpec as Spec>::CryptoSpec as CryptoSpec>::PrivateKey;
+type TestHasher = <<TestSpec as Spec>::CryptoSpec as CryptoSpec>::Hasher;
 
 #[tokio::test]
 async fn bank_tx_tests() -> Result<(), anyhow::Error> {
@@ -51,35 +55,30 @@ async fn bank_tx_tests() -> Result<(), anyhow::Error> {
 
 async fn send_test_create_token_tx(rpc_address: SocketAddr) -> Result<(), anyhow::Error> {
     let key = DefaultPrivateKey::generate();
-    let user_address: <TestSpec as Spec>::Address = key.to_address();
+    let user_address: <TestSpec as Spec>::Address = key.to_address::<TestHasher, _>();
 
-    let token_id = sov_bank::get_token_id::<TestSpec>(
-        TOKEN_NAME,
-        &user_address,
-        TOKEN_SALT,
-    );
+    let token_id = sov_bank::get_token_id::<TestSpec>(TOKEN_NAME, &user_address, TOKEN_SALT);
 
-    let msg = RuntimeCall::<TestSpec, MockDaSpec>::bank(sov_bank::CallMessage::<
-        TestSpec,
-    >::CreateToken {
-        salt: TOKEN_SALT,
-        token_name: TOKEN_NAME.to_string(),
-        initial_balance: 1000,
-        minter_address: user_address,
-        authorized_minters: vec![],
-    });
+    let msg =
+        RuntimeCall::<TestSpec, MockDaSpec>::bank(sov_bank::CallMessage::<TestSpec>::CreateToken {
+            salt: TOKEN_SALT,
+            token_name: TOKEN_NAME.to_string(),
+            initial_balance: 1000,
+            minter_address: user_address,
+            authorized_minters: vec![],
+        });
     let chain_id = 0;
-    let gas_tip = 0;
-    let gas_limit = 0;
     let nonce = 0;
-    let max_gas_price = None;
+    let max_priority_fee = PriorityFeeBips::ZERO;
+    let max_fee = 0;
+    let gas_limit = None;
     let tx = Transaction::<TestSpec>::new_signed_tx(
         &key,
         msg.try_to_vec().unwrap(),
         chain_id,
-        gas_tip,
+        max_priority_fee,
+        max_fee,
         gas_limit,
-        max_gas_price,
         nonce,
     );
 
@@ -95,7 +94,7 @@ async fn send_test_create_token_tx(rpc_address: SocketAddr) -> Result<(), anyhow
         )
         .await?;
 
-    client.send_transactions(vec![tx], None).await.unwrap();
+    client.send_transactions(&[tx]).await.unwrap();
     // Wait until the rollup has processed the next slot
     let _ = slot_processed_subscription.next().await;
 

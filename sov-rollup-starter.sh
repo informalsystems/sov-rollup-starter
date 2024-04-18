@@ -65,8 +65,8 @@ fi
 
 echo 'Running: '\''curl -X POST -H "Content-Type: application/json" -d '\''{"jsonrpc":"2.0","method":"bank_supplyOf","params":{"token_id":"token_1rwrh8gn2py0dl4vv65twgctmlwck6esm2as9dftumcw89kqqn3nqrduss6"},"id":1}'\'' http://127.0.0.1:12345'\'''
 output=$(curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"bank_supplyOf","params":{"token_id":"token_1rwrh8gn2py0dl4vv65twgctmlwck6esm2as9dftumcw89kqqn3nqrduss6"},"id":1}' http://127.0.0.1:12345)
-expected='{"jsonrpc":"2.0","result":{"amount":103000000},"id":1}'
-
+expected='{"jsonrpc":"2.0","result":{"amount":103000000},"id":1}
+'
 # Either of the two must be a substring of the other. This kinda protects us
 # against whitespace differences, trimming, etc.
 if ! [[ $output == *"$expected"* || $expected == *"$output"* ]]; then

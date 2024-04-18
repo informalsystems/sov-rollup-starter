@@ -21,7 +21,7 @@ $ make clean-db
 #### 3. Start the rollup node:
 
 ```sh,test-ci
-export SOV_PROVER_MODE=execute 
+export SOV_PROVER_MODE=execute
 ```
 
 This will compile and start the rollup node:
@@ -128,6 +128,38 @@ $ make test-bank-supply-of
 ```
 $ curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"bank_supplyOf","params":{"token_address":"sov1zdwj8thgev2u3yyrrlekmvtsz4av4tp3m7dm5mx5peejnesga27svq9m72"},"id":1}' http://127.0.0.1:12345
 {"jsonrpc":"2.0","result":{"amount":10000000},"id":1}
+```
+
+#### 10. Test IBC client creation:
+
+```
+$ make test-crete-client
+```
+
+#### 11. Check if the client state is created:
+
+```
+$ make test-query-client-state
+```
+
+#### 12. Test IBC client update:
+
+```
+$ make test-update-client
+```
+
+#### 13. Check the client status after update:
+
+```
+$ make test-query-client-status
+```
+
+the output of the above script:
+
+```bash,test-ci
+curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"ibc_clientStatus","params":
+{"request":{"client_id": "07-tendermint-0"}},"id":1}' http://127.0.0.1:12345
+{"jsonrpc":"2.0","result":{"status":"Active"},"id":1}
 ```
 
 ## Enabling the prover

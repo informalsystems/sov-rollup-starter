@@ -77,9 +77,9 @@ fi
 
 run_make_cmd "make test-create-client"
 run_make_cmd "make wait-ten-seconds"
+run_make_cmd "make test-query-client-state"
 run_make_cmd "make test-update-client"
 run_make_cmd "make wait-ten-seconds"
-run_make_cmd "make test-query-client-state"
 run_make_cmd "make test-query-client-status"
 
 if [ $? -ne 0 ]; then

@@ -7,8 +7,8 @@ core_ip: "full.consensus.mocha-4.celestia-mocha.com"
 p2p_network: "mocha"
 
 # Key information. Refer to `Key Generation` section of the README
-key_name: "sov005"
-key_address_filename: "42aee5e3edc3a5373f042cd102de19705bc0545c.address"
+key_name: "devnet-ec2"
+key_address_filename: "62423a23c849bae9348f84c72b71f43b307eef9b.address"
 
 key_filename: "{{key_name}}.info"
 
@@ -20,6 +20,6 @@ key_address_path: "../.keys/{{ key_name }}/{{ key_address_filename }}"
 keyring_path: "{{ da_store }}/keys/keyring-test"
 
 # Define this variable to prevent celestia from syncing from genesis
-da_start_from: 1461058
+da_start_from: 1628120
 # RPC url to fetch the trusted blockhash from, since syncing from a specific height requires setting the start hash
 celestia_rpc_url: "https://rpc.celestia-mocha.com"

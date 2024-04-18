@@ -38,8 +38,8 @@ jobs:
       - uses: namespacelabs/nscloud-cache-action@v1
         with:
           cache: rust
-      - name: Lint
-        run: cargo check
+      - name: Check
+        run: make lint
       - name: Run tests
         run: cargo nextest run
       - name: Run README.md

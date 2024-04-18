@@ -1,15 +1,15 @@
 ---
 # git commit hash for the sovereign rollup repository (sov-rollup-starter) (check rollup/defaults/main.yaml for repo org and name)
-rollup_commit_hash: "158c7eb62d717fb8061dde0bafa17dd8ec710f9b"
+rollup_commit_hash: "4413d3949e37876f86f9de0ac7839ef5d61c5ba1"
 # DA namespace to post transaction blobs to. [NOTE: Length cannot change. TODO: add a check for this]
-rollup_namespace_prefix: "sov-roll05"
+rollup_namespace_prefix: "sov-roll06"
 # DA namespace to post proof blobs to. [NOTE: Length cannot change. TODO: add a check for this]
-rollup_proof_namespace_prefix: "sov-prov05"
+rollup_proof_namespace_prefix: "sov-prov06"
 # The DA address for sequencer
-sequencer_self_da_address: "celestia1g2hwtcldcwjnw0cy9ngs9hsewpduq4zuehqlqh"
+sequencer_self_da_address: "celestia1vfpr5g7gfxawjdy0snrjku058vc8amumr29str"
 # The DA address for genesis
-sequencer_genesis_da_address: "celestia1g2hwtcldcwjnw0cy9ngs9hsewpduq4zuehqlqh"
+sequencer_genesis_da_address: "celestia1vfpr5g7gfxawjdy0snrjku058vc8amumr29str"
 # The rollup address for genesis
 sequencer_genesis_rollup_address: "sov1l6n2cku82yfqld30lanm2nfw43n2auc8clw7r5u5m6s7p8jrm4zqrr8r94"
 # Rollup start height
-rollup_da_start_height: 1461258
+rollup_da_start_height: 1628370

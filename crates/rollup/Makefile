@@ -94,15 +94,31 @@ set-rpc-url: build-sov-cli
 import-keys: build-sov-cli
 	$(SOV_CLI_REL_PATH) keys import --nickname DANGER__DO_NOT_USE_WITH_REAL_MONEY --path ../../test-data/keys/token_deployer_private_key.json
 
-
 test-generate-create-token-tx: build-sov-cli
 	$(SOV_CLI_REL_PATH) transactions import from-file bank --chain-id 0 --path ../../test-data/requests/create_token.json
-
 
 test-create-token: set-rpc-url test-generate-create-token-tx import-keys
 	$(SOV_CLI_REL_PATH) rpc submit-batch by-nickname DANGER__DO_NOT_USE_WITH_REAL_MONEY
 
-
 test-bank-supply-of:
 	curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"bank_supplyOf","params":{"token_id":"token_1rwrh8gn2py0dl4vv65twgctmlwck6esm2as9dftumcw89kqqn3nqrduss6"},"id":1}' http://127.0.0.1:12345
 
+test-generate-create-client-tx: build-sov-cli
+	$(SOV_CLI_REL_PATH) transactions clean
+	$(SOV_CLI_REL_PATH) transactions import from-file ibc --chain-id 0 --path ../../test-data/requests/ibc_create_client.json
+
+test-create-client: set-rpc-url test-generate-create-client-tx import-keys
+	$(SOV_CLI_REL_PATH) rpc submit-batch by-nickname DANGER__DO_NOT_USE_WITH_REAL_MONEY
+
+test-generate-update-client-tx: build-sov-cli
+	$(SOV_CLI_REL_PATH) transactions clean
+	$(SOV_CLI_REL_PATH) transactions import from-file ibc --chain-id 0 --path ../../test-data/requests/ibc_update_client.json
+
+test-update-client: set-rpc-url test-generate-update-client-tx import-keys
+	$(SOV_CLI_REL_PATH) rpc submit-batch by-nickname DANGER__DO_NOT_USE_WITH_REAL_MONEY
+
+test-query-client-state:
+	curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"ibc_clientState","params":{"request":{"client_id": "07-tendermint-0"}},"id":1}' http://127.0.0.1:12345
+
+test-query-client-status:
+	curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"ibc_clientStatus","params":{"request":{"client_id": "07-tendermint-0"}},"id":1}' http://127.0.0.1:12345

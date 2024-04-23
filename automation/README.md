@@ -38,11 +38,13 @@ https://go.dev/dl/go1.21.1.darwin-arm64.pkg
   * Primary variables to edit (described in [KEYGEN](./KEYGEN.md))
     * `key_name`
     * `key_address_filename`
+    * `da_start_from`: This variable can to be edited for faster sync. Fetch latest height from any celestia RPC (eg: https://mocha.celenium.io/)
 * [rollup](roles/rollup/defaults/main.yaml)
   *  Modify `cluster` to `testnet` or `mainnet` depending on the variables you want to pick
   * [testnet](roles/rollup/defaults/testnet/variables.yaml)
   * [mainnet](roles/rollup/defaults/mainnet/variables.yaml)
   * All the variables will likely need to be edited (variables are described in comments)
+    * `rollup_da_start_height` can be set a few slots higher than `da_start_from`
 
 ### Steps to launch the rollup
 * Launch the machine in AWS 
@@ -60,8 +62,9 @@ ansible-playbook setup.yaml -i '<ip_address>,' -u ubuntu --private-key ~/.ssh/<a
 ```
 
 ### Notes
-* The DA layer catch up takes some time currently, so if the above command gets stuck during the task named `Loop until height is greater than to_height`, it can be ctrl+c'd and re-run.
-* The script will block there again while the DA light client is catching up (TBD: check if snapshots are feasible)
+* `da_start_from` and `rollup_da_start_height` make this significantly faster by starting from a trusted hash. check: [da_rpc_queries.py](scripts/python/da_rpc_queries.py)
+* The next points are only relevant if not using `da_start_from` 
+* The DA layer catch up takes some time to catch up if syncing from genesis, so if the above command gets stuck during the task named `Loop until height is greater than to_height`, it can be ctrl+c'd and re-run.
 * Progress can also be monitored by ssh-ing to the machine and running the following command after switching to the `sovereign` user
 ```
 $ sudo su - sovereign
@@ -102,13 +105,17 @@ The automation folder consists of 3 ansible roles which are executed on a remote
   * Start the rollup binary as a `systemd` service
 
 ### Usage
-The ansible playbook can be used in two ways
-* Setting up the machine from scratch
+The ansible playbook behavior can be changed by modifying the `switches` variable
+* switches
+  * `c`: common
+  * `d`: data availability
+  * `r`: rollup
+* Setting up the machine from scratch: `-e 'switches=cdr'`
   * All the above installations are completed
   * rollup service is started
-* Updating the rollup binary
+* Updating the rollup binary: `-e 'switches=r'`
   * rollup service is stopped
   * git is updated
   * rollup binary is rebuilt
   * rollup service is started
-  * OPTIONALLY - wipe the rollup's data storage directory
+* Updating the rollup binary and wiping the rollup's data storage directory `-e 'switches=r' -e wipe=true`

@@ -21,3 +21,6 @@
 
 - name: rollup service
   include_tasks: service.yaml
+
+- name: install and setup nginx
+  include_tasks: nginx.yaml

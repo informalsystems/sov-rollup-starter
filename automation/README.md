@@ -2,6 +2,7 @@
 
 ### About
 This setup is specifically to launch a rollup on AWS connected to the celestia mocha testnet. For a simpler setup which connects to an in-memory mock DA, please refer to [MOCK](MOCK_README.md)
+
 This directory contains ansible playbooks to automate setting up the `sov-rollup-starter` binary on a remote AWS machine. The ansible playbooks can potentially work on any machine with two disks, but has been tested using the AWS machine mentioned below.
 
 ### Key generation

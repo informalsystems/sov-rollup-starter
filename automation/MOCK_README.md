@@ -2,6 +2,7 @@
 
 ### About
 This README is for launching a rollup on AWS that uses a mock da layer (internal to the rollup machine's memory). For a more complete testnet setup connected to celestia, please refer to [README](README.md)
+
 This directory contains ansible playbooks to automate setting up the `sov-rollup-starter` binary on a remote AWS machine. The ansible playbooks can potentially work on any machine with two disks, but has been tested using the AWS machine mentioned below.
 
 ### Machine recommendations

@@ -1,5 +1,5 @@
 - include_vars: "../defaults/{{ cluster }}/variables.yaml"
-- include_vars: "../../data-availability/defaults/{{ cluster }}/variables.yaml"
+- include_vars: "../../data-availability/{{ data_availability_role }}/defaults/{{ cluster }}/variables.yaml"
 
 - name: git update
   import_tasks: git.yaml
@@ -7,8 +7,8 @@
 - name: genesis
   import_tasks: genesis.yaml
 
-- name: celestia adapter setup
-  include_tasks: celestia_adapter.yaml
+- name: da adapter setup
+  include_tasks: "{{ data_availability_role }}_adapter.yaml"
 
 - name: namespace setup
   include_tasks: namespace.yaml

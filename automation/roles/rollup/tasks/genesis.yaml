@@ -9,7 +9,7 @@
 
 - name: Synchronize genesis folder to remote
   ansible.builtin.synchronize:
-    src: "{{ role_path }}/files/celestia_genesis/"
+    src: "{{ role_path }}/files/genesis/"
     dest: "{{ genesis_folder }}"
     delete: no
     recursive: yes

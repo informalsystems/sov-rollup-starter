@@ -6,13 +6,13 @@ rollup_namespace_prefix: "sov-roll05"
 # DA namespace to post proof blobs to. [NOTE: Length cannot change. TODO: add a check for this]
 rollup_proof_namespace_prefix: "sov-prov05"
 # The DA address for sequencer
-sequencer_self_da_address: "celestia1htg5dypcqqq5msdgjrd3e0djw2xldekmgzl3x6"
+sequencer_self_da_address: "{{ da_rollup_address }}"
 # The DA address for genesis
-sequencer_genesis_da_address: "celestia1htg5dypcqqq5msdgjrd3e0djw2xldekmgzl3x6"
+sequencer_genesis_da_address: "{{ da_rollup_address }}"
 # The rollup address for genesis
 sequencer_genesis_rollup_address: "sov1l6n2cku82yfqld30lanm2nfw43n2auc8clw7r5u5m6s7p8jrm4zqrr8r94"
 # Rollup start height
-rollup_da_start_height: 1665056
+rollup_da_start_height: "{{ da_rollup_start_from }}"
 # Default RPC port
 rollup_json_rpc_port: 12345
 # Default Rest port

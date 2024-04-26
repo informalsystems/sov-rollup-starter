@@ -1,5 +1,5 @@
-- include_vars: "roles/data-availability/defaults/main.yaml"
-- include_vars: "roles/data-availability/defaults/{{ cluster }}/variables.yaml"
+- include_vars: "roles/data-availability/{{ data_availability_role }}/defaults/main.yaml"
+- include_vars: "roles/data-availability/{{ data_availability_role }}/defaults/{{ cluster }}/variables.yaml"
 
 - name: Validate da_start_from is optional and skip subsequent tasks if not defined
   debug:

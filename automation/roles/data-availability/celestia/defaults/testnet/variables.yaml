@@ -18,8 +18,13 @@ key_address_path: "../.keys/{{ key_name }}/{{ key_address_filename }}"
 
 # Remote path. Does not need to be changed unless key management is different
 keyring_path: "{{ da_store }}/keys/keyring-test"
-
 # Define this variable to prevent celestia from syncing from genesis
 da_start_from: 1665050
+
 # RPC url to fetch the trusted blockhash from, since syncing from a specific height requires setting the start hash
 celestia_rpc_url: "https://rpc.celestia-mocha.com"
+
+### The variables below are used in the rollup
+# Define this variable to let the rollup start from a certain DA height
+da_rollup_start_from: 1665054
+da_rollup_address: "celestia1htg5dypcqqq5msdgjrd3e0djw2xldekmgzl3x6"

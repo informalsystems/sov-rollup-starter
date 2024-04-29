@@ -1,17 +1,22 @@
+use std::env;
 use std::net::SocketAddr;
+use std::str::FromStr;
 
-use super::test_helpers::start_rollup;
+use super::test_helpers::{read_private_keys, start_rollup};
 use borsh::BorshSerialize;
 use jsonrpsee::core::client::{Subscription, SubscriptionClientT};
 use jsonrpsee::rpc_params;
 use sov_kernels::basic::BasicKernelGenesisPaths;
 use sov_mock_da::{MockAddress, MockDaConfig, MockDaSpec};
 use sov_modules_api::transaction::{PriorityFeeBips, Transaction};
-use sov_modules_api::{CryptoSpec, PrivateKey, Spec};
+use sov_modules_api::Spec;
 use sov_sequencer::utils::SimpleClient;
 use sov_stf_runner::RollupProverConfig;
 use stf_starter::genesis_config::GenesisPaths;
 use stf_starter::RuntimeCall;
+use tracing_subscriber::layer::SubscriberExt;
+use tracing_subscriber::util::SubscriberInitExt;
+use tracing_subscriber::{fmt, EnvFilter};
 
 const TOKEN_SALT: u64 = 0;
 const TOKEN_NAME: &str = "sov-token";
@@ -20,11 +25,19 @@ type TestSpec = sov_modules_api::default_spec::DefaultSpec<
     sov_mock_zkvm::MockZkVerifier,
     sov_mock_zkvm::MockZkVerifier,
 >;
-type DefaultPrivateKey = <<TestSpec as Spec>::CryptoSpec as CryptoSpec>::PrivateKey;
-type TestHasher = <<TestSpec as Spec>::CryptoSpec as CryptoSpec>::Hasher;
 
 #[tokio::test]
 async fn bank_tx_tests() -> Result<(), anyhow::Error> {
+    tracing_subscriber::registry()
+        .with(fmt::layer())
+        .with(
+            EnvFilter::from_str(
+                &env::var("RUST_LOG")
+                    .unwrap_or_else(|_| "debug,hyper=info,jmt=info,risc0_zkvm=info".to_string()),
+            )
+            .unwrap(),
+        )
+        .init();
     let (port_tx, port_rx) = tokio::sync::oneshot::channel();
 
     let rollup_task = tokio::spawn(async {
@@ -54,16 +67,18 @@ async fn bank_tx_tests() -> Result<(), anyhow::Error> {
 }
 
 async fn send_test_create_token_tx(rpc_address: SocketAddr) -> Result<(), anyhow::Error> {
-    let key = DefaultPrivateKey::generate();
-    let user_address: <TestSpec as Spec>::Address = key.to_address::<TestHasher, _>();
+    let key_and_address = read_private_keys::<TestSpec>("tx_signer_private_key.json");
+    let key = key_and_address.private_key;
+    let user_address: <TestSpec as Spec>::Address = key_and_address.address;
 
     let token_id = sov_bank::get_token_id::<TestSpec>(TOKEN_NAME, &user_address, TOKEN_SALT);
+    let initial_balance = 1000;
 
     let msg =
         RuntimeCall::<TestSpec, MockDaSpec>::bank(sov_bank::CallMessage::<TestSpec>::CreateToken {
             salt: TOKEN_SALT,
             token_name: TOKEN_NAME.to_string(),
-            initial_balance: 1000,
+            initial_balance,
             minter_address: user_address,
             authorized_minters: vec![],
         });
@@ -105,6 +120,10 @@ async fn send_test_create_token_tx(rpc_address: SocketAddr) -> Result<(), anyhow
         token_id,
     )
     .await?;
-    assert_eq!(balance_response.amount.unwrap_or_default(), 1000);
+    assert_eq!(
+        initial_balance,
+        balance_response.amount.unwrap_or_default(),
+        "deployer initial balance is not correct"
+    );
     Ok(())
 }

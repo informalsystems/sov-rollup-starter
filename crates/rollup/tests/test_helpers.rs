@@ -1,7 +1,10 @@
+use sov_cli::wallet_state::PrivateKeyAndAddress;
 use std::net::SocketAddr;
+use std::path::Path;
 
 use sov_kernels::basic::{BasicKernelGenesisConfig, BasicKernelGenesisPaths};
 use sov_mock_da::MockDaConfig;
+use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;
 use sov_rollup_starter::mock_rollup::MockRollup;
 use sov_stf_runner::RollupProverConfig;
@@ -69,4 +72,25 @@ pub async fn start_rollup(
 
     // Close the tempdir explicitly to ensure that rustc doesn't see that it's unused and drop it unexpectedly
     temp_dir.close().unwrap();
+}
+
+pub fn read_private_keys<S: Spec>(suffix: &str) -> PrivateKeyAndAddress<S> {
+    let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
+
+    let private_keys_dir = Path::new(&manifest_dir).join("../../test-data/keys");
+
+    let data = std::fs::read_to_string(private_keys_dir.join(suffix))
+        .expect("Unable to read file to string");
+
+    let key_and_address: PrivateKeyAndAddress<S> =
+        serde_json::from_str(&data).unwrap_or_else(|_| {
+            panic!("Unable to convert data {} to PrivateKeyAndAddress", &data);
+        });
+
+    assert!(
+        key_and_address.is_matching_to_default(),
+        "Inconsistent key data"
+    );
+
+    key_and_address
 }

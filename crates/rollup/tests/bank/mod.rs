@@ -20,6 +20,7 @@ use tracing_subscriber::{fmt, EnvFilter};
 
 const TOKEN_SALT: u64 = 0;
 const TOKEN_NAME: &str = "sov-token";
+const MAX_TX_FEE: u64 = 10_000;
 
 type TestSpec = sov_modules_api::default_spec::DefaultSpec<
     sov_mock_zkvm::MockZkVerifier,
@@ -85,14 +86,13 @@ async fn send_test_create_token_tx(rpc_address: SocketAddr) -> Result<(), anyhow
     let chain_id = 0;
     let nonce = 0;
     let max_priority_fee = PriorityFeeBips::ZERO;
-    let max_fee = 0;
     let gas_limit = None;
     let tx = Transaction::<TestSpec>::new_signed_tx(
         &key,
         msg.try_to_vec().unwrap(),
         chain_id,
         max_priority_fee,
-        max_fee,
+        MAX_TX_FEE,
         gas_limit,
         nonce,
     );

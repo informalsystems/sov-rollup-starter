@@ -11,5 +11,5 @@
   become: true
   become_user: sovereign
   ansible.builtin.template:
-    src: "mock_rollup_config.toml.j2"
+    src: "{{ data_availability_role }}/rollup_config.toml.j2"
     dest: "/home/sovereign/rollup_config.toml"

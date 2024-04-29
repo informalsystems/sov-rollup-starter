@@ -8,7 +8,7 @@
   import_tasks: genesis.yaml
 
 - name: da adapter setup
-  include_tasks: "{{ data_availability_role }}_adapter.yaml"
+  include_tasks: "{{ data_availability_role }}/da_adapter.yaml"
 
 - name: namespace setup
   include_tasks: namespace.yaml

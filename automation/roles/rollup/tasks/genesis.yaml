@@ -15,3 +15,12 @@
     recursive: yes
   become: true
   become_user: sovereign
+
+- name: Render sequencer config with address
+  become: true
+  become_user: sovereign
+  ansible.builtin.template:
+    src: "genesis/sequencer_registry.json.j2"
+    dest: "{{genesis_folder}}/sequencer_registry.json"
+  vars:
+    sequencer_da_address: "{{ sequencer_genesis_address }}"

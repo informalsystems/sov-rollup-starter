@@ -53,10 +53,9 @@ impl GenesisPaths {
     }
 }
 
-/// Creates genesis configuration.
 pub(crate) fn get_genesis_config<S: Spec, Da: DaSpec>(
     genesis_paths: &GenesisPaths,
-) -> Result<<Runtime<S, Da> as RuntimeTrait<S, Da>>::GenesisConfig, anyhow::Error> {
+) -> anyhow::Result<<Runtime<S, Da> as RuntimeTrait<S, Da>>::GenesisConfig> {
     create_genesis_config(genesis_paths).with_context(|| {
         format!(
             "Unable to read genesis configuration from: {}",
@@ -65,9 +64,11 @@ pub(crate) fn get_genesis_config<S: Spec, Da: DaSpec>(
     })
 }
 
-fn create_genesis_config<S: Spec, Da: DaSpec>(
+/// Creates a new [`GenesisConfig`] from the files contained in the given
+/// directory.
+pub fn create_genesis_config<S: Spec, Da: DaSpec>(
     genesis_paths: &GenesisPaths,
-) -> anyhow::Result<GenesisConfig<S, Da>> {
+) -> anyhow::Result<<Runtime<S, Da> as RuntimeTrait<S, Da>>::GenesisConfig> {
     let accounts_config: AccountConfig<S> = read_json_file(&genesis_paths.accounts_genesis_path)?;
     let bank_config: BankConfig<S> = read_json_file(&genesis_paths.bank_genesis_path)?;
     let sequencer_registry_config: SequencerConfig<S, Da> =

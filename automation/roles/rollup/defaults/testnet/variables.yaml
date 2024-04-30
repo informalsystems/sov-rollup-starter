@@ -1,10 +1,10 @@
 ---
 # git commit hash for the sovereign rollup repository (sov-rollup-starter) (check rollup/defaults/main.yaml for repo org and name)
-rollup_commit_hash: "ea6af630797162733cd469235afcb30deef78eb1"
+rollup_commit_hash: "e7c9614c1bb33e1d1c282f9aad5ec95aa1c5ae25"
 # DA namespace to post transaction blobs to. [NOTE: Length cannot change. TODO: add a check for this]
-rollup_namespace_prefix: "sov-roll05"
+rollup_namespace_prefix: "sov-b-ng01"
 # DA namespace to post proof blobs to. [NOTE: Length cannot change. TODO: add a check for this]
-rollup_proof_namespace_prefix: "sov-prov05"
+rollup_proof_namespace_prefix: "sov-p-ng01"
 # The DA address for sequencer
 sequencer_self_da_address: "{{ da_rollup_address }}"
 # The DA address for genesis
@@ -15,9 +15,9 @@ sequencer_genesis_rollup_address: "sov1l6n2cku82yfqld30lanm2nfw43n2auc8clw7r5u5m
 rollup_da_start_height: "{{ da_rollup_start_from }}"
 # Default RPC port
 rollup_json_rpc_port: 12345
-# Default Rest port
+# Default REST API port
 rollup_rest_rpc_port: 12346
-# Default RPC port
+# Default RPC port on Nginx
 nginx_json_rpc_port: 8080
-# Default Rest port
+# Default REST API port on Nginx
 nginx_rest_rpc_port: 8081

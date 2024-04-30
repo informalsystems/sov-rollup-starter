@@ -24,3 +24,12 @@
     dest: "{{genesis_folder}}/sequencer_registry.json"
   vars:
     sequencer_da_address: "{{ sequencer_genesis_address }}"
+
+- name: Render chain state config with genesis height
+  become: true
+  become_user: sovereign
+  ansible.builtin.template:
+    src: "chain_state.json.j2"
+    dest: "{{genesis_folder}}/chain_state.json"
+  vars:
+    genesis_da_height: "{{ rollup_da_start_height }}"

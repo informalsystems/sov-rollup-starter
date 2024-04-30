@@ -9,23 +9,29 @@ This directory contains ansible playbooks to automate setting up the `sov-rollup
 This is a one time step to generate the celestia keypair that will be used to post blobs. Follow the guide here [KEYGEN](./KEYGEN.md)
 
 ### Machine recommendations
-* AWS `c5ad.4xlarge`
+* AWS [`c5ad.4xlarge`](https://aws.amazon.com/ec2/instance-types/c5/)
   * 16 cores
   * 2 x NVME SSD
   * 32 GB RAM
-* Ubuntu 22.04
-* Open security group
+* Ubuntu 22.04 LTS.
+* Open security group.
+* Root volume >=100GB gp3, to accommodate build process of the rollup.
 
 ### Installation (Mac OS)
 * Homebrew - https://brew.sh/
 * Ansible
 ```
 brew install ansible
+ansible --version
+ansible [core 2.16.5]
 ```
-* go1.21.1 - install for your specific architecture from https://go.dev/dl/
+* go1.21.1 - install for your specific architecture from https://go.dev/dl/: [MacOS .pkg](https://go.dev/dl/go1.21.1.darwin-arm64.pkg)
 ```
-https://go.dev/dl/go1.21.1.darwin-arm64.pkg
+▸ go version
+go version go1.21.9 darwin/arm64
 ```
+
+(!) It is important to have go 1.21 
 
 ### Ansible variables to edit
 * [common](roles/common/defaults/main.yaml)
@@ -51,17 +57,34 @@ https://go.dev/dl/go1.21.1.darwin-arm64.pkg
 ### Steps to launch the rollup
 * Launch the machine in AWS 
 * Select `c5ad.4xlarge` as the instance type 
-* Ensure public IP is attached 
+* Ensure public IP is attached
 * Ensure a permissive security group for testnet 
-* The only restriction for instance role is to ensure it can post data to AWS managed prometheus (out of the scope of this README)
-* Ensure <aws_ssh_key>.pem is part of the ssh agent. Verify with
-```
+* The only restriction, for instance, role is to ensure it can post data to AWS managed prometheus (out of the scope of this README)
+* Ensure <aws_ssh_key>.pem is part of the ssh agent: `ssh-add ~/.ssh/YourAWSKey.pem`. This key is needed to ansible provision machine 
+* Ensure that your GitHub ssh keys is a part of of the ssh agent, so it can fetch code from private WIP repos. This key is needed to get access to GitHub repo. If repo is publicly accessible it is not needed
+
+```bash
 ssh-add -l
+2048 SHA256:udAui6vtUjoAtuza7l+x5tZsoq+cAzvD5TNjh6SuhyA ~/.ssh/YourAWSKey.pem (RSA)
+2048 SHA256:Bxv9vtL64zz2QuhEysRiF2s5WPLVp99YpgdNfqJe5u4 ~/.ssh/github_id_rsa (RSA)
 ```
+
 * Run the ansible command to set up the machine from the automation folder
+
+```bash
+cd automation
 ```
-ansible-playbook setup.yaml -i '<ip_address>,' -u ubuntu --private-key ~/.ssh/<aws_ssh_key>.pem -e 'ansible_ssh_common_args="-o ForwardAgent=yes" -e 'switches=cdr' -e data_availability_role=celestia'
+
+```bash
+$ ansible-playbook setup.yaml -i '<ip_address>,' -u ubuntu --private-key ~/.ssh/<aws_ssh_key>.pem -e 'ansible_ssh_common_args="-o ForwardAgent=yes" -e 'switches=cdr' -e data_availability_role=celestia'
+PLAY [Playbook Runner] ********************************************************************************************************************************************************************
+...
+
+PLAY RECAP ********************************************************************************************************************************************************************************
+<ip_address>             : ok=93   changed=30   unreachable=0    failed=0    skipped=36   rescued=0    ignored=1
 ```
+
+This is expected output. Please note that `failed` should be `0`.
 
 ### Notes
 * `da_start_from` and `rollup_da_start_height` make this significantly faster by starting from a trusted hash. check: [da_rpc_queries.py](scripts/python/da_rpc_queries.py)
@@ -123,3 +146,23 @@ The ansible playbook behavior can be changed by modifying the `switches` variabl
   * rollup binary is rebuilt
   * rollup service is started
 * Updating the rollup binary and wiping the rollup's data storage directory `-e 'switches=r' -e wipe=true`
+
+
+### Troubleshooting
+
+Status of the service:
+
+```bash
+sudo systemctl status rollup
+```
+
+Service logs:
+
+```bash
+journalctl -u rollup
+```
+
+Non panic log messages are also available in the file:
+```bash
+tail -f /mnt/logs/rollup.log.<DATE>
+```

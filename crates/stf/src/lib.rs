@@ -1,9 +1,11 @@
 //! The rollup State Transition Function.
 
+pub mod authentication;
 #[cfg(feature = "native")]
 pub mod genesis_config;
-mod hooks;
+pub mod hooks;
 pub mod runtime;
+
 pub use runtime::*;
 use sov_modules_stf_blueprint::StfBlueprint;
 use sov_rollup_interface::da::DaVerifier;

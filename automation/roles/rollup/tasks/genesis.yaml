@@ -9,9 +9,18 @@
 
 - name: Synchronize genesis folder to remote
   ansible.builtin.synchronize:
-    src: "{{ role_path }}/files/celestia_genesis/"
+    src: "{{ role_path }}/files/genesis/"
     dest: "{{ genesis_folder }}"
     delete: no
     recursive: yes
   become: true
   become_user: sovereign
+
+- name: Render sequencer config with address
+  become: true
+  become_user: sovereign
+  ansible.builtin.template:
+    src: "genesis/sequencer_registry.json.j2"
+    dest: "{{genesis_folder}}/sequencer_registry.json"
+  vars:
+    sequencer_da_address: "{{ sequencer_genesis_address }}"

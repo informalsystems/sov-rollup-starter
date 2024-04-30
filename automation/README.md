@@ -1,6 +1,8 @@
 ## Automation
 
 ### About
+This setup is specifically to launch a rollup on AWS connected to the celestia mocha testnet. For a simpler setup which connects to an in-memory mock DA, please refer to [MOCK](MOCK_README.md)
+
 This directory contains ansible playbooks to automate setting up the `sov-rollup-starter` binary on a remote AWS machine. The ansible playbooks can potentially work on any machine with two disks, but has been tested using the AWS machine mentioned below.
 
 ### Key generation
@@ -58,7 +60,7 @@ ssh-add -l
 ```
 * Run the ansible command to set up the machine from the automation folder
 ```
-ansible-playbook setup.yaml -i '<ip_address>,' -u ubuntu --private-key ~/.ssh/<aws_ssh_key>.pem -e 'ansible_ssh_common_args="-o ForwardAgent=yes" -e 'switches=cdr' '
+ansible-playbook setup.yaml -i '<ip_address>,' -u ubuntu --private-key ~/.ssh/<aws_ssh_key>.pem -e 'ansible_ssh_common_args="-o ForwardAgent=yes" -e 'switches=cdr' -e data_availability_role=celestia'
 ```
 
 ### Notes
@@ -110,6 +112,8 @@ The ansible playbook behavior can be changed by modifying the `switches` variabl
   * `c`: common
   * `d`: data availability
   * `r`: rollup
+* `data_availability_role` controls if `mock` or `celestia` DA is used
+  * `-e 'data_availability_role=celestia'`
 * Setting up the machine from scratch: `-e 'switches=cdr'`
   * All the above installations are completed
   * rollup service is started

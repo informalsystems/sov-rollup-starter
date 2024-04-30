@@ -17,20 +17,11 @@
   ansible.builtin.set_fact:
     key_address: "{{ (key_list_output.stdout | from_json)[0].address }}"
 
-- name: Render sequencer config with address
-  become: true
-  become_user: sovereign
-  ansible.builtin.template:
-    src: "sequencer_registry.json.j2"
-    dest: "{{genesis_folder}}/sequencer_registry.json"
-  vars:
-    sequencer_da_address: "{{ sequencer_genesis_address }}"
-
 - name: Render config with auth
   become: true
   become_user: sovereign
   ansible.builtin.template:
-    src: "celestia_rollup_config.toml.j2"
+    src: "{{ data_availability_role }}/rollup_config.toml.j2"
     dest: "/home/sovereign/rollup_config.toml"
   vars:
     celestia_auth_token: "{{ command_output.stdout }}"

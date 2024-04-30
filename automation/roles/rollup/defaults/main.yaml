@@ -12,7 +12,7 @@ rollup_repo_dir: "sov-rollup-starter-wip"
 # Rollup binary name. Default is `node`
 rollup_bin: "node"
 # Feature for the DA adapter. Default is `celestia-da`
-da_feature: "celestia_da"
+da_feature: "{{data_availability_role}}_da"
 # Folder on the remote machine that has the genesis configuration
 genesis_folder: "/home/sovereign/genesis"
 rollup_log_dir: "/mnt/logs"

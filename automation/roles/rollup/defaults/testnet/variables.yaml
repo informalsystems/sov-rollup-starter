@@ -1,6 +1,6 @@
 ---
 # git commit hash for the sovereign rollup repository (sov-rollup-starter) (check rollup/defaults/main.yaml for repo org and name)
-rollup_commit_hash: "e7c9614c1bb33e1d1c282f9aad5ec95aa1c5ae25"
+rollup_commit_hash: "39cde0a4b6410d3ca70db9dd0a4e001eb340daf8"
 # DA namespace to post transaction blobs to. [NOTE: Length cannot change. TODO: add a check for this]
 rollup_namespace_prefix: "sov-b-ng01"
 # DA namespace to post proof blobs to. [NOTE: Length cannot change. TODO: add a check for this]

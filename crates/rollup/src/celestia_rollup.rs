@@ -23,6 +23,7 @@ use sov_state::{DefaultStorageSpec, ZkStorage};
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
 use sov_stf_runner::{ParallelProverService, ProverService};
+use stf_starter::authentication::ModAuth;
 use stf_starter::Runtime;
 use tokio::sync::watch;
 
@@ -97,13 +98,10 @@ impl RollupBlueprint for CelestiaRollup {
         rollup_config: &RollupConfig<Self::DaConfig>,
     ) -> anyhow::Result<(jsonrpsee::RpcModule<()>, axum::Router<()>)> {
         let sequencer = rollup_config.da.own_celestia_address.clone();
-        sov_modules_rollup_blueprint::register_endpoints::<Self>(
-            storage,
-            ledger_db,
-            sequencer_db,
-            da_service,
-            sequencer,
-        )
+        sov_modules_rollup_blueprint::register_endpoints::<
+            Self,
+            ModAuth<Self::NativeSpec, Self::DaSpec>,
+        >(storage, ledger_db, sequencer_db, da_service, sequencer)
     }
 
     async fn create_da_service(

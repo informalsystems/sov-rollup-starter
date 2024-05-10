@@ -4,6 +4,7 @@
 use async_trait::async_trait;
 use sov_consensus_state_tracker::{MockDaConfig, MockDaService, MockDaSpec};
 
+use sov_consensus_state_tracker::ConsensusStateTracker;
 use sov_db::ledger_db::LedgerDB;
 use sov_db::sequencer_db::SequencerDB;
 use sov_kernels::basic::BasicKernel;
@@ -61,8 +62,13 @@ impl RollupBlueprint for MockRollup {
     type NativeRuntime = Runtime<Self::NativeSpec, Self::DaSpec>;
 
     /// Kernels.
-    type NativeKernel = BasicKernel<Self::NativeSpec, Self::DaSpec>;
-    type ZkKernel = BasicKernel<Self::ZkSpec, Self::DaSpec>;
+    type NativeKernel = ConsensusStateTracker<
+        BasicKernel<Self::NativeSpec, Self::DaSpec>,
+        Self::NativeSpec,
+        Self::DaSpec,
+    >;
+    type ZkKernel =
+        ConsensusStateTracker<BasicKernel<Self::ZkSpec, Self::DaSpec>, Self::ZkSpec, Self::DaSpec>;
 
     /// Prover service.
     type ProverService = ParallelProverService<

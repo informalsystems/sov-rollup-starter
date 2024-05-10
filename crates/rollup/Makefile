@@ -106,3 +106,23 @@ test-create-token: set-rpc-url test-generate-create-token-tx import-keys
 test-bank-supply-of:
 	curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"bank_supplyOf","params":{"token_id":"token_1gs3c7xshs42cr09d5yj0np6smhnd6y0fyleas8qpvk9u020crj2q5ar73r"},"id":1}' http://127.0.0.1:12345
 
+
+test-generate-create-client-tx: build-sov-cli
+	$(SOV_CLI_REL_PATH) transactions clean
+	$(SOV_CLI_REL_PATH) transactions import from-file ibc --chain-id 0 --path ../../test-data/requests/ibc_create_client.json
+
+test-create-client: set-rpc-url test-generate-create-client-tx import-keys
+	$(SOV_CLI_REL_PATH) rpc submit-batch by-nickname DANGER__DO_NOT_USE_WITH_REAL_MONEY
+
+test-generate-update-client-tx: build-sov-cli
+	$(SOV_CLI_REL_PATH) transactions clean
+	$(SOV_CLI_REL_PATH) transactions import from-file ibc --chain-id 0 --path ../../test-data/requests/ibc_update_client.json
+
+test-update-client: set-rpc-url test-generate-update-client-tx import-keys
+	$(SOV_CLI_REL_PATH) rpc submit-batch by-nickname DANGER__DO_NOT_USE_WITH_REAL_MONEY
+
+test-query-client-state:
+	curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"ibc_clientState","params":{"request":{"client_id": "07-tendermint-0"}},"id":1}' http://127.0.0.1:12345
+
+test-query-client-status:
+	curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"ibc_clientStatus","params":{"request":{"client_id": "07-tendermint-0"}},"id":1}' http://127.0.0.1:12345

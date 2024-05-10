@@ -142,7 +142,7 @@ let
                 "risc0-cycle-utils-0.3.0" = "sha256-5dA62v1eqfyZBny4s3YlC2Tty7Yfd/OAVGfTlLBgypk=";
                 "rockbound-1.0.0" = "sha256-xTaeBndRb/bYe+tySChDKsh4f9pywAExsdgJExCQiy8=";
                 "sov-celestia-client-0.1.0" = sov-ibc-hash;
-                "ibc-0.51.0" = "sha256-6HcMSTcKx4y1hfKcXnzgiNM9FWdqUuUNnemAgS36Z1A=";
+                "ibc-0.51.0" = "sha256-vKcqk6VqL0D842Z1rMfVTSTmQ9MO2USi9t7ZrwJcxSE=";
             };
         };
 

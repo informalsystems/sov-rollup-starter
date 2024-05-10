@@ -1,4 +1,16 @@
 #!/usr/bin/env bash
+
+function run_make_cmd() {
+    local cmd="$1"
+    echo "Running: '$cmd'"
+    $cmd
+    local exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+        echo "Expected exit code 0, got $exit_code"
+        exit 1
+    fi
+}
+
 trap 'jobs -p | xargs -r kill' EXIT
 echo 'Running: '\''cd crates/rollup/'\'''
 cd crates/rollup/
@@ -20,8 +32,8 @@ cargo run --bin node &> $output &
 background_process_pid=$!
 echo "Waiting for process with PID: $background_process_pid"
 until grep -q -i RPC $output
-do       
-  if ! ps $background_process_pid > /dev/null 
+do
+  if ! ps $background_process_pid > /dev/null
   then
     echo "The background process died" >&2
     exit 1
@@ -62,6 +74,13 @@ if ! [[ $output == *"$expected"* || $expected == *"$output"* ]]; then
     echo "'$output'"
     exit 1
 fi
+
+run_make_cmd "make test-create-client"
+run_make_cmd "make wait-ten-seconds"
+run_make_cmd "make test-query-client-state"
+run_make_cmd "make test-update-client"
+run_make_cmd "make wait-ten-seconds"
+run_make_cmd "make test-query-client-status"
 
 if [ $? -ne 0 ]; then
     echo "Expected exit code 0, got $?"

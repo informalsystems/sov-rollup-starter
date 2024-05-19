@@ -25,7 +25,7 @@ tracing = "0.1.37"
 anyhow = { workspace = true }
 serde = { workspace = true, features = ["derive", "rc"] }
 serde_json = { workspace = true }
-jsonrpsee = { workspace = true, features = ["jsonrpsee-types"], optional = true }
+jsonrpsee = { workspace = true, features = ["http-client", "server"], optional = true }
 borsh = { workspace = true, features = ["rc", "bytes"] }
 clap = { workspace = true, features = ["derive"], optional = true }
 tokio = { workspace = true, features = ["sync"], optional = true }

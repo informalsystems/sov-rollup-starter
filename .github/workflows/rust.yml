@@ -32,7 +32,7 @@ jobs:
           tool: cargo-risczero@0.20
       - uses: taiki-e/install-action@nextest
       - name: Install risc0-zkvm toolchain # Use the risc0 cargo extension to install the risc0 std library for the current toolchain
-        run: cargo risczero install --version v2024-02-08.1
+        run: cargo risczero install --version v2024-04-22.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: namespacelabs/nscloud-cache-action@v1

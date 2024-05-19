@@ -3,7 +3,7 @@
 //! of the zkvm in order to generate proofs for the rollup.
 
 use sov_mock_da::MockDaVerifier;
-pub use sov_mock_zkvm::MockZkVerifier;
+pub use sov_mock_zkvm::{MockZkVerifier, MockZkGuest};
 use sov_modules_api::default_spec::ZkDefaultSpec;
 use sov_kernels::basic::BasicKernel;
 use sov_modules_stf_blueprint::StfBlueprint;
@@ -39,10 +39,14 @@ pub fn main() {
     #[cfg(feature = "bench")]
         let start_cycles = risc0_zkvm_platform::syscall::sys_cycle_count();
 
-    let stf: StfBlueprint<ZkDefaultSpec<Risc0Verifier, MockZkVerifier>, _, _, Runtime<_, _>, BasicKernel<_, _>> =
-        StfBlueprint::new();
+    let stf: StfBlueprint<
+        ZkDefaultSpec<Risc0Verifier, MockZkVerifier>,
+        _,
+        Runtime<_, _>,
+        BasicKernel<_, _>,
+    > = StfBlueprint::new();
 
-    let stf_verifier = StfVerifier::new(stf, MockDaVerifier {});
+    let stf_verifier = StfVerifier::<_, _, _, _, _, MockZkGuest>::new(stf, MockDaVerifier {});
 
     stf_verifier
         .run_block(guest, storage)

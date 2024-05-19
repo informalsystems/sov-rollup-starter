@@ -1,5 +1,6 @@
 [da]
 sender_address = "0000000000000000000000000000000000000000000000000000000000000000"
+wait_attempts = 10_000_000
 
 [storage]
 # The path to the rollup's data directory. Paths that do not begin with `/` are interpreted as relative paths.

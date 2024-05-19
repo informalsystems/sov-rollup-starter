@@ -66,39 +66,39 @@ impl<S: Spec, Da: DaSpec> GasEnforcer<S, Da> for Runtime<S, Da> {
 }
 
 impl<S: Spec, Da: DaSpec> RuntimeAuthorization<S, Da> for Runtime<S, Da> {
-    /// The transaction type that the deduplicator knows how to parse.
-    type Tx = AuthenticatedTransactionData<S>;
+    /// Resolves the context for a transaction.
     fn resolve_context(
         &self,
-        tx: &Self::Tx,
+        tx: &AuthenticatedTransactionData<S>,
         sequencer: &Da::Address,
         height: u64,
-        working_set: &mut StateCheckpoint<S>,
-    ) -> Context<S> {
+        state_checkpoint: &mut StateCheckpoint<S>,
+    ) -> Result<Context<S>, anyhow::Error> {
         // TODO(@preston-evans98): This is a temporary hack to get the sequencer address
         // This should be resolved by the sequencer registry during blob selection
         let sequencer = self
             .sequencer_registry
-            .resolve_da_address(sequencer, working_set)
+            .resolve_da_address(sequencer, state_checkpoint)
             .ok_or(anyhow::anyhow!("Sequencer was no longer registered by the time of context resolution. This is a bug")).unwrap();
-        let sender = self.accounts.resolve_sender_address(tx, working_set);
-        Context::new(sender, sequencer, height)
+        let sender = self.accounts.resolve_sender_address(tx, state_checkpoint)?;
+        Ok(Context::new(sender, sequencer, height))
     }
 
     /// Prevents duplicate transactions from running.
     // TODO(@preston-evans98): Use type system to prevent writing to the `StateCheckpoint` during this check
     fn check_uniqueness(
         &self,
-        tx: &Self::Tx,
+        tx: &AuthenticatedTransactionData<S>,
         _context: &Context<S>,
         state_checkpoint: &mut StateCheckpoint<S>,
     ) -> Result<(), anyhow::Error> {
         self.accounts.check_uniqueness(tx, state_checkpoint)
     }
+
     /// Marks a transaction as having been executed, preventing it from executing again.
     fn mark_tx_attempted(
         &self,
-        tx: &Self::Tx,
+        tx: &AuthenticatedTransactionData<S>,
         _sequencer: &Da::Address,
         state_checkpoint: &mut StateCheckpoint<S>,
     ) {

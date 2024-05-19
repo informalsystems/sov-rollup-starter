@@ -1,32 +1,23 @@
 {
-    "comment": "Sovereign SDK constants",
-    "gas": {
-      "Bank": {
-        "create_token": [
-          4,
-          4
-        ],
-        "transfer": [
-          5,
-          5
-        ],
-        "burn": [
-          2,
-          2
-        ],
-        "mint": [
-          2,
-          2
-        ],
-        "freeze": [
-          1,
-          1
-        ]
-      }
-    },
-    "constants": {
-      "DEFERRED_SLOTS_COUNT": 2,
-      "GAS_TOKEN_ADDRESS": "sov1p9xxgsh78u3nxsl0zhfq4eazy0y4c8m5psjv3k3vrv45859jgazq3x72sg"
+  "comment": "Sovereign SDK constants",
+  "gas": {
+    "Bank": {
+      "create_token": [4, 4],
+      "transfer": [5, 5],
+      "burn": [2, 2],
+      "mint": [2, 2],
+      "freeze": [1, 1]
     }
+  },
+  "constants": {
+    "DEFERRED_SLOTS_COUNT": 2,
+    "GAS_TOKEN_ID": "token_1rwrh8gn2py0dl4vv65twgctmlwck6esm2as9dftumcw89kqqn3nqrduss6",
+    "GAS_TX_FIXED_COST": [10, 10],
+    "GAS_TX_COST_PER_BYTE": [0, 0],
+    "PERCENT_BASE_FEE_TO_BURN": 10,
+    "INITIAL_GAS_LIMIT": [100000000, 100000000],
+    "INITIAL_BASE_FEE_PER_GAS": [100, 100],
+    "BASE_FEE_MAX_CHANGE_DENOMINATOR": 8,
+    "ELASTICITY_MULTIPLIER": 2
+  }
 }
-  

@@ -10,9 +10,9 @@ pub use sov_accounts::{AccountsRpcImpl, AccountsRpcServer};
 #[cfg(feature = "native")]
 pub use sov_bank::{BankRpcImpl, BankRpcServer};
 #[cfg(feature = "native")]
-pub use sov_sequencer_registry::{SequencerRegistryRpcImpl, SequencerRegistryRpcServer};
-#[cfg(feature = "native")]
 use sov_prover_incentives::{ProverIncentivesRpcImpl, ProverIncentivesRpcServer};
+#[cfg(feature = "native")]
+pub use sov_sequencer_registry::{SequencerRegistryRpcImpl, SequencerRegistryRpcServer};
 
 #[cfg(feature = "native")]
 use sov_modules_api::macros::{expose_rpc, CliWallet};

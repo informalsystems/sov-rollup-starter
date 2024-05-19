@@ -8,12 +8,13 @@ use sov_bank::IntoPayable;
 use sov_modules_api::batch::BatchWithId;
 use sov_modules_api::hooks::{ApplyBatchHooks, FinalizeHook, SlotHooks, TxHooks};
 use sov_modules_api::runtime::capabilities::{
-    GasEnforcer, RuntimeAuthorization, SequencerAuthorization
+    GasEnforcer, RuntimeAuthorization, SequencerAuthorization,
 };
-use sov_modules_api::transaction::{AuthenticatedTransactionData, TransactionConsumption, TxGasMeter};
+use sov_modules_api::transaction::{
+    AuthenticatedTransactionData, TransactionConsumption, TxGasMeter,
+};
 use sov_modules_api::{
-    Context, DaSpec, Gas, ModuleInfo, Spec, StateCheckpoint, StateReaderAndWriter,
-    WorkingSet,
+    Context, DaSpec, Gas, ModuleInfo, Spec, StateCheckpoint, StateReaderAndWriter, WorkingSet,
 };
 use sov_modules_stf_blueprint::BatchSequencerOutcome;
 use sov_sequencer_registry::{SequencerRegistry, SequencerStakeMeter};
@@ -218,7 +219,8 @@ impl<S: Spec, Da: DaSpec> SlotHooks for Runtime<S, Da> {
         _versioned_state_checkpoint: &mut sov_modules_api::VersionedStateReadWriter<
             StateCheckpoint<Self::Spec>,
         >,
-    ) {}
+    ) {
+    }
 
     fn end_slot_hook(&self, _state_checkpoint: &mut StateCheckpoint<S>) {}
 }
@@ -230,5 +232,6 @@ impl<S: Spec, Da: DaSpec> FinalizeHook for Runtime<S, Da> {
         &self,
         _root_hash: S::VisibleHash,
         _accessory_working_set: &mut impl StateReaderAndWriter<Accessory>,
-    ) {}
+    ) {
+    }
 }

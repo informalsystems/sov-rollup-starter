@@ -1,14 +1,14 @@
 //! The stf-rollup supports `sov-module` authenticator. To support other authentication schemes,
 //! you can check out how we support `EVM` authenticator here:
 //! https://github.com/Sovereign-Labs/sovereign-sdk-wip/blob/146d5c2c5fa07ab7bb59ba6b2e64690ac9b63830/examples/demo-rollup/stf/src/authentication.rs#L29-L32
-use std::marker::PhantomData;
 use borsh::{BorshDeserialize, BorshSerialize};
 use serde::{Deserialize, Serialize};
+use std::marker::PhantomData;
 
+use sov_modules_api::capabilities::{FatalError, RuntimeAuthenticator};
 use sov_modules_api::runtime::capabilities::{AuthenticationError, RawTx};
 use sov_modules_api::transaction::AuthenticatedTransactionAndRawHash;
 use sov_modules_api::{Authenticator, DaSpec, DispatchCall, GasMeter, Spec};
-use sov_modules_api::capabilities::{FatalError, RuntimeAuthenticator};
 use sov_sequencer_registry::SequencerStakeMeter;
 
 use crate::runtime::Runtime;

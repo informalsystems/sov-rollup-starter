@@ -9,12 +9,15 @@
 pub use sov_accounts::{AccountsRpcImpl, AccountsRpcServer};
 #[cfg(feature = "native")]
 pub use sov_bank::{BankRpcImpl, BankRpcServer};
-use sov_modules_api::{macros::DefaultRuntime, Event};
-use sov_modules_api::{DaSpec, DispatchCall, Genesis, MessageCodec, Spec};
-#[cfg(feature = "native")]
-use sov_prover_incentives::{ProverIncentivesRpcImpl, ProverIncentivesRpcServer};
 #[cfg(feature = "native")]
 pub use sov_sequencer_registry::{SequencerRegistryRpcImpl, SequencerRegistryRpcServer};
+#[cfg(feature = "native")]
+use sov_prover_incentives::{ProverIncentivesRpcImpl, ProverIncentivesRpcServer};
+
+#[cfg(feature = "native")]
+use sov_modules_api::macros::{expose_rpc, CliWallet};
+use sov_modules_api::{DispatchCall, Event, Genesis, MessageCodec, Spec};
+use sov_rollup_interface::da::DaSpec;
 
 #[cfg(feature = "native")]
 use crate::genesis_config::GenesisPaths;
@@ -49,12 +52,8 @@ use crate::genesis_config::GenesisPaths;
 /// `#[derive(MessageCodec)]` adds deserialization capabilities to the `Runtime` (by implementing the `decode_call` method).
 /// `Runtime::decode_call` accepts a serialized call message and returns a type that implements the `DispatchCall` trait.
 ///  The `DispatchCall` implementation (derived by a macro) forwards the message to the appropriate module and executes its `call` method.
-#[cfg_attr(
-    feature = "native",
-    derive(sov_modules_api::macros::CliWallet),
-    sov_modules_api::macros::expose_rpc
-)]
-#[derive(Genesis, DispatchCall, Event, MessageCodec, DefaultRuntime)]
+#[cfg_attr(feature = "native", derive(CliWallet), expose_rpc)]
+#[derive(Default, Genesis, DispatchCall, Event, MessageCodec)]
 #[serialization(
     borsh::BorshDeserialize,
     borsh::BorshSerialize,

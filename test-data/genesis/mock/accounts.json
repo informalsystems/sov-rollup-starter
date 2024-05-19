@@ -1,3 +1,8 @@
 {
-  "pub_keys": []
+  "accounts": [
+    {
+      "credential_id": "0xfea6ac5b8751120fb62fff67b54d2eac66aef307c7dde1d394dea1e09e43dd44",
+      "address": "sov1l6n2cku82yfqld30lanm2nfw43n2auc8clw7r5u5m6s7p8jrm4zqrr8r94"
+    }
+  ]
 }

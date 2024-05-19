@@ -54,6 +54,6 @@ tracing = "0.1.40"
 tracing-appender = "0.2"
 tokio = { version = "1", features = ["full"] }
 tempfile = "3.5"
-jsonrpsee = { version = "0.20.1", features = ["jsonrpsee-types"] }
+jsonrpsee = { version = "0.22.5", features = ["jsonrpsee-types"] }
 
 risc0-build = "0.20"

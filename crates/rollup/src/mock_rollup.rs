@@ -7,7 +7,7 @@ use sov_kernels::basic::BasicKernel;
 use sov_mock_da::{MockDaConfig, MockDaService, MockDaSpec};
 use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
-use sov_modules_api::{Spec, Zkvm};
+use sov_modules_api::{CryptoSpec, Spec, Zkvm};
 use sov_modules_rollup_blueprint::RollupBlueprint;
 use sov_modules_stf_blueprint::StfBlueprint;
 use sov_prover_storage_manager::ProverStorageManager;
@@ -53,7 +53,10 @@ impl RollupBlueprint for MockRollup {
     >;
 
     /// Manager for the native storage lifecycle.
-    type StorageManager = ProverStorageManager<MockDaSpec, DefaultStorageSpec>;
+    type StorageManager = ProverStorageManager<
+        MockDaSpec,
+        DefaultStorageSpec<<<Self::NativeSpec as Spec>::CryptoSpec as CryptoSpec>::Hasher>,
+    >;
 
     /// Runtime for the Zero Knowledge environment.
     type ZkRuntime = Runtime<Self::ZkSpec, Self::DaSpec>;
@@ -71,13 +74,7 @@ impl RollupBlueprint for MockRollup {
         Self::DaService,
         Self::InnerZkvmHost,
         Self::OuterZkvmHost,
-        StfBlueprint<
-            Self::ZkSpec,
-            Self::DaSpec,
-            <<Self::InnerZkvmHost as ZkvmHost>::Guest as ZkvmGuest>::Verifier,
-            Self::ZkRuntime,
-            Self::ZkKernel,
-        >,
+        StfBlueprint<Self::ZkSpec, Self::DaSpec, Self::ZkRuntime, Self::ZkKernel>,
     >;
 
     fn create_outer_code_commitment(

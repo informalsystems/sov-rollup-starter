@@ -11,7 +11,7 @@ use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::{CryptoSpec, Spec};
 use sov_modules_rollup_blueprint::RollupBlueprint;
-use sov_modules_stf_blueprint::{StfBlueprint, RuntimeEndpoints};
+use sov_modules_stf_blueprint::{RuntimeEndpoints, StfBlueprint};
 use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
 use sov_rollup_interface::zk::aggregated_proof::CodeCommitment;

@@ -8,7 +8,7 @@ use jsonrpsee::core::client::{Subscription, SubscriptionClientT};
 use jsonrpsee::rpc_params;
 use sov_kernels::basic::BasicKernelGenesisPaths;
 use sov_mock_da::{MockAddress, MockDaConfig, MockDaSpec};
-use sov_modules_api::transaction::{PriorityFeeBips, Transaction};
+use sov_modules_api::transaction::{PriorityFeeBips, Transaction, UnsignedTransaction};
 use sov_modules_api::Spec;
 use sov_sequencer::utils::SimpleClient;
 use sov_stf_runner::RollupProverConfig;
@@ -89,12 +89,14 @@ async fn send_test_create_token_tx(rpc_address: SocketAddr) -> Result<(), anyhow
     let gas_limit = None;
     let tx = Transaction::<TestSpec>::new_signed_tx(
         &key,
-        msg.try_to_vec().unwrap(),
-        chain_id,
-        max_priority_fee,
-        MAX_TX_FEE,
-        gas_limit,
-        nonce,
+        UnsignedTransaction::new(
+            msg.try_to_vec().unwrap(),
+            chain_id,
+            max_priority_fee,
+            MAX_TX_FEE,
+            nonce,
+            gas_limit,
+        ),
     );
 
     let port = rpc_address.port();

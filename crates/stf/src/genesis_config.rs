@@ -38,8 +38,8 @@ impl core::fmt::Display for GenesisPaths {
 }
 
 impl GenesisPaths {
-    /// Creates a new [`GenesisPaths`] from the files contained in the given
-    /// directory.
+    /// Creates a new [`RuntimeTrait::GenesisConfig`] from the files contained in
+    /// the given directory.
     ///
     /// Take a look at the contents of the `test_data` directory to see the
     /// expected files.

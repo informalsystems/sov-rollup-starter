@@ -68,7 +68,7 @@ struct Args {
 fn init_logging(log_dir: Option<String>) -> Option<WorkerGuard> {
     let stdout_layer = fmt::layer().with_writer(std::io::stdout);
     let filter_layer =
-        EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("debug,hyper=info,risc0_zkvm=warn,sov_prover_storage_manager=info,jmt=info,sov_celestia_adapter=info"));
+        EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("debug,hyper=info,risc0_zkvm=warn,sov_prover_storage_manager=info,jmt=info,sov_celestia_adapter=info,jsonrpsee_server=info"));
 
     let subscriber = tracing_subscriber::registry()
         .with(stdout_layer)
@@ -102,7 +102,7 @@ fn setup_panic_hook() {
 }
 
 #[tokio::main]
-async fn main() -> Result<(), anyhow::Error> {
+async fn main() -> anyhow::Result<()> {
     let args = Args::parse();
 
     let guard = init_logging(args.log_dir);
@@ -118,24 +118,8 @@ async fn main() -> Result<(), anyhow::Error> {
     let genesis_paths = args.genesis_paths.as_str();
     let kernel_genesis_paths = args.kernel_genesis_paths.as_str();
 
-    let prover_config = if option_env!("CI").is_some() {
-        Some(RollupProverConfig::Execute)
-    } else if let Some(prover) = option_env!("SOV_PROVER_MODE") {
-        match prover {
-            "simulate" => Some(RollupProverConfig::Simulate),
-            "execute" => Some(RollupProverConfig::Execute),
-            "prove" => Some(RollupProverConfig::Prove),
-            _ => {
-                tracing::warn!(
-                    prover_mode = prover,
-                    "Unknown sov prover mode, using 'Skip' default"
-                );
-                Some(RollupProverConfig::Skip)
-            }
-        }
-    } else {
-        None
-    };
+    let prover_config = parse_prover_config()?;
+    tracing::info!(?prover_config, "Running demo rollup with prover config");
 
     let rollup = new_rollup(
         &GenesisPaths::from_dir(genesis_paths),
@@ -149,6 +133,18 @@ async fn main() -> Result<(), anyhow::Error> {
     rollup.run().await?;
     drop(guard);
     Ok(())
+}
+
+fn parse_prover_config() -> anyhow::Result<Option<RollupProverConfig>> {
+    if let Some(value) = option_env!("SOV_PROVER_MODE") {
+        let config = std::str::FromStr::from_str(value).map_err(|error| {
+            tracing::error!(value, ?error, "Unknown `SOV_PROVER_MODE` value; aborting");
+            error
+        })?;
+        Ok(Some(config))
+    } else {
+        Ok(None)
+    }
 }
 
 #[cfg(all(feature = "mock_da", not(feature = "celestia_da")))]

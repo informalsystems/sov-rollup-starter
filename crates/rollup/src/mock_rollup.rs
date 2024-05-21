@@ -9,7 +9,7 @@ use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::{CryptoSpec, Spec, Zkvm};
 use sov_modules_rollup_blueprint::RollupBlueprint;
-use sov_modules_stf_blueprint::StfBlueprint;
+use sov_modules_stf_blueprint::{RuntimeEndpoints, StfBlueprint};
 use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
 use sov_rollup_interface::zk::{aggregated_proof::CodeCommitment, ZkvmGuest, ZkvmHost};
@@ -91,7 +91,7 @@ impl RollupBlueprint for MockRollup {
         sequencer_db: &SequencerDb,
         da_service: &Self::DaService,
         rollup_config: &RollupConfig<Self::DaConfig>,
-    ) -> Result<(jsonrpsee::RpcModule<()>, axum::Router<()>), anyhow::Error> {
+    ) -> anyhow::Result<RuntimeEndpoints> {
         sov_modules_rollup_blueprint::register_endpoints::<
             Self,
             ModAuth<Self::NativeSpec, Self::DaSpec>,

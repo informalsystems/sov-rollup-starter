@@ -48,7 +48,6 @@ sov-rollup-interface            = { path = "../../../../vendor/sovereign-sdk/rol
 sov-risc0-adapter               = { path = "../../../../vendor/sovereign-sdk/adapters/risc0" }
 sov-mock-zkvm                   = { path = "../../../../vendor/sovereign-sdk/adapters/mock-zkvm" }
 sov-kernels                     = { path = "../../../../vendor/sovereign-sdk/module-system/sov-kernels" }
-sov-modules-core                = { path = "../../../../vendor/sovereign-sdk/module-system/sov-modules-core" }
 sov-mock-da                     = { path = "../../../../vendor/sovereign-sdk/adapters/mock-da" }
 
 sha2                            = { git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.8-risczero.0" }

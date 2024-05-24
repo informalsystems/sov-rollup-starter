@@ -37,7 +37,6 @@ sov-rollup-interface            = { path = "../../../../vendor/sovereign-sdk/rol
 sov-risc0-adapter               = { path = "../../../../vendor/sovereign-sdk/adapters/risc0" }
 sov-mock-zkvm                   = { path = "../../../../vendor/sovereign-sdk/adapters/mock-zkvm" }
 sov-kernels                     = { path = "../../../../vendor/sovereign-sdk/module-system/sov-kernels" }
-sov-modules-core                = { path = "../../../../vendor/sovereign-sdk/module-system/sov-modules-core" }
 sov-celestia-adapter            = { path = "../../../../vendor/sovereign-sdk/adapters/celestia" }
 
 ibc-core                    = { git = "https://github.com/cosmos/ibc-rs.git", rev = "c579628c67" }

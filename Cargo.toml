@@ -24,7 +24,6 @@ sov-modules-api                 = { version = "0.3.0" }
 sov-state                       = { version = "0.3.0" }
 sov-accounts                    = { version = "0.3.0" }
 sov-bank                        = { version = "0.3.0" }
-sov-ledger-rpc                  = { version = "0.3.0" }
 sov-sequencer-registry          = { version = "0.3.0" }
 sov-modules-stf-blueprint       = { version = "0.3.0" }
 sov-modules-rollup-blueprint    = { version = "0.3.0" }
@@ -81,7 +80,6 @@ sov-modules-api                 = { path = "./vendor/sovereign-sdk/module-system
 sov-state                       = { path = "./vendor/sovereign-sdk/module-system/sov-state" }
 sov-accounts                    = { path = "./vendor/sovereign-sdk/module-system/module-implementations/sov-accounts" }
 sov-bank                        = { path = "./vendor/sovereign-sdk/module-system/module-implementations/sov-bank" }
-sov-ledger-rpc                  = { path = "./vendor/sovereign-sdk/full-node/sov-ledger-rpc" }
 sov-sequencer-registry          = { path = "./vendor/sovereign-sdk/module-system/module-implementations/sov-sequencer-registry" }
 sov-modules-stf-blueprint       = { path = "./vendor/sovereign-sdk/module-system/sov-modules-stf-blueprint" }
 sov-modules-rollup-blueprint    = { path = "./vendor/sovereign-sdk/module-system/sov-modules-rollup-blueprint" }
@@ -94,7 +92,6 @@ sov-mock-zkvm                   = { path = "./vendor/sovereign-sdk/adapters/mock
 sov-cli                         = { path = "./vendor/sovereign-sdk/module-system/sov-cli" }
 sov-prover-storage-manager      = { path = "./vendor/sovereign-sdk/full-node/sov-prover-storage-manager" }
 sov-kernels                     = { path = "./vendor/sovereign-sdk/module-system/sov-kernels" }
-sov-modules-core                = { path = "./vendor/sovereign-sdk/module-system/sov-modules-core" }
 sov-celestia-adapter            = { path = "./vendor/sovereign-sdk/adapters/celestia" }
 sov-mock-da                     = { path = "./vendor/sovereign-sdk/adapters/mock-da" }
 

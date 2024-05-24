@@ -71,10 +71,10 @@ ibc-app-transfer            = { git = "https://github.com/cosmos/ibc-rs.git", re
 ibc-primitives              = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
 ibc-query                   = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
 
-sov-ibc                     = { git = "https://github.com/informalsystems/sovereign-ibc.git" }
-sov-ibc-transfer            = { git = "https://github.com/informalsystems/sovereign-ibc.git" }
-sov-celestia-client         = { git = "https://github.com/informalsystems/sovereign-ibc.git" }
-sov-consensus-state-tracker = { git = "https://github.com/informalsystems/sovereign-ibc.git" }
+sov-ibc                     = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "b74f6eb"  }
+sov-ibc-transfer            = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "b74f6eb"  }
+sov-celestia-client         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "b74f6eb"  }
+sov-consensus-state-tracker = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "b74f6eb"  }
 
 sov-modules-api                 = { path = "./vendor/sovereign-sdk/module-system/sov-modules-api" }
 sov-state                       = { path = "./vendor/sovereign-sdk/module-system/sov-state" }

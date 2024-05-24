@@ -114,7 +114,7 @@
       become: true
       become_user: ubuntu
       become_method: sudo
-      shell: /home/ubuntu/.cargo/bin/cargo risczero install --version v2024-02-08.1
+      shell: /home/ubuntu/.cargo/bin/cargo risczero install --version v2024-04-22.0
       args:
         executable: /bin/bash
   when: risc0_version_check.rc != 0

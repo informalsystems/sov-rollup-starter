@@ -56,7 +56,7 @@
                 rust-bin = nixpkgs.rust-bin.stable.latest.complete;
 
                 risc0-rust-tarball = builtins.fetchurl {
-                    url = "https://github.com/risc0/rust/releases/download/v2024-02-08.1/rust-toolchain-x86_64-unknown-linux-gnu.tar.gz";
+                    url = "https://github.com/risc0/rust/releases/download/v2024-04-22.0/rust-toolchain-x86_64-unknown-linux-gnu.tar.gz";
                     sha256 = "sha256:1v4i19wpj9z2zpn2wdf7w1nw5ridwi1linzy0g93wiy09pmz64j9";
                 };
 

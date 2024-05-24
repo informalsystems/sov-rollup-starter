@@ -27,11 +27,11 @@ sov-kernels                 = { version = "0.3.0" }
 stf-starter = { path = "../../../stf" }
 
 [patch.crates-io]
-ibc-core                    = { git = "https://github.com/cosmos/ibc-rs.git", rev = "c579628c67" }
-ibc-core-client             = { git = "https://github.com/cosmos/ibc-rs.git", rev = "c579628c67" }
-ibc-client-tendermint       = { git = "https://github.com/cosmos/ibc-rs.git", rev = "c579628c67" }
-ibc-app-transfer            = { git = "https://github.com/cosmos/ibc-rs.git", rev = "c579628c67" }
-ibc-primitives              = { git = "https://github.com/cosmos/ibc-rs.git", rev = "c579628c67" }
+ibc-core                    = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
+ibc-core-client             = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
+ibc-client-tendermint       = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
+ibc-app-transfer            = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
+ibc-primitives              = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
 
 sov-ibc                     = { git = "https://github.com/informalsystems/sovereign-ibc.git" }
 sov-ibc-transfer            = { git = "https://github.com/informalsystems/sovereign-ibc.git" }

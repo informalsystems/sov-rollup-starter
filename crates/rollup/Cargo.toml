@@ -39,6 +39,7 @@ serde_json = { workspace = true }
 jsonrpsee = { workspace = true }
 tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }
 prometheus_exporter = { workspace = true }
+sha2 = { workspace = true }
 
 risc0-starter = { path = "../provers/risc0" }
 stf-starter = { path = "../stf", features = ["native"] }

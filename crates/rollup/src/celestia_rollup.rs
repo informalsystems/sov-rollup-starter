@@ -12,6 +12,7 @@ use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
 use sov_modules_api::Spec;
 use sov_modules_rollup_blueprint::RollupBlueprint;
+use sov_modules_stf_blueprint::RuntimeEndpoints;
 use sov_modules_stf_blueprint::StfBlueprint;
 use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
@@ -23,6 +24,7 @@ use sov_state::{DefaultStorageSpec, ZkStorage};
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
 use sov_stf_runner::{ParallelProverService, ProverService};
+use stf_starter::authentication::ModAuth;
 use stf_starter::Runtime;
 use tokio::sync::watch;
 
@@ -58,7 +60,7 @@ impl RollupBlueprint for CelestiaRollup {
         <<Self::OuterZkvmHost as ZkvmHost>::Guest as ZkvmGuest>::Verifier,
     >;
 
-    type StorageManager = ProverStorageManager<CelestiaSpec, DefaultStorageSpec>;
+    type StorageManager = ProverStorageManager<CelestiaSpec, DefaultStorageSpec<sha2::Sha256>>;
     type ZkRuntime = Runtime<Self::ZkSpec, Self::DaSpec>;
 
     type NativeRuntime = Runtime<Self::NativeSpec, Self::DaSpec>;
@@ -92,22 +94,20 @@ impl RollupBlueprint for CelestiaRollup {
         MockCodeCommitment::default()
     }
 
-    fn create_rpc_methods(
+    fn create_endpoints(
         &self,
         storage: watch::Receiver<<Self::NativeSpec as Spec>::Storage>,
         ledger_db: &sov_db::ledger_db::LedgerDB,
         sequencer_db: &SequencerDB,
         da_service: &Self::DaService,
         rollup_config: &RollupConfig<Self::DaConfig>,
-    ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
+    ) -> Result<RuntimeEndpoints, anyhow::Error> {
         let sequencer = rollup_config.da.own_celestia_address.clone();
 
         #[allow(unused_mut)]
-        let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<
-            Self::NativeRuntime,
-            Self::NativeKernel,
-            Self::NativeSpec,
-            Self::DaService,
+        let mut rpc_methods = sov_modules_rollup_blueprint::register_endpoints::<
+            Self,
+            ModAuth<Self::NativeSpec, Self::DaSpec>,
         >(storage, ledger_db, sequencer_db, da_service, sequencer)?;
 
         #[cfg(feature = "experimental")]
@@ -146,8 +146,12 @@ impl RollupBlueprint for CelestiaRollup {
         let zk_storage = ZkStorage::new();
 
         let da_verifier = CelestiaVerifier {
-            rollup_namespace: ROLLUP_NAMESPACE,
+            rollup_batch_namespace: ROLLUP_NAMESPACE,
+            rollup_proof_namespace: ROLLUP_PROOF_NAMESPACE,
         };
+
+        let num_cpus = num_cpus::get();
+        assert!(num_cpus > 1, "Unable to create parallel prover service");
 
         ParallelProverService::new_with_default_workers(
             inner_vm,
@@ -156,7 +160,6 @@ impl RollupBlueprint for CelestiaRollup {
             da_verifier,
             prover_config,
             zk_storage,
-            rollup_config.prover_service,
             CodeCommitment::default(),
         )
     }

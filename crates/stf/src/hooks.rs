@@ -6,73 +6,107 @@
 
 use super::runtime::Runtime;
 use sov_modules_api::batch::BatchWithId;
+use sov_modules_api::capabilities::RuntimeAuthorization;
 use sov_modules_api::hooks::{ApplyBatchHooks, FinalizeHook, SlotHooks, TxHooks};
-use sov_modules_api::namespaces::Accessory;
-use sov_modules_api::runtime::capabilities::{
-    ContextResolver, GasEnforcer, TransactionDeduplicator,
-};
-use sov_modules_api::transaction::Transaction;
-use sov_modules_api::{
-    BlobReaderTrait, Context, DaSpec, Gas, Spec, StateCheckpoint, StateReaderAndWriter, WorkingSet,
-};
-use sov_modules_stf_blueprint::SequencerOutcome;
+use sov_modules_api::transaction::AuthenticatedTransactionData;
+use sov_modules_api::{Context, DaSpec, Spec, StateCheckpoint, StateReaderAndWriter, WorkingSet};
+use sov_modules_stf_blueprint::BatchSequencerOutcome;
 use sov_sequencer_registry::SequencerRegistry;
+use sov_state::Accessory;
 use tracing::info;
 
-impl<S: Spec, Da: DaSpec> GasEnforcer<S, Da> for Runtime<S, Da> {
-    /// The transaction type that the gas enforcer knows how to parse
-    type Tx = Transaction<S>;
-    /// Reserves enough gas for the transaction to be processed, if possible.
-    fn try_reserve_gas(
-        &self,
-        tx: &Self::Tx,
-        context: &Context<S>,
-        gas_price: &<S::Gas as Gas>::Price,
-        mut state_checkpoint: StateCheckpoint<S>,
-    ) -> Result<WorkingSet<S>, StateCheckpoint<S>> {
-        match self
-            .bank
-            .reserve_gas(tx, gas_price, context.sender(), &mut state_checkpoint)
-        {
-            Ok(gas_meter) => Ok(state_checkpoint.to_revertable(gas_meter)),
-            Err(e) => {
-                tracing::debug!("Unable to reserve gas from {}. {}", e, context.sender());
-                Err(state_checkpoint)
-            }
-        }
-    }
+// impl<S: Spec, Da: DaSpec> GasEnforcer<S, Da> for Runtime<S, Da> {
+//     type PreExecChecksMeter = SequencerStakeMeter<S::Gas>;
 
-    /// Refunds any remaining gas to the payer after the transaction is processed.
-    fn refund_remaining_gas(
+//     /// Reserves enough gas for the transaction to be processed, if possible.
+//     fn try_reserve_gas(
+//         &self,
+//         tx: &AuthenticatedTransactionData<S>,
+//         context: &Context<S>,
+//         gas_price: &<S::Gas as Gas>::Price,
+//         pre_exec_checks_meter: &Self::PreExecChecksMeter,
+//         state_checkpoint: StateCheckpoint<S>,
+//     ) -> Result<WorkingSet<S>, StateCheckpoint<S>> {
+//         self.bank
+//             .reserve_gas(
+//                 tx,
+//                 gas_price,
+//                 context.sender(),
+//                 pre_exec_checks_meter,
+//                 state_checkpoint,
+//             )
+//             .map_err(
+//                 |ReserveGasError::<S> {
+//                      state_checkpoint,
+//                      reason,
+//                  }| {
+//                     tracing::debug!(
+//                         sender = %context.sender(),
+//                         error = ?reason,
+//                         "Unable to reserve gas from sender"
+//                     );
+//                     state_checkpoint
+//                 },
+//             )
+//     }
+
+//     /// Refunds any remaining gas to the payer after the transaction is processed.
+//     fn refund_remaining_gas(
+//         &self,
+//         tx: &AuthenticatedTransactionData<S>,
+//         context: &Context<S>,
+//         consumption: &TransactionConsumption<S::Gas>,
+//         state_checkpoint: &mut StateCheckpoint<S>,
+//     ) {
+//         self.bank
+//             .refund_remaining_gas(tx, context.sender(), consumption, state_checkpoint);
+//     }
+
+//     fn allocate_consumed_gas(
+//         &self,
+//         tx_consumption: &TransactionConsumption<<S as Spec>::Gas>,
+//         checkpoint: &mut StateCheckpoint<S>,
+//     ) {
+//         // TODO(rano): Implement this
+//     }
+// }
+
+impl<S: Spec, Da: DaSpec> RuntimeAuthorization<S, Da> for Runtime<S, Da> {
+    fn resolve_context(
         &self,
-        tx: &Self::Tx,
-        context: &Context<S>,
-        gas_meter: &sov_modules_api::GasMeter<S::Gas>,
+        tx: &AuthenticatedTransactionData<S>,
+        sequencer: &Da::Address,
+        height: u64,
         state_checkpoint: &mut StateCheckpoint<S>,
-    ) {
-        self.bank
-            .refund_remaining_gas(tx, gas_meter, context.sender(), state_checkpoint);
+    ) -> Result<Context<S>, anyhow::Error> {
+        // TODO(@preston-evans98): This is a temporary hack to get the sequencer address
+        // This should be resolved by the sequencer registry during blob selection
+        let sequencer = self
+            .sequencer_registry
+            .resolve_da_address(sequencer, state_checkpoint)
+            .ok_or(anyhow::anyhow!("Sequencer was no longer registered by the time of context resolution. This is a bug"))?;
+        let sender = self.accounts.resolve_sender_address(tx, state_checkpoint)?;
+        // TODO(rano): I don't think, we should use Default here.
+        Ok(Context::new(
+            sender,
+            tx.credentials.clone(),
+            sequencer,
+            height,
+        ))
     }
-}
 
-impl<S: Spec, Da: DaSpec> TransactionDeduplicator<S, Da> for Runtime<S, Da> {
-    /// The transaction type that the deduplicator knows how to parse.
-    type Tx = Transaction<S>;
-    /// Prevents duplicate transactions from running.
-    // TODO(@preston-evans98): Use type system to prevent writing to the `StateCheckpoint` during this check
     fn check_uniqueness(
         &self,
-        tx: &Self::Tx,
+        tx: &AuthenticatedTransactionData<S>,
         _context: &Context<S>,
         state_checkpoint: &mut StateCheckpoint<S>,
     ) -> Result<(), anyhow::Error> {
         self.accounts.check_uniqueness(tx, state_checkpoint)
     }
 
-    /// Marks a transaction as having been executed, preventing it from executing again.
     fn mark_tx_attempted(
         &self,
-        tx: &Self::Tx,
+        tx: &AuthenticatedTransactionData<S>,
         _sequencer: &Da::Address,
         state_checkpoint: &mut StateCheckpoint<S>,
     ) {
@@ -80,54 +114,14 @@ impl<S: Spec, Da: DaSpec> TransactionDeduplicator<S, Da> for Runtime<S, Da> {
     }
 }
 
-/// Resolves the context for a transaction.
-impl<S: Spec, Da: DaSpec> ContextResolver<S, Da> for Runtime<S, Da> {
-    /// The transaction type that the resolver knows how to parse.
-    type Tx = Transaction<S>;
-    /// Resolves the context for a transaction.
-    fn resolve_context(
-        &self,
-        tx: &Self::Tx,
-        sequencer: &Da::Address,
-        height: u64,
-        working_set: &mut StateCheckpoint<S>,
-    ) -> Context<S> {
-        // TODO(@preston-evans98): This is a temporary hack to get the sequencer address
-        // This should be resolved by the sequencer registry during blob selection
-        let sequencer = self
-            .sequencer_registry
-            .resolve_da_address(sequencer, working_set)
-            .ok_or(anyhow::anyhow!("Sequencer was no longer registered by the time of context resolution. This is a bug")).unwrap();
-        let sender = self.accounts.resolve_sender_address(tx, working_set);
-        Context::new(sender, sequencer, height)
-    }
-}
-
 impl<S: Spec, Da: DaSpec> TxHooks for Runtime<S, Da> {
     type Spec = S;
-
-    fn pre_dispatch_tx_hook(
-        &self,
-        _tx: &Transaction<Self::Spec>,
-        _working_set: &mut WorkingSet<S>,
-    ) -> anyhow::Result<()> {
-        Ok(())
-    }
-
-    fn post_dispatch_tx_hook(
-        &self,
-        _tx: &Transaction<Self::Spec>,
-        _ctx: &Context<S>,
-        _working_set: &mut WorkingSet<S>,
-    ) -> anyhow::Result<()> {
-        Ok(())
-    }
+    type TxState = WorkingSet<S>;
 }
 
 impl<S: Spec, Da: DaSpec> ApplyBatchHooks<Da> for Runtime<S, Da> {
     type Spec = S;
-    type BatchResult =
-        SequencerOutcome<<<Da as DaSpec>::BlobTransaction as BlobReaderTrait>::Address>;
+    type BatchResult = BatchSequencerOutcome;
 
     fn begin_batch_hook(
         &self,
@@ -140,37 +134,33 @@ impl<S: Spec, Da: DaSpec> ApplyBatchHooks<Da> for Runtime<S, Da> {
             .begin_batch_hook(batch, sender, working_set)
     }
 
-    fn end_batch_hook(&self, result: Self::BatchResult, state_checkpoint: &mut StateCheckpoint<S>) {
+    fn end_batch_hook(
+        &self,
+        result: Self::BatchResult,
+        sender: &Da::Address,
+        state_checkpoint: &mut StateCheckpoint<S>,
+    ) {
+        // Since we need to make sure the `StfBlueprint` doesn't depend on the module system, we need to
+        // convert the `SequencerOutcome` structures manually.
         match result {
-            SequencerOutcome::Rewarded(reward) => {
-                // TODO: Process reward here or above.
+            BatchSequencerOutcome::Rewarded(amount) => {
+                info!(%sender, ?amount, "Rewarding sequencer");
                 <SequencerRegistry<S, Da> as ApplyBatchHooks<Da>>::end_batch_hook(
                     &self.sequencer_registry,
-                    sov_sequencer_registry::SequencerOutcome::Rewarded { amount: reward },
+                    sov_sequencer_registry::SequencerOutcome::Rewarded(amount.into()),
+                    sender,
                     state_checkpoint,
-                )
+                );
             }
-            SequencerOutcome::Ignored => {}
-            SequencerOutcome::Slashed {
-                reason,
-                sequencer_da_address,
-            } => {
-                info!(%sequencer_da_address, ?reason, "Slashing sequencer");
+            BatchSequencerOutcome::Ignored => {}
+            BatchSequencerOutcome::Slashed(reason) => {
+                info!(%sender, ?reason, "Slashing sequencer");
                 <SequencerRegistry<S, Da> as ApplyBatchHooks<Da>>::end_batch_hook(
                     &self.sequencer_registry,
-                    sov_sequencer_registry::SequencerOutcome::Slashed {
-                        sequencer: sequencer_da_address,
-                    },
+                    sov_sequencer_registry::SequencerOutcome::Slashed,
+                    sender,
                     state_checkpoint,
-                )
-            }
-            SequencerOutcome::Penalized(amount) => {
-                info!(amount, "Penalizing sequencer");
-                <SequencerRegistry<S, Da> as ApplyBatchHooks<Da>>::end_batch_hook(
-                    &self.sequencer_registry,
-                    sov_sequencer_registry::SequencerOutcome::Penalized { amount },
-                    state_checkpoint,
-                )
+                );
             }
         }
     }
@@ -178,16 +168,15 @@ impl<S: Spec, Da: DaSpec> ApplyBatchHooks<Da> for Runtime<S, Da> {
 
 impl<S: Spec, Da: DaSpec> SlotHooks for Runtime<S, Da> {
     type Spec = S;
+
     fn begin_slot_hook(
         &self,
-        _pre_state_root: <Self::Spec as Spec>::VisibleHash,
-        _versioned_working_set: &mut sov_modules_api::VersionedStateReadWriter<
-            StateCheckpoint<Self::Spec>,
-        >,
+        _pre_state_root: <S as Spec>::VisibleHash,
+        _versioned_working_set: &mut sov_modules_api::VersionedStateReadWriter<StateCheckpoint<S>>,
     ) {
     }
 
-    fn end_slot_hook(&self, _working_set: &mut StateCheckpoint<S>) {}
+    fn end_slot_hook(&self, _working_set: &mut sov_modules_api::StateCheckpoint<S>) {}
 }
 
 impl<S: Spec, Da: sov_modules_api::DaSpec> FinalizeHook for Runtime<S, Da> {
@@ -195,8 +184,8 @@ impl<S: Spec, Da: sov_modules_api::DaSpec> FinalizeHook for Runtime<S, Da> {
 
     fn finalize_hook(
         &self,
-        _root_hash: S::VisibleHash,
-        _accessory_working_set: &mut impl StateReaderAndWriter<Accessory>,
+        #[allow(unused_variables)] root_hash: S::VisibleHash,
+        #[allow(unused_variables)] accessory_state: &mut impl StateReaderAndWriter<Accessory>,
     ) {
     }
 }

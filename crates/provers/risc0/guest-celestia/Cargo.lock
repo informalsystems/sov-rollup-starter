@@ -626,6 +626,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2459377285ad874054d797f3ccebf984978aa39129f6eafde5cdc8315b612f8"
 
 [[package]]
+name = "const-rollup-config"
+version = "0.3.0"
+
+[[package]]
 name = "const_format"
 version = "0.2.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2800,6 +2804,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "sov-capabilities"
+version = "0.3.0"
+dependencies = [
+ "anyhow",
+ "sov-accounts",
+ "sov-bank",
+ "sov-modules-api",
+ "sov-prover-incentives",
+ "sov-rollup-interface",
+ "sov-sequencer-registry",
+ "tracing",
+]
+
+[[package]]
 name = "sov-celestia-adapter"
 version = "0.3.0"
 dependencies = [
@@ -2892,6 +2910,7 @@ version = "0.3.0"
 dependencies = [
  "ahash",
  "anyhow",
+ "const-rollup-config",
  "risc0-zkvm",
  "risc0-zkvm-platform",
  "sov-celestia-adapter",
@@ -3049,6 +3068,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "sov-prover-incentives"
+version = "0.3.0"
+dependencies = [
+ "anyhow",
+ "borsh",
+ "serde",
+ "sov-bank",
+ "sov-chain-state",
+ "sov-modules-api",
+ "sov-state",
+ "thiserror",
+]
+
+[[package]]
 name = "sov-risc0-adapter"
 version = "0.3.0"
 dependencies = [
@@ -3154,10 +3187,12 @@ dependencies = [
  "serde_json",
  "sov-accounts",
  "sov-bank",
+ "sov-capabilities",
  "sov-ibc",
  "sov-ibc-transfer",
  "sov-modules-api",
  "sov-modules-stf-blueprint",
+ "sov-prover-incentives",
  "sov-rollup-interface",
  "sov-sequencer-registry",
  "sov-state",

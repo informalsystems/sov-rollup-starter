@@ -20,6 +20,8 @@ sov-modules-stf-blueprint = { workspace = true }
 sov-stf-runner = { workspace = true }
 sov-sequencer = { workspace = true, optional = true }
 sov-rollup-interface = { workspace = true }
+sov-capabilities = { workspace = true }
+sov-prover-incentives = { workspace = true }
 tracing = "0.1.37"
 
 anyhow = { workspace = true }

@@ -6,20 +6,23 @@
 //!   3. Update `genesis.json` with any additional data required by your new module
 
 #[cfg(feature = "native")]
-pub use sov_accounts::{AccountsRpcImpl, AccountsRpcServer};
+use crate::genesis_config::GenesisPaths;
 #[cfg(feature = "native")]
-pub use sov_bank::{BankRpcImpl, BankRpcServer};
+pub use sov_accounts::AccountsRpcServer;
 #[cfg(feature = "native")]
-pub use sov_ibc::{IbcRpcImpl, IbcRpcServer};
+pub use sov_bank::BankRpcServer;
+use sov_capabilities::StandardProvenRollupCapabilities as StandardCapabilities;
 #[cfg(feature = "native")]
-pub use sov_ibc_transfer::{IbcTransferRpcImpl, IbcTransferRpcServer};
-use sov_modules_api::{macros::DefaultRuntime, Event};
+pub use sov_ibc::IbcRpcServer;
+#[cfg(feature = "native")]
+pub use sov_ibc_transfer::IbcTransferRpcServer;
+use sov_modules_api::capabilities::HasCapabilities;
+use sov_modules_api::macros::RuntimeRestApi;
+use sov_modules_api::Event;
 use sov_modules_api::{DaSpec, DispatchCall, Genesis, MessageCodec, Spec};
 #[cfg(feature = "native")]
-pub use sov_sequencer_registry::{SequencerRegistryRpcImpl, SequencerRegistryRpcServer};
-
-#[cfg(feature = "native")]
-use crate::genesis_config::GenesisPaths;
+pub use sov_sequencer_registry::SequencerRegistryRpcServer;
+use sov_sequencer_registry::SequencerStakeMeter;
 
 /// The runtime defines the logic of the rollup.
 ///
@@ -56,7 +59,7 @@ use crate::genesis_config::GenesisPaths;
     derive(sov_modules_api::macros::CliWallet),
     sov_modules_api::macros::expose_rpc
 )]
-#[derive(Genesis, DispatchCall, Event, MessageCodec, DefaultRuntime)]
+#[derive(Default, Genesis, DispatchCall, Event, MessageCodec, RuntimeRestApi)]
 #[serialization(
     borsh::BorshDeserialize,
     borsh::BorshSerialize,
@@ -74,6 +77,8 @@ pub struct Runtime<S: Spec, Da: DaSpec> {
     pub ibc_transfer: sov_ibc_transfer::IbcTransfer<S>,
     /// The sequencer registry module is responsible for authorizing users to sequencer rollup transactions
     pub sequencer_registry: sov_sequencer_registry::SequencerRegistry<S, Da>,
+    /// The Prover Incentives module.
+    pub prover_incentives: sov_prover_incentives::ProverIncentives<S, Da>,
 }
 
 impl<S, Da> sov_modules_stf_blueprint::Runtime<S, Da> for Runtime<S, Da>
@@ -87,14 +92,34 @@ where
     type GenesisPaths = GenesisPaths;
 
     #[cfg(feature = "native")]
-    fn rpc_methods(storage: tokio::sync::watch::Receiver<S::Storage>) -> jsonrpsee::RpcModule<()> {
-        get_rpc_methods::<S, Da>(storage)
+    fn endpoints(
+        storage: tokio::sync::watch::Receiver<<S as Spec>::Storage>,
+    ) -> sov_modules_stf_blueprint::RuntimeEndpoints {
+        use sov_modules_api::rest::HasRestApi;
+
+        sov_modules_stf_blueprint::RuntimeEndpoints {
+            jsonrpsee_module: get_rpc_methods::<S, Da>(storage.clone()),
+            axum_router: Self::default().rest_api(storage),
+        }
     }
 
     #[cfg(feature = "native")]
     fn genesis_config(
         genesis_paths: &Self::GenesisPaths,
     ) -> Result<Self::GenesisConfig, anyhow::Error> {
-        crate::genesis_config::get_genesis_config(genesis_paths)
+        crate::genesis_config::create_genesis_config(genesis_paths)
+    }
+}
+
+impl<S: Spec, Da: DaSpec> HasCapabilities<S, Da> for Runtime<S, Da> {
+    type Capabilities<'a> = StandardCapabilities<'a, S, Da>;
+    type SequencerStakeMeter = SequencerStakeMeter<S::Gas>;
+    fn capabilities(&self) -> Self::Capabilities<'_> {
+        StandardCapabilities {
+            bank: &self.bank,
+            sequencer_registry: &self.sequencer_registry,
+            accounts: &self.accounts,
+            prover_incentives: &self.prover_incentives,
+        }
     }
 }

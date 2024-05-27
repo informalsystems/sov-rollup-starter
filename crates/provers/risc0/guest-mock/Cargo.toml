@@ -42,6 +42,8 @@ sov-state                       = { path = "../../../../vendor/sovereign-sdk/mod
 sov-accounts                    = { path = "../../../../vendor/sovereign-sdk/module-system/module-implementations/sov-accounts" }
 sov-bank                        = { path = "../../../../vendor/sovereign-sdk/module-system/module-implementations/sov-bank" }
 sov-sequencer-registry          = { path = "../../../../vendor/sovereign-sdk/module-system/module-implementations/sov-sequencer-registry" }
+sov-capabilities                = { path = "../../../../vendor/sovereign-sdk/module-system/sov-capabilities" }
+sov-prover-incentives           = { path = "../../../../vendor/sovereign-sdk/module-system/module-implementations/sov-prover-incentives" }
 sov-modules-stf-blueprint       = { path = "../../../../vendor/sovereign-sdk/module-system/sov-modules-stf-blueprint" }
 sov-stf-runner                  = { path = "../../../../vendor/sovereign-sdk/full-node/sov-stf-runner" }
 sov-rollup-interface            = { path = "../../../../vendor/sovereign-sdk/rollup-interface" }

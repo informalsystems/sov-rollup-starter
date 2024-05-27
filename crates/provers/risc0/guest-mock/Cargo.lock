@@ -2182,6 +2182,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "sov-capabilities"
+version = "0.3.0"
+dependencies = [
+ "anyhow",
+ "sov-accounts",
+ "sov-bank",
+ "sov-modules-api",
+ "sov-prover-incentives",
+ "sov-rollup-interface",
+ "sov-sequencer-registry",
+ "tracing",
+]
+
+[[package]]
 name = "sov-celestia-client"
 version = "0.1.0"
 source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=b74f6eb#b74f6eb829d0e881f55dd8cd3fa938bf5f53e75c"
@@ -2404,6 +2418,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "sov-prover-incentives"
+version = "0.3.0"
+dependencies = [
+ "anyhow",
+ "borsh",
+ "serde",
+ "sov-bank",
+ "sov-chain-state",
+ "sov-modules-api",
+ "sov-state",
+ "thiserror",
+]
+
+[[package]]
 name = "sov-risc0-adapter"
 version = "0.3.0"
 dependencies = [
@@ -2509,10 +2537,12 @@ dependencies = [
  "serde_json",
  "sov-accounts",
  "sov-bank",
+ "sov-capabilities",
  "sov-ibc",
  "sov-ibc-transfer",
  "sov-modules-api",
  "sov-modules-stf-blueprint",
+ "sov-prover-incentives",
  "sov-rollup-interface",
  "sov-sequencer-registry",
  "sov-state",

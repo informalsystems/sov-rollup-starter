@@ -29,17 +29,6 @@
     - ncdu
     - protobuf-compiler
     - ninja-build
-      
-- name: some python utils
-  become: true
-  become_user: sovereign
-  ansible.builtin.pip:
-    name:
-      - tqdm
-      - requests
-      - pynacl
-      - base58
-    executable: pip3
 
 # Temporary workaround for https://github.com/Sovereign-Labs/sovereign-sdk-wip/pull/192
 - name: Download libssl package

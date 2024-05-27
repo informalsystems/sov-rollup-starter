@@ -5,6 +5,13 @@ This package is a convenient starting point for building a rollup using the Sove
 - `crates/provers`: This crate is responsible for creating proofs for the `STF`.
 - `crates/rollup`: This crate runs the `STF` and offers additional full-node functionalities.
 
+(!) Note for using WIP repo. 
+This repo utilizes private Sovereign SDK repo and default cargo needs this environment variable to use ssh key:
+
+```
+export CARGO_NET_GIT_FETCH_WITH_CLI=true
+```
+
 # How to run the sov-rollup-starter:
 #### 1. Change the working directory:
 

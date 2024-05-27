@@ -1,5 +1,6 @@
 [da]
 sender_address = "0000000000000000000000000000000000000000000000000000000000000000"
+wait_attempts = 10_000_000
 
 [storage]
 # The path to the rollup's data directory. Paths that do not begin with `/` are interpreted as relative paths.
@@ -12,9 +13,11 @@ genesis_height = 0
 da_polling_interval_ms = 1000
 
 [runner.rpc_config]
-# the host and port to bind the rpc server for
 bind_host = "127.0.0.1"
 bind_port = 12345
+[runner.axum_config]
+bind_host = "127.0.0.1"
+bind_port = 12346
 
-[prover_service]
+[proof_manager]
 aggregated_proof_block_jump = 1

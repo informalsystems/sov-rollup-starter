@@ -5,16 +5,15 @@
 use std::convert::AsRef;
 use std::path::{Path, PathBuf};
 
-pub use sov_accounts::{AccountConfig, AccountData};
-pub use sov_bank::{BankConfig, Coins, TokenConfig};
+use anyhow::Context as _;
+use sov_accounts::AccountConfig;
+use sov_bank::BankConfig;
 use sov_ibc::ExampleModuleConfig;
 use sov_ibc_transfer::TransferConfig;
-use sov_modules_api::Spec;
+use sov_modules_api::{DaSpec, Spec};
 use sov_modules_stf_blueprint::Runtime as RuntimeTrait;
 use sov_prover_incentives::ProverIncentivesConfig;
-use sov_rollup_interface::da::DaSpec;
-pub use sov_sequencer_registry::SequencerConfig;
-pub use sov_state::config::Config as StorageConfig;
+use sov_sequencer_registry::SequencerConfig;
 use sov_stf_runner::read_json_file;
 
 /// Creates config for a rollup with some default settings, the config is used in demos and tests.
@@ -37,9 +36,22 @@ pub struct GenesisPaths {
     pub prover_incentives_genesis_path: PathBuf,
 }
 
+impl core::fmt::Display for GenesisPaths {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(
+            f,
+            "GenesisPaths {{ accounts_genesis_path: {}, bank_genesis_path: {}, sequencer_genesis_path: {}, prover_incentives_genesis_path: {} }}",
+            self.accounts_genesis_path.display(),
+            self.bank_genesis_path.display(),
+            self.sequencer_genesis_path.display(),
+            self.prover_incentives_genesis_path.display(),
+        )
+    }
+}
+
 impl GenesisPaths {
-    /// Creates a new [`GenesisPaths`] from the files contained in the given
-    /// directory.
+    /// Creates a new [`RuntimeTrait::GenesisConfig`] from the files contained in
+    /// the given directory.
     ///
     /// Take a look at the contents of the `test-data` directory to see the
     /// expected files.
@@ -55,18 +67,27 @@ impl GenesisPaths {
     }
 }
 
-/// Creates a new [`RuntimeTrait::GenesisConfig`] from the files contained in
-/// the given directory.
+pub(crate) fn get_genesis_config<S: Spec, Da: DaSpec>(
+    genesis_paths: &GenesisPaths,
+) -> anyhow::Result<<Runtime<S, Da> as RuntimeTrait<S, Da>>::GenesisConfig> {
+    create_genesis_config(genesis_paths).with_context(|| {
+        format!(
+            "Unable to read genesis configuration from: {}",
+            genesis_paths
+        )
+    })
+}
+
+/// Creates a new [`GenesisConfig`] from the files contained in the given
+/// directory.
 pub fn create_genesis_config<S: Spec, Da: DaSpec>(
     genesis_paths: &GenesisPaths,
 ) -> anyhow::Result<<Runtime<S, Da> as RuntimeTrait<S, Da>>::GenesisConfig> {
+    let accounts_config: AccountConfig<S> = read_json_file(&genesis_paths.accounts_genesis_path)?;
     let bank_config: BankConfig<S> = read_json_file(&genesis_paths.bank_genesis_path)?;
 
     let sequencer_registry_config: SequencerConfig<S, Da> =
         read_json_file(&genesis_paths.sequencer_genesis_path)?;
-
-    let accounts_config: AccountConfig<S> = read_json_file(&genesis_paths.accounts_genesis_path)?;
-
     let prover_incentives_config: ProverIncentivesConfig<S> =
         read_json_file(&genesis_paths.prover_incentives_genesis_path)?;
 

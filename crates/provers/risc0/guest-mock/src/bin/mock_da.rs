@@ -1,7 +1,10 @@
 #![no_main]
+//! This binary implements the verification logic for the rollup. This is the code that runs inside
+//! of the zkvm in order to generate proofs for the rollup.
+
 use sov_kernels::basic::BasicKernel;
 use sov_mock_da::MockDaVerifier;
-pub use sov_mock_zkvm::{MockZkGuest, MockZkVerifier};
+use sov_mock_zkvm::{MockZkGuest, MockZkVerifier};
 use sov_modules_api::default_spec::ZkDefaultSpec;
 use sov_modules_stf_blueprint::StfBlueprint;
 use sov_risc0_adapter::guest::Risc0Guest;

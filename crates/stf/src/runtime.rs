@@ -5,24 +5,28 @@
 //!   2. Add the module to the `Runtime` below
 //!   3. Update `genesis.json` with any additional data required by your new module
 
+use sov_capabilities::StandardProvenRollupCapabilities as StandardCapabilities;
+use sov_modules_api::capabilities::HasCapabilities;
+#[cfg(feature = "native")]
+use sov_modules_api::macros::{expose_rpc, CliWallet};
+use sov_modules_api::prelude::*;
+use sov_modules_api::{DispatchCall, Event, Genesis, MessageCodec, Spec};
+use sov_rollup_interface::da::DaSpec;
+use sov_sequencer_registry::SequencerStakeMeter;
+
 #[cfg(feature = "native")]
 use crate::genesis_config::GenesisPaths;
 #[cfg(feature = "native")]
 pub use sov_accounts::AccountsRpcServer;
 #[cfg(feature = "native")]
 pub use sov_bank::BankRpcServer;
-use sov_capabilities::StandardProvenRollupCapabilities as StandardCapabilities;
 #[cfg(feature = "native")]
 pub use sov_ibc::IbcRpcServer;
 #[cfg(feature = "native")]
 pub use sov_ibc_transfer::IbcTransferRpcServer;
-use sov_modules_api::capabilities::HasCapabilities;
 use sov_modules_api::macros::RuntimeRestApi;
-use sov_modules_api::Event;
-use sov_modules_api::{DaSpec, DispatchCall, Genesis, MessageCodec, Spec};
 #[cfg(feature = "native")]
 pub use sov_sequencer_registry::SequencerRegistryRpcServer;
-use sov_sequencer_registry::SequencerStakeMeter;
 
 /// The runtime defines the logic of the rollup.
 ///
@@ -32,7 +36,7 @@ use sov_sequencer_registry::SequencerStakeMeter;
 /// The module-specific logic is implemented by module creators, but all the glue code responsible for message
 /// deserialization/forwarding is handled by a rollup `runtime`.
 ///
-/// In order to define the runtime we need to specify all the modules supported by our rollup (see the `Runtime` struct bellow)
+/// To define the runtime, we need to specify all the modules supported by our rollup (see the `Runtime` struct bellow)
 ///
 /// The `Runtime` defines:
 /// - how the rollup modules are wired up together.
@@ -51,14 +55,10 @@ use sov_sequencer_registry::SequencerStakeMeter;
 ///     In general, the point of a call is to change the module state, but if the call throws an error,
 ///     no state is updated (the transaction is reverted).
 ///
-/// `#[derive(MessageCodec)` adds deserialization capabilities to the `Runtime` (by implementing the `decode_call` method).
+/// `#[derive(MessageCodec)]` adds deserialization capabilities to the `Runtime` (by implementing the `decode_call` method).
 /// `Runtime::decode_call` accepts a serialized call message and returns a type that implements the `DispatchCall` trait.
 ///  The `DispatchCall` implementation (derived by a macro) forwards the message to the appropriate module and executes its `call` method.
-#[cfg_attr(
-    feature = "native",
-    derive(sov_modules_api::macros::CliWallet),
-    sov_modules_api::macros::expose_rpc
-)]
+#[cfg_attr(feature = "native", derive(CliWallet), expose_rpc)]
 #[derive(Default, Genesis, DispatchCall, Event, MessageCodec, RuntimeRestApi)]
 #[serialization(
     borsh::BorshDeserialize,
@@ -67,7 +67,7 @@ use sov_sequencer_registry::SequencerStakeMeter;
     serde::Deserialize
 )]
 pub struct Runtime<S: Spec, Da: DaSpec> {
-    /// The `accounts` module is responsible for managing user accounts and their nonces
+    /// The `accounts` module is responsible for managing user accounts and their nonce
     pub accounts: sov_accounts::Accounts<S>,
     /// The bank module is responsible for minting, transferring, and burning tokens
     pub bank: sov_bank::Bank<S>,
@@ -93,9 +93,9 @@ where
 
     #[cfg(feature = "native")]
     fn endpoints(
-        storage: tokio::sync::watch::Receiver<<S as Spec>::Storage>,
+        storage: tokio::sync::watch::Receiver<S::Storage>,
     ) -> sov_modules_stf_blueprint::RuntimeEndpoints {
-        use sov_modules_api::rest::HasRestApi;
+        use ::sov_modules_api::rest::HasRestApi;
 
         sov_modules_stf_blueprint::RuntimeEndpoints {
             jsonrpsee_module: get_rpc_methods::<S, Da>(storage.clone()),

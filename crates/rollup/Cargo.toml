@@ -19,16 +19,20 @@ tracing-appender = { workspace = true }
 sov-prover-storage-manager = { workspace = true }
 sov-accounts = { workspace = true, features = ["native"] }
 sov-bank = { workspace = true, features = ["native"] }
+sov-ledger-apis = { workspace = true, features = ["server"] }
 sov-sequencer-registry = { workspace = true, features = ["native"] }
 sov-modules-rollup-blueprint = { workspace = true }
 sov-modules-stf-blueprint = { workspace = true, features = ["native"] }
 sov-stf-runner = { workspace = true, features = ["native"] }
-sov-cli = { workspace = true}
+sov-cli = { workspace = true }
 
 sov-db = { workspace = true }
 sov-sequencer = { workspace = true }
 sov-rollup-interface = { workspace = true }
+sov-mock-da = { workspace = true, features = ["native"], optional = true }
+sov-celestia-adapter = { workspace = true, features = ["native"], optional = true }
 
+axum = { workspace = true }
 anyhow = { workspace = true }
 async-trait = { workspace = true }
 borsh = { workspace = true }
@@ -39,7 +43,6 @@ serde_json = { workspace = true }
 jsonrpsee = { workspace = true }
 tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }
 prometheus_exporter = { workspace = true }
-sha2 = { workspace = true }
 
 risc0-starter = { path = "../provers/risc0" }
 stf-starter = { path = "../stf", features = ["native"] }

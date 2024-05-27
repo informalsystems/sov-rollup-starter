@@ -1,0 +1,22 @@
+[da]
+sender_address = "{{ da_rollup_address }}"
+
+[storage]
+# The path to the rollup's data directory. Paths that do not begin with `/` are interpreted as relative paths.
+path = "/mnt/rollup"
+
+# We define the rollup's genesis to occur at block number `start_height`. The rollup will ignore
+# any blocks before this height
+[runner]
+genesis_height = 0
+da_polling_interval_ms = 1000
+
+[runner.rpc_config]
+bind_host = "127.0.0.1"
+bind_port = {{ rollup_json_rpc_port }}
+[runner.axum_config]
+bind_host = "127.0.0.1"
+bind_port = {{ rollup_rest_rpc_port }}
+
+[proof_manager]
+aggregated_proof_block_jump = 1

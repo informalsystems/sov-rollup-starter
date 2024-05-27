@@ -3,9 +3,9 @@ name: Rust
 on:
   workflow_dispatch:
   push:
-    branches: [ "ibc-rollup" ]
+    branches: ["ibc-rollup"]
   pull_request:
-    branches: [ "ibc-rollup" ]
+    branches: ["ibc-rollup"]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -16,7 +16,10 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on:
+      - nscloud-ubuntu-20.04-amd64-8x32-with-cache
+      - nscloud-cache-tag-sov-rollup-starter-build
+      - nscloud-cache-size-100gb
     steps:
       - uses: webfactory/ssh-agent@v0.9.0
         with:
@@ -29,19 +32,22 @@ jobs:
         uses: arduino/setup-protoc@v2
         with:
           version: "23.2"
-      - name: Cache dependencies
-        uses: Swatinem/rust-cache@v2
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install cargo-risczero
         uses: taiki-e/install-action@v2
         with:
           tool: cargo-risczero@0.20
+      - uses: taiki-e/install-action@nextest
       - name: Install risc0-zkvm toolchain # Use the risc0 cargo extension to install the risc0 std library for the current toolchain
         run: cargo risczero install --version v2024-04-22.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build
-        run: cargo build
+      - uses: namespacelabs/nscloud-cache-action@v1
+        with:
+          cache: rust
+      - name: Check
+        run: make lint
       - name: Run tests
-        run: cargo test
+        run: cargo nextest run
       - name: Run README.md
         run: chmod +x sov-rollup-starter.sh && ./sov-rollup-starter.sh

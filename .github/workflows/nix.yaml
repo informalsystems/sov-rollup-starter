@@ -1,11 +1,11 @@
-name: Rust
+name: Nix
 
 on:
   workflow_dispatch:
   push:
-    branches: [ "ibc-rollup" ]
+    branches: ["ibc-rollup"]
   pull_request:
-    branches: [ "ibc-rollup" ]
+    branches: ["ibc-rollup"]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-2
@@ -26,7 +26,7 @@ jobs:
       - uses: cachix/cachix-action@v14
         with:
           name: informal-sovereign
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Run Nix Build
         run: |
           nix build .#rollup .#celestia-app .#celestia-node .#gaia

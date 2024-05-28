@@ -14,14 +14,14 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo 'Running: '\''cargo run --bin node'\'''
+echo 'Running: '\''cargo run --bin rollup'\'''
 output=$(mktemp)
-cargo run --bin node &> $output &
+cargo run --bin rollup &> $output &
 background_process_pid=$!
 echo "Waiting for process with PID: $background_process_pid"
 until grep -q -i RPC $output
-do       
-  if ! ps $background_process_pid > /dev/null 
+do
+  if ! ps $background_process_pid > /dev/null
   then
     echo "The background process died" >&2
     exit 1

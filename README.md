@@ -5,7 +5,7 @@ This package is a convenient starting point for building a rollup using the Sove
 - `crates/provers`: This crate is responsible for creating proofs for the `STF`.
 - `crates/rollup`: This crate runs the `STF` and offers additional full-node functionalities.
 
-(!) Note for using WIP repo. 
+(!) Note for using WIP repo.
 This repo utilizes private Sovereign SDK repo and default cargo needs this environment variable to use ssh key:
 
 ```
@@ -28,7 +28,7 @@ $ make clean-db
 #### 3. Start the rollup node:
 
 ```sh,test-ci
-export SOV_PROVER_MODE=execute 
+export SOV_PROVER_MODE=execute
 ```
 
 This will compile and start the rollup node:
@@ -98,7 +98,7 @@ $ make start
 This will compile and start the rollup node:
 
 ```
-$ cargo run --bin node --no-default-features --features celestia_da
+$ cargo run --bin rollup --no-default-features --features celestia_da
 ```
 
 #### 5. Submit a token creation transaction to the `bank` module:

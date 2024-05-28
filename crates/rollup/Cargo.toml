@@ -65,8 +65,8 @@ celestia_da = ["sov-consensus-state-tracker/celestia-da", "dep:sov-celestia-adap
 test = ["mock_da"]
 
 [[bin]]
-name = "node"
-path = "src/bin/node.rs"
+name = "rollup"
+path = "src/bin/rollup.rs"
 
 [[bin]]
 name = "starter-cli-wallet"

@@ -5,6 +5,7 @@ use async_trait::async_trait;
 use sov_celestia_adapter::types::Namespace;
 use sov_celestia_adapter::verifier::{CelestiaSpec, CelestiaVerifier, RollupParams};
 use sov_celestia_adapter::{CelestiaConfig, CelestiaService};
+use sov_consensus_state_tracker::ConsensusStateTracker;
 use sov_db::ledger_db::LedgerDb;
 use sov_kernels::basic::BasicKernel;
 use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
@@ -135,9 +136,6 @@ impl RollupBlueprint for CelestiaRollup {
             rollup_batch_namespace: ROLLUP_BATCH_NAMESPACE,
             rollup_proof_namespace: ROLLUP_PROOF_NAMESPACE,
         };
-
-        let num_cpus = num_cpus::get();
-        assert!(num_cpus > 1, "Unable to create parallel prover service");
 
         ParallelProverService::new_with_default_workers(
             inner_vm,

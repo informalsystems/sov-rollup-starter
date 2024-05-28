@@ -17,7 +17,7 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 authors = ["Informal Systems <hello@informal.systems>", "Sovereign Labs <info@sovereign.xyz>"]
 publish = false
-rust-version = "1.73"
+rust-version = "1.77"
 
 [workspace.dependencies]
 sov-modules-api = { version = "0.3.0" }

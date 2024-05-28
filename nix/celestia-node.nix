@@ -3,7 +3,7 @@
 ,   celestia-node-src
 }:
 let
-    celestia-node = nixpkgs.buildGoModule {
+    celestia-node = nixpkgs.buildGo121Module {
         name = "celestia-node";
         version = "0.12.0";
         src = celestia-node-src;

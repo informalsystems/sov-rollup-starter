@@ -4,7 +4,23 @@ fn main() {
     println!("cargo::rerun-if-env-changed=SKIP_GUEST_BUILD");
     println!("cargo::rerun-if-env-changed=OUT_DIR");
 
-    if std::env::var("SKIP_GUEST_BUILD").is_ok() {
+    if let Ok(rollup_elf_path) = std::env::var("ROLLUP_ELF_PATH") {
+        println!("Using prebuilt rollup ELF bytes at {rollup_elf_path}");
+
+        let out_dir = std::env::var_os("OUT_DIR").unwrap();
+        let out_dir = std::path::Path::new(&out_dir);
+        let methods_path = out_dir.join("methods.rs");
+
+        let rollup_elf_bytes = std::fs::read(rollup_elf_path).unwrap();
+
+        let elf = format!(
+            r#"
+            pub const ROLLUP_ELF: &[u8] = &{rollup_elf_bytes:?};
+            "#
+        );
+
+        std::fs::write(methods_path, elf).expect("Failed to write rollup elf to methods.rs");
+    } else if std::env::var("SKIP_GUEST_BUILD").is_ok() {
         println!("Skipping guest build for CI run");
         let out_dir = std::env::var_os("OUT_DIR").unwrap();
         let out_dir = std::path::Path::new(&out_dir);

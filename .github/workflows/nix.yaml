@@ -29,4 +29,4 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Run Nix Build
         run: |
-          nix build .#rollup .#celestia-app .#celestia-node .#gaia
+          nix build -L .#rollup .#celestia-app .#celestia-node .#gaia

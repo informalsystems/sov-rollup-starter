@@ -6,7 +6,8 @@
 ,   risc0-circuit
 }:
 let
-    sov-ibc-hash = "sha256-PZlKt4gXSgAYLr8XHs/2LNsetWPqkn9GvgMzqcsfrao=";
+    sov-ibc-hash = "sha256-Wpr0hZt9mmikLNeIju7grA05y56RvSnfyLk9mQyd8jw=";
+    ibc-rs-hash = "sha256-Rew8AV3wuQ90ft0uAyysfdfHYejCqSDz66Wo9Tf0lW0=";
 
     rollup-guest-src = nixpkgs.stdenv.mkDerivation {
         name = "rollup-guest-src";
@@ -54,7 +55,7 @@ let
                 "sha2-0.10.8" = "sha256-vuFQFlbDXEW+n9+Nx2VeWanggCSd6NZ+GVEDFS9qZ2M=";
                 "risc0-cycle-utils-0.3.0" = "sha256-5dA62v1eqfyZBny4s3YlC2Tty7Yfd/OAVGfTlLBgypk=";
                 "sov-celestia-client-0.1.0" = sov-ibc-hash;
-                "ibc-app-transfer-0.51.0" = "sha256-6HcMSTcKx4y1hfKcXnzgiNM9FWdqUuUNnemAgS36Z1A=";
+                "ibc-app-transfer-0.53.0" = ibc-rs-hash;
             };
         };
 
@@ -98,7 +99,7 @@ let
                 "tendermint-0.32.0" = "sha256-FtY7a+hBvQryATrs3mykCWFRe8ABTT6cuf5oh9IBElQ=";
                 "risc0-cycle-utils-0.3.0" = "sha256-5dA62v1eqfyZBny4s3YlC2Tty7Yfd/OAVGfTlLBgypk=";
                 "sov-celestia-client-0.1.0" = sov-ibc-hash;
-                "ibc-app-transfer-0.51.0" = "sha256-6HcMSTcKx4y1hfKcXnzgiNM9FWdqUuUNnemAgS36Z1A=";
+                "ibc-app-transfer-0.53.0" = ibc-rs-hash;
             };
         };
 
@@ -140,9 +141,9 @@ let
                 "crypto-bigint-0.5.2" = "sha256-9rh8z3vwOQ7/mtzVbyADoRWgTzARF/nkhBwfKb7+A6I=";
                 "curve25519-dalek-4.1.0" = "sha256-H8YMea3AIcUn9NGRfataNjCTzCK4NAjo4ZhWuPfT6ts=";
                 "risc0-cycle-utils-0.3.0" = "sha256-5dA62v1eqfyZBny4s3YlC2Tty7Yfd/OAVGfTlLBgypk=";
-                "rockbound-1.0.0" = "sha256-xTaeBndRb/bYe+tySChDKsh4f9pywAExsdgJExCQiy8=";
+                "rockbound-1.0.0" = "sha256-aDrNegRfsSwiNw4XLsE4rpUYDZn2N59UJbGZ6mpY180=";
                 "sov-celestia-client-0.1.0" = sov-ibc-hash;
-                "ibc-0.51.0" = "sha256-6HcMSTcKx4y1hfKcXnzgiNM9FWdqUuUNnemAgS36Z1A=";
+                "ibc-0.53.0" = ibc-rs-hash;
             };
         };
 

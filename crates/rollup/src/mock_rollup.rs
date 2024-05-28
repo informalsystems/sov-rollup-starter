@@ -2,32 +2,32 @@
 //! StarterRollup provides a minimal self-contained rollup implementation
 
 use async_trait::async_trait;
-use sov_consensus_state_tracker::{MockDaConfig, MockDaService, MockDaSpec};
-
-use sov_db::ledger_db::LedgerDB;
-use sov_db::sequencer_db::SequencerDB;
+use sov_db::ledger_db::LedgerDb;
 use sov_kernels::basic::BasicKernel;
+use sov_mock_da::{MockDaConfig, MockDaService, MockDaSpec};
 use sov_mock_zkvm::{MockCodeCommitment, MockZkvm};
 use sov_modules_api::default_spec::{DefaultSpec, ZkDefaultSpec};
-use sov_modules_api::{Spec, Zkvm};
+use sov_modules_api::{CryptoSpec, Spec, Zkvm};
 use sov_modules_rollup_blueprint::RollupBlueprint;
-use sov_modules_stf_blueprint::StfBlueprint;
+use sov_modules_stf_blueprint::{RuntimeEndpoints, StfBlueprint};
 use sov_prover_storage_manager::ProverStorageManager;
 use sov_risc0_adapter::host::Risc0Host;
 use sov_rollup_interface::zk::{aggregated_proof::CodeCommitment, ZkvmGuest, ZkvmHost};
+use sov_sequencer::SequencerDb;
 use sov_state::config::Config as StorageConfig;
 use sov_state::Storage;
 use sov_state::{DefaultStorageSpec, ZkStorage};
 use sov_stf_runner::RollupConfig;
 use sov_stf_runner::RollupProverConfig;
 use sov_stf_runner::{ParallelProverService, ProverService};
+use stf_starter::authentication::ModAuth;
 use stf_starter::Runtime;
 use tokio::sync::watch;
 
 /// Rollup with [`MockDaService`].
 pub struct MockRollup {}
 
-/// This is the place, where all the rollup components come together and
+/// This is the place, where all the rollup components come together, and
 /// they can be easily swapped with alternative implementations as needed.
 #[async_trait]
 impl RollupBlueprint for MockRollup {
@@ -53,7 +53,10 @@ impl RollupBlueprint for MockRollup {
     >;
 
     /// Manager for the native storage lifecycle.
-    type StorageManager = ProverStorageManager<MockDaSpec, DefaultStorageSpec>;
+    type StorageManager = ProverStorageManager<
+        MockDaSpec,
+        DefaultStorageSpec<<<Self::NativeSpec as Spec>::CryptoSpec as CryptoSpec>::Hasher>,
+    >;
 
     /// Runtime for the Zero Knowledge environment.
     type ZkRuntime = Runtime<Self::ZkSpec, Self::DaSpec>;
@@ -71,13 +74,7 @@ impl RollupBlueprint for MockRollup {
         Self::DaService,
         Self::InnerZkvmHost,
         Self::OuterZkvmHost,
-        StfBlueprint<
-            Self::ZkSpec,
-            Self::DaSpec,
-            <<Self::InnerZkvmHost as ZkvmHost>::Guest as ZkvmGuest>::Verifier,
-            Self::ZkRuntime,
-            Self::ZkKernel,
-        >,
+        StfBlueprint<Self::ZkSpec, Self::DaSpec, Self::ZkRuntime, Self::ZkKernel>,
     >;
 
     fn create_outer_code_commitment(
@@ -87,36 +84,24 @@ impl RollupBlueprint for MockRollup {
     }
 
     /// This function generates RPC methods for the rollup, allowing for extension with custom endpoints.
-    fn create_rpc_methods(
+    fn create_endpoints(
         &self,
         storage: watch::Receiver<<Self::NativeSpec as Spec>::Storage>,
-        ledger_db: &LedgerDB,
-        sequencer_db: &SequencerDB,
+        ledger_db: &LedgerDb,
+        sequencer_db: &SequencerDb,
         da_service: &Self::DaService,
         rollup_config: &RollupConfig<Self::DaConfig>,
-    ) -> Result<jsonrpsee::RpcModule<()>, anyhow::Error> {
-        #[allow(unused_mut)]
-        let mut rpc_methods = sov_modules_rollup_blueprint::register_rpc::<
-            Self::NativeRuntime,
-            Self::NativeKernel,
-            Self::NativeSpec,
-            Self::DaService,
+    ) -> anyhow::Result<RuntimeEndpoints> {
+        sov_modules_rollup_blueprint::register_endpoints::<
+            Self,
+            ModAuth<Self::NativeSpec, Self::DaSpec>,
         >(
-            storage,
+            storage.clone(),
             ledger_db,
             sequencer_db,
             da_service,
             rollup_config.da.sender_address,
-        )?;
-
-        #[cfg(feature = "experimental")]
-        crate::eth::register_ethereum::<Self::DaService>(
-            da_service.clone(),
-            storage.clone(),
-            &mut rpc_methods,
-        )?;
-
-        Ok(rpc_methods)
+        )
     }
 
     async fn create_da_service(
@@ -129,7 +114,7 @@ impl RollupBlueprint for MockRollup {
     async fn create_prover_service(
         &self,
         prover_config: RollupProverConfig,
-        rollup_config: &RollupConfig<Self::DaConfig>,
+        _rollup_config: &RollupConfig<Self::DaConfig>,
         _da_service: &Self::DaService,
     ) -> Self::ProverService {
         let inner_vm = Risc0Host::new(risc0_starter::MOCK_DA_ELF);
@@ -145,7 +130,6 @@ impl RollupBlueprint for MockRollup {
             da_verifier,
             prover_config,
             zk_storage,
-            rollup_config.prover_service,
             CodeCommitment::default(),
         )
     }

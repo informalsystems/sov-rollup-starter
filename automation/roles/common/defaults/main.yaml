@@ -1,5 +1,5 @@
 ---
-# can be left alone for aws `c4ad.4xlarge` instance type
+# can be left alone for aws `c5ad.4xlarge` instance type
 # If the machine is different or not AWS, then get the unmounted disks using `fdisk -l` and modify the list
 raw_disk_list: ["/dev/nvme1n1", "/dev/nvme2n1"]
 # Set to false if you want to manually setup the disks before running the playbook
@@ -11,4 +11,4 @@ aws_prometheus_remote_write_url: "https://aps-workspaces.us-east-1.amazonaws.com
 # Region for AWS managed prometheus
 aws_region: "us-east-1"
 # Label for filtering data in grafana
-aws_prometheus_monitoring_label: "sov005"
+aws_prometheus_monitoring_label: "sov-nikolai01"

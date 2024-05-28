@@ -24,6 +24,9 @@ da_polling_interval_ms = 1000
 # the host and port to bind the rpc server for
 bind_host = "127.0.0.1"
 bind_port = 12345
+[runner.axum_config]
+bind_host = "127.0.0.1"
+bind_port = 12346
 
-[prover_service]
+[proof_manager]
 aggregated_proof_block_jump = 1

@@ -19,17 +19,20 @@ tracing-appender = { workspace = true }
 sov-prover-storage-manager = { workspace = true }
 sov-accounts = { workspace = true, features = ["native"] }
 sov-bank = { workspace = true, features = ["native"] }
-sov-ledger-rpc = { workspace = true, features = ["server"] }
+sov-ledger-apis = { workspace = true, features = ["server"] }
 sov-sequencer-registry = { workspace = true, features = ["native"] }
 sov-modules-rollup-blueprint = { workspace = true }
 sov-modules-stf-blueprint = { workspace = true, features = ["native"] }
 sov-stf-runner = { workspace = true, features = ["native"] }
-sov-cli = { workspace = true}
+sov-cli = { workspace = true }
 
 sov-db = { workspace = true }
 sov-sequencer = { workspace = true }
 sov-rollup-interface = { workspace = true }
+sov-mock-da = { workspace = true, features = ["native"], optional = true }
+sov-celestia-adapter = { workspace = true, features = ["native"], optional = true }
 
+axum = { workspace = true }
 anyhow = { workspace = true }
 async-trait = { workspace = true }
 borsh = { workspace = true }
@@ -57,13 +60,13 @@ sov-mock-zkvm = { workspace = true, features = ["native"] }
 
 [features]
 default = ["mock_da"] # set mock_da as the default feature
-mock_da = ["sov-consensus-state-tracker/mock-da"]
-celestia_da = ["sov-consensus-state-tracker/celestia-da"]
+mock_da = ["sov-consensus-state-tracker/mock-da", "dep:sov-mock-da"]
+celestia_da = ["sov-consensus-state-tracker/celestia-da", "dep:sov-celestia-adapter"]
 test = ["mock_da"]
 
 [[bin]]
-name = "node"
-path = "src/bin/node.rs"
+name = "rollup"
+path = "src/bin/rollup.rs"
 
 [[bin]]
 name = "starter-cli-wallet"

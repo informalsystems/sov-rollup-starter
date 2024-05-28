@@ -7,12 +7,12 @@ cluster: testnet
 rollup_org_name: "Sovereign-Labs"
 # Github repository name
 rollup_repo_name: "sov-rollup-starter-wip"
-# Local directory to clone the github repo into
+# Local directory to clone the GitHub repo into
 rollup_repo_dir: "sov-rollup-starter-wip"
 # Rollup binary name. Default is `node`
 rollup_bin: "node"
-# Feature for the DA adapter. Default is `celestia-da`
-da_feature: "celestia_da"
+# Feature for the DA adapter. Default is `celestia_da`
+da_feature: "{{data_availability_role}}_da"
 # Folder on the remote machine that has the genesis configuration
 genesis_folder: "/home/sovereign/genesis"
 rollup_log_dir: "/mnt/logs"

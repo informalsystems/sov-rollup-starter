@@ -10,7 +10,7 @@
 
         sovereign-sdk-src = {
             flake = false;
-            url = git+ssh://git@github.com/informalsystems/sovereign-sdk-wip?rev=20bfd68c8c740b447d51eb50381b5590102258bb;
+            url = git+ssh://git@github.com/informalsystems/sovereign-sdk-wip?rev=fc1552b44acddc2674a783cd11f301a8b79cc4f3;
         };
 
         celestia-app-src = {
@@ -56,8 +56,8 @@
                 rust-bin = nixpkgs.rust-bin.stable.latest.complete;
 
                 risc0-rust-tarball = builtins.fetchurl {
-                    url = "https://github.com/risc0/rust/releases/download/v2024-02-08.1/rust-toolchain-x86_64-unknown-linux-gnu.tar.gz";
-                    sha256 = "sha256:1v4i19wpj9z2zpn2wdf7w1nw5ridwi1linzy0g93wiy09pmz64j9";
+                    url = "https://github.com/risc0/rust/releases/download/v2024-04-22.0/rust-toolchain-x86_64-unknown-linux-gnu.tar.gz";
+                    sha256 = "sha256:1jnjd5wv31ii1vknfdw2idbq1lcdgmzp1fp5ff8pbghid2hdp6ww";
                 };
 
                 risc0-circuit = builtins.fetchurl {

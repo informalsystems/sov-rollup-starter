@@ -1,6 +1,9 @@
 use std::collections::HashMap;
 
 fn main() {
+    println!("cargo::rerun-if-env-changed=SKIP_GUEST_BUILD");
+    println!("cargo::rerun-if-env-changed=OUT_DIR");
+
     if let Ok(rollup_elf_path) = std::env::var("ROLLUP_ELF_PATH") {
         println!("Using prebuilt rollup ELF bytes at {rollup_elf_path}");
 
@@ -13,7 +16,7 @@ fn main() {
         let elf = format!(
             r#"
             pub const ROLLUP_ELF: &[u8] = &{rollup_elf_bytes:?};
-        "#
+            "#
         );
 
         std::fs::write(methods_path, elf).expect("Failed to write rollup elf to methods.rs");
@@ -36,5 +39,18 @@ fn main() {
 }
 
 fn get_guest_options() -> HashMap<&'static str, risc0_build::GuestOptions> {
-    HashMap::new()
+    let mut guest_pkg_to_options = HashMap::new();
+    let mut features = vec![];
+
+    if cfg!(feature = "bench") {
+        features.push("bench".to_string());
+    }
+    guest_pkg_to_options.insert(
+        "sov-demo-prover-guest-mock",
+        risc0_build::GuestOptions {
+            features,
+            ..Default::default()
+        },
+    );
+    guest_pkg_to_options
 }

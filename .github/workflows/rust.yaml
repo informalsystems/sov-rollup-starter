@@ -29,7 +29,6 @@ jobs:
         uses: arduino/setup-protoc@v2
         with:
           version: "23.2"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install cargo-risczero
         uses: taiki-e/install-action@v2
         with:
@@ -37,11 +36,8 @@ jobs:
       - uses: taiki-e/install-action@nextest
       - name: Install risc0-zkvm toolchain # Use the risc0 cargo extension to install the risc0 std library for the current toolchain
         run: cargo risczero install --version v2024-04-22.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: namespacelabs/nscloud-cache-action@v1
-        with:
-          cache: rust
+      - name: Cache dependencies
+        uses: Swatinem/rust-cache@v2
       - name: Check
         run: make lint
       - name: Run tests

@@ -16,10 +16,7 @@ env:
 
 jobs:
   build:
-    runs-on:
-      - nscloud-ubuntu-20.04-amd64-8x32-with-cache
-      - nscloud-cache-tag-sov-rollup-starter-build
-      - nscloud-cache-size-100gb
+    runs-on: ubuntu-latest
     steps:
       - uses: webfactory/ssh-agent@v0.9.0
         with:

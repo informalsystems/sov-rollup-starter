@@ -57,7 +57,7 @@
 
                 risc0-rust-tarball = builtins.fetchurl {
                     url = "https://github.com/risc0/rust/releases/download/v2024-04-22.0/rust-toolchain-x86_64-unknown-linux-gnu.tar.gz";
-                    sha256 = "sha256:1v4i19wpj9z2zpn2wdf7w1nw5ridwi1linzy0g93wiy09pmz64j9";
+                    sha256 = "sha256:1jnjd5wv31ii1vknfdw2idbq1lcdgmzp1fp5ff8pbghid2hdp6ww";
                 };
 
                 risc0-circuit = builtins.fetchurl {

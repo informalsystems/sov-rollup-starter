@@ -60,8 +60,8 @@ sov-mock-zkvm = { workspace = true, features = ["native"] }
 
 [features]
 default = ["mock_da"] # set mock_da as the default feature
-mock_da = ["sov-consensus-state-tracker/mock-da"]
-celestia_da = ["sov-consensus-state-tracker/celestia-da"]
+mock_da = ["sov-consensus-state-tracker/mock-da", "dep:sov-mock-da"]
+celestia_da = ["sov-consensus-state-tracker/celestia-da", "dep:sov-celestia-adapter"]
 test = ["mock_da"]
 
 [[bin]]

@@ -27,12 +27,12 @@ sov-kernels                 = { version = "0.3.0" }
 stf-starter = { path = "../../../stf" }
 
 [patch.crates-io]
-ibc-core                    = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/allow-country-party-client-state-wrapper" }
-ibc-core-client             = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/allow-country-party-client-state-wrapper" }
-ibc-client-tendermint       = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/allow-country-party-client-state-wrapper" }
-ibc-app-transfer            = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/allow-country-party-client-state-wrapper" }
-ibc-primitives              = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/allow-country-party-client-state-wrapper" }
-ibc-client-wasm-types       = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/allow-country-party-client-state-wrapper" }
+ibc-core                    = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
+ibc-core-client             = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
+ibc-client-tendermint       = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
+ibc-app-transfer            = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
+ibc-primitives              = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
+ibc-client-wasm-types       = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
 
 sov-ibc                     = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "soares/update-ibc-rs"  }
 sov-ibc-transfer            = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "soares/update-ibc-rs"  }

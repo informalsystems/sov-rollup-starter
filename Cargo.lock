@@ -2357,7 +2357,7 @@ dependencies = [
  "http 1.1.0",
  "ibc-app-transfer-types",
  "ibc-core",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "mime",
  "parity-scale-codec",
  "scale-info",
@@ -2385,7 +2385,7 @@ dependencies = [
  "derive_more",
  "displaydoc",
  "ibc-core",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "parity-scale-codec",
  "primitive-types",
  "scale-info",
@@ -2430,7 +2430,7 @@ dependencies = [
  "ibc-core-commitment-types",
  "ibc-core-host-types",
  "ibc-primitives",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "serde",
  "tendermint 0.36.0",
  "tendermint-light-client-verifier",
@@ -2447,7 +2447,7 @@ dependencies = [
  "ibc-core-client",
  "ibc-core-host-types",
  "ibc-primitives",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "serde",
 ]
 
@@ -2504,7 +2504,7 @@ dependencies = [
  "ibc-core-connection-types",
  "ibc-core-host-types",
  "ibc-primitives",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "parity-scale-codec",
  "scale-info",
  "schemars",
@@ -2554,7 +2554,7 @@ dependencies = [
  "ibc-core-commitment-types",
  "ibc-core-host-types",
  "ibc-primitives",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "parity-scale-codec",
  "scale-info",
  "schemars",
@@ -2572,7 +2572,7 @@ dependencies = [
  "derive_more",
  "displaydoc",
  "ibc-primitives",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "ics23",
  "parity-scale-codec",
  "scale-info",
@@ -2607,7 +2607,7 @@ dependencies = [
  "ibc-core-commitment-types",
  "ibc-core-host-types",
  "ibc-primitives",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "parity-scale-codec",
  "scale-info",
  "schemars",
@@ -2646,7 +2646,7 @@ dependencies = [
  "ibc-core-host-types",
  "ibc-core-router-types",
  "ibc-primitives",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "parity-scale-codec",
  "scale-info",
  "schemars",
@@ -2689,7 +2689,7 @@ dependencies = [
  "ibc-core-handler-types",
  "ibc-core-host-types",
  "ibc-primitives",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "serde",
  "sha2 0.10.8",
  "subtle-encoding",
@@ -2735,7 +2735,7 @@ dependencies = [
  "displaydoc",
  "ibc-core-host-types",
  "ibc-primitives",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "parity-scale-codec",
  "scale-info",
  "schemars",
@@ -2762,7 +2762,7 @@ dependencies = [
  "borsh 1.5.1",
  "derive_more",
  "displaydoc",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "parity-scale-codec",
  "prost",
  "scale-info",
@@ -2770,23 +2770,6 @@ dependencies = [
  "serde",
  "tendermint 0.36.0",
  "time",
-]
-
-[[package]]
-name = "ibc-proto"
-version = "0.44.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "66080040d5a4800d52966d55b055400f86b79c34b854b935bef03c87aacda62a"
-dependencies = [
- "base64 0.22.1",
- "bytes",
- "flex-error",
- "ics23",
- "informalsystems-pbjson",
- "prost",
- "serde",
- "subtle-encoding",
- "tendermint-proto 0.36.0",
 ]
 
 [[package]]
@@ -2818,7 +2801,7 @@ source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/allow-country-par
 dependencies = [
  "displaydoc",
  "ibc",
- "ibc-proto 0.45.0",
+ "ibc-proto",
  "schemars",
  "serde",
  "tonic",
@@ -5348,7 +5331,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=90591e5#90591e58d89dc5c2d1b912ed1db69c2f93dbc321"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#ff9f3e9b5f1431a557b6a673e31c8cd264dbb59d"
 dependencies = [
  "borsh 0.10.3",
  "derive_more",
@@ -5367,7 +5350,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=90591e5#90591e58d89dc5c2d1b912ed1db69c2f93dbc321"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#ff9f3e9b5f1431a557b6a673e31c8cd264dbb59d"
 dependencies = [
  "derive_more",
  "ibc-client-tendermint",
@@ -5417,7 +5400,7 @@ dependencies = [
 [[package]]
 name = "sov-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=90591e5#90591e58d89dc5c2d1b912ed1db69c2f93dbc321"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#ff9f3e9b5f1431a557b6a673e31c8cd264dbb59d"
 dependencies = [
  "derive_more",
  "hex",
@@ -5431,7 +5414,7 @@ dependencies = [
 [[package]]
 name = "sov-consensus-state-tracker"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=90591e5#90591e58d89dc5c2d1b912ed1db69c2f93dbc321"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#ff9f3e9b5f1431a557b6a673e31c8cd264dbb59d"
 dependencies = [
  "anyhow",
  "borsh 0.10.3",
@@ -5472,7 +5455,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=90591e5#90591e58d89dc5c2d1b912ed1db69c2f93dbc321"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#ff9f3e9b5f1431a557b6a673e31c8cd264dbb59d"
 dependencies = [
  "ahash",
  "anyhow",
@@ -5502,9 +5485,9 @@ dependencies = [
 [[package]]
 name = "sov-ibc-proto"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=90591e5#90591e58d89dc5c2d1b912ed1db69c2f93dbc321"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#ff9f3e9b5f1431a557b6a673e31c8cd264dbb59d"
 dependencies = [
- "ibc-proto 0.44.0",
+ "ibc-proto",
  "informalsystems-pbjson",
  "prost",
  "serde",
@@ -5514,7 +5497,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-transfer"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?rev=90591e5#90591e58d89dc5c2d1b912ed1db69c2f93dbc321"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#ff9f3e9b5f1431a557b6a673e31c8cd264dbb59d"
 dependencies = [
  "anyhow",
  "borsh 0.10.3",

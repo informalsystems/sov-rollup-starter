@@ -7,7 +7,7 @@
 }:
 let
     sov-ibc-hash = "sha256-Wpr0hZt9mmikLNeIju7grA05y56RvSnfyLk9mQyd8jw=";
-    ibc-rs-hash = "sha256-Rew8AV3wuQ90ft0uAyysfdfHYejCqSDz66Wo9Tf0lW0=";
+    ibc-rs-hash = "sha256-mahb4LxE3mOvYomNRCHo5CLaJ3rI/hxpe68nAS01OFM=";
 
     rollup-guest-src = nixpkgs.stdenv.mkDerivation {
         name = "rollup-guest-src";

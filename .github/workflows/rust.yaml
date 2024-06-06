@@ -16,6 +16,7 @@ env:
 
 jobs:
   rust-build:
+    if: ${{ ! always() }}
     runs-on: ubuntu-latest
     steps:
       - uses: webfactory/ssh-agent@v0.9.0

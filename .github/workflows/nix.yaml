@@ -15,8 +15,6 @@ jobs:
   nix-build:
     runs-on: ubuntu-latest
     steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
       - uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SOVEREIGN_SDK_PRIVATE_SSH_KEY }}

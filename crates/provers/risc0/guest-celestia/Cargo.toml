@@ -41,16 +41,16 @@ sov-mock-zkvm                   = { path = "../../../../vendor/sovereign-sdk/ada
 sov-kernels                     = { path = "../../../../vendor/sovereign-sdk/module-system/sov-kernels" }
 sov-celestia-adapter            = { path = "../../../../vendor/sovereign-sdk/adapters/celestia" }
 
-ibc-core                    = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
-ibc-core-client             = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
-ibc-client-tendermint       = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
-ibc-app-transfer            = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
-ibc-primitives              = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
-ibc-client-wasm-types       = { git = "https://github.com/cosmos/ibc-rs.git", rev = "67841b3c" }
+ibc-core                    = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
+ibc-core-client             = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
+ibc-client-tendermint       = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
+ibc-app-transfer            = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
+ibc-primitives              = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
+ibc-client-wasm-types       = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
 
-sov-ibc                     = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "b74f6eb"  }
-sov-ibc-transfer            = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "b74f6eb"  }
-sov-celestia-client         = { git = "https://github.com/informalsystems/sovereign-ibc.git", rev = "b74f6eb"  }
+sov-ibc                     = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "soares/update-ibc-rs"  }
+sov-ibc-transfer            = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "soares/update-ibc-rs"  }
+sov-celestia-client         = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "soares/update-ibc-rs"  }
 
 sha2                            = { git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.8-risczero.0" }
 ed25519-dalek                   = { git = "https://github.com/risc0/curve25519-dalek", tag = "curve25519-4.1.0-risczero.1" }

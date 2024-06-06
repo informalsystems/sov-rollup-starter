@@ -5,7 +5,6 @@
 use std::convert::AsRef;
 use std::path::{Path, PathBuf};
 
-use anyhow::Context as _;
 use sov_accounts::AccountConfig;
 use sov_bank::BankConfig;
 use sov_ibc::ExampleModuleConfig;
@@ -65,17 +64,6 @@ impl GenesisPaths {
             prover_incentives_genesis_path: dir.as_ref().join("prover_incentives.json"),
         }
     }
-}
-
-pub(crate) fn get_genesis_config<S: Spec, Da: DaSpec>(
-    genesis_paths: &GenesisPaths,
-) -> anyhow::Result<<Runtime<S, Da> as RuntimeTrait<S, Da>>::GenesisConfig> {
-    create_genesis_config(genesis_paths).with_context(|| {
-        format!(
-            "Unable to read genesis configuration from: {}",
-            genesis_paths
-        )
-    })
 }
 
 /// Creates a new [`GenesisConfig`] from the files contained in the given

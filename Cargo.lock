@@ -1073,9 +1073,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.5.4"
+version = "4.5.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "90bc066a67923782aa8515dbaea16946c5bcc5addbd668bb80af688e53e548a0"
+checksum = "a9689a29b593160de5bc4aacab7b5d54fb52231de70122626c178e6a368994c7"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -1083,9 +1083,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.5.2"
+version = "4.5.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ae129e2e766ae0ec03484e609954119f123cc1fe650337e155d03b022f24f7b4"
+checksum = "2e5387378c84f6faa26890ebf9f0a92989f8873d4d380467bcd0d8d8620424df"
 dependencies = [
  "anstream",
  "anstyle",
@@ -1095,9 +1095,9 @@ dependencies = [
 
 [[package]]
 name = "clap_derive"
-version = "4.5.4"
+version = "4.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "528131438037fd55894f62d6e9f068b8f45ac57ffa77517819645d10aed04f64"
+checksum = "c780290ccf4fb26629baa7a1081e68ced113f1d3ec302fa5948f1c381ebf06c6"
 dependencies = [
  "heck 0.5.0",
  "proc-macro2",
@@ -1107,9 +1107,9 @@ dependencies = [
 
 [[package]]
 name = "clap_lex"
-version = "0.7.0"
+version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "98cc8fbded0c607b7ba9dd60cd98df59af97e84d24e49c8557331cfc26d301ce"
+checksum = "4b82cf0babdbd58558212896d1a4272303a57bdb245c2bf1147185fb45640e70"
 
 [[package]]
 name = "colorchoice"
@@ -2310,7 +2310,7 @@ dependencies = [
 [[package]]
 name = "ibc"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "ibc-apps",
  "ibc-clients",
@@ -2323,7 +2323,7 @@ dependencies = [
 [[package]]
 name = "ibc-app-nft-transfer"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "ibc-app-nft-transfer-types",
  "ibc-core",
@@ -2333,7 +2333,7 @@ dependencies = [
 [[package]]
 name = "ibc-app-nft-transfer-types"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "base64 0.21.7",
  "borsh",
@@ -2354,7 +2354,7 @@ dependencies = [
 [[package]]
 name = "ibc-app-transfer"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "ibc-app-transfer-types",
  "ibc-core",
@@ -2364,7 +2364,7 @@ dependencies = [
 [[package]]
 name = "ibc-app-transfer-types"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "borsh",
  "derive_more",
@@ -2382,7 +2382,7 @@ dependencies = [
 [[package]]
 name = "ibc-apps"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "ibc-app-nft-transfer",
  "ibc-app-transfer",
@@ -2391,7 +2391,7 @@ dependencies = [
 [[package]]
 name = "ibc-client-tendermint"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "derive_more",
  "ibc-client-tendermint-types",
@@ -2408,7 +2408,7 @@ dependencies = [
 [[package]]
 name = "ibc-client-tendermint-types"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "displaydoc",
  "ibc-core-client-types",
@@ -2425,7 +2425,7 @@ dependencies = [
 [[package]]
 name = "ibc-client-wasm-types"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "base64 0.21.7",
  "displaydoc",
@@ -2439,7 +2439,7 @@ dependencies = [
 [[package]]
 name = "ibc-clients"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "ibc-client-tendermint",
  "ibc-client-wasm-types",
@@ -2448,7 +2448,7 @@ dependencies = [
 [[package]]
 name = "ibc-core"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "ibc-core-channel",
  "ibc-core-client",
@@ -2464,7 +2464,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-channel"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "ibc-core-channel-types",
  "ibc-core-client",
@@ -2479,7 +2479,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-channel-types"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "borsh",
  "derive_more",
@@ -2502,7 +2502,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-client"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "ibc-core-client-context",
  "ibc-core-client-types",
@@ -2515,7 +2515,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-client-context"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "derive_more",
  "displaydoc",
@@ -2531,7 +2531,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-client-types"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "borsh",
  "derive_more",
@@ -2551,7 +2551,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-commitment-types"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "borsh",
  "derive_more",
@@ -2569,7 +2569,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-connection"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "ibc-client-wasm-types",
  "ibc-core-client",
@@ -2583,7 +2583,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-connection-types"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "borsh",
  "derive_more",
@@ -2604,7 +2604,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-handler"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "ibc-core-channel",
  "ibc-core-client",
@@ -2619,7 +2619,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-handler-types"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "borsh",
  "derive_more",
@@ -2643,7 +2643,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-host"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "derive_more",
  "displaydoc",
@@ -2661,7 +2661,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-host-cosmos"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "derive_more",
  "displaydoc",
@@ -2684,7 +2684,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-host-types"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "borsh",
  "derive_more",
@@ -2699,7 +2699,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-router"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "derive_more",
  "displaydoc",
@@ -2713,7 +2713,7 @@ dependencies = [
 [[package]]
 name = "ibc-core-router-types"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "borsh",
  "derive_more",
@@ -2732,7 +2732,7 @@ dependencies = [
 [[package]]
 name = "ibc-derive"
 version = "0.7.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2742,7 +2742,7 @@ dependencies = [
 [[package]]
 name = "ibc-primitives"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "borsh",
  "derive_more",
@@ -2782,7 +2782,7 @@ dependencies = [
 [[package]]
 name = "ibc-query"
 version = "0.53.0"
-source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#d90295e3ff386d786c996d8ff3a42e79d4c4dcea"
+source = "git+https://github.com/cosmos/ibc-rs.git?branch=rano/downgrade-borsh#b4c1f9b7f8e0a6ccad6a10e06a344ec2749d72b1"
 dependencies = [
  "displaydoc",
  "ibc",
@@ -5334,7 +5334,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#982b39226670dbf7c5ce7f14d6456e1533439d30"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/update-deps#1ab286a075b10d072bedaa42eb079685e4ff972e"
 dependencies = [
  "borsh",
  "derive_more",
@@ -5353,7 +5353,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#982b39226670dbf7c5ce7f14d6456e1533439d30"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/update-deps#1ab286a075b10d072bedaa42eb079685e4ff972e"
 dependencies = [
  "derive_more",
  "ibc-client-tendermint",
@@ -5403,7 +5403,7 @@ dependencies = [
 [[package]]
 name = "sov-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#982b39226670dbf7c5ce7f14d6456e1533439d30"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/update-deps#1ab286a075b10d072bedaa42eb079685e4ff972e"
 dependencies = [
  "derive_more",
  "hex",
@@ -5417,7 +5417,7 @@ dependencies = [
 [[package]]
 name = "sov-consensus-state-tracker"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#982b39226670dbf7c5ce7f14d6456e1533439d30"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/update-deps#1ab286a075b10d072bedaa42eb079685e4ff972e"
 dependencies = [
  "anyhow",
  "borsh",
@@ -5458,7 +5458,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#982b39226670dbf7c5ce7f14d6456e1533439d30"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/update-deps#1ab286a075b10d072bedaa42eb079685e4ff972e"
 dependencies = [
  "ahash",
  "anyhow",
@@ -5488,7 +5488,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-proto"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#982b39226670dbf7c5ce7f14d6456e1533439d30"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/update-deps#1ab286a075b10d072bedaa42eb079685e4ff972e"
 dependencies = [
  "ibc-proto",
  "informalsystems-pbjson",
@@ -5500,7 +5500,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-transfer"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=soares/update-ibc-rs#982b39226670dbf7c5ce7f14d6456e1533439d30"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/update-deps#1ab286a075b10d072bedaa42eb079685e4ff972e"
 dependencies = [
  "anyhow",
  "borsh",
@@ -6449,7 +6449,7 @@ dependencies = [
  "serde",
  "serde_spanned",
  "toml_datetime",
- "winnow 0.6.11",
+ "winnow 0.6.13",
 ]
 
 [[package]]
@@ -7221,9 +7221,9 @@ dependencies = [
 
 [[package]]
 name = "winnow"
-version = "0.6.11"
+version = "0.6.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "56c52728401e1dc672a56e81e593e912aa54c78f40246869f78359a2bf24d29d"
+checksum = "59b5e5f6c299a3c7890b876a2a587f3115162487e704907d9b6cd29473052ba1"
 dependencies = [
  "memchr",
 ]

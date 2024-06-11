@@ -2181,9 +2181,9 @@ dependencies = [
 
 [[package]]
 name = "httparse"
-version = "1.9.2"
+version = "1.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9f3935c160d00ac752e09787e6e6bfc26494c2183cc922f1bc678a60d4733bc2"
+checksum = "d0e7a4dd27b9476dc40cb050d3632d3bba3a70ddbff012285f7f8559a1e7e545"
 
 [[package]]
 name = "httpdate"
@@ -5460,7 +5460,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#9be262d9cbd5115d91146e212d2defe662e102ff"
 dependencies = [
  "borsh",
  "derive_more",
@@ -5479,7 +5479,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#9be262d9cbd5115d91146e212d2defe662e102ff"
 dependencies = [
  "derive_more",
  "ibc-client-tendermint",
@@ -5529,7 +5529,7 @@ dependencies = [
 [[package]]
 name = "sov-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#9be262d9cbd5115d91146e212d2defe662e102ff"
 dependencies = [
  "derive_more",
  "hex",
@@ -5543,7 +5543,7 @@ dependencies = [
 [[package]]
 name = "sov-consensus-state-tracker"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#9be262d9cbd5115d91146e212d2defe662e102ff"
 dependencies = [
  "anyhow",
  "borsh",
@@ -5585,7 +5585,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#9be262d9cbd5115d91146e212d2defe662e102ff"
 dependencies = [
  "ahash",
  "anyhow",
@@ -5615,7 +5615,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-proto"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#9be262d9cbd5115d91146e212d2defe662e102ff"
 dependencies = [
  "ibc-proto",
  "informalsystems-pbjson",
@@ -5627,7 +5627,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-transfer"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#9be262d9cbd5115d91146e212d2defe662e102ff"
 dependencies = [
  "anyhow",
  "borsh",

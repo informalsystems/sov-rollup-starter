@@ -5460,7 +5460,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/consensus-state-tracker#d576c906589ec17c2bf4fa73103c9306374ed9c7"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
 dependencies = [
  "borsh",
  "derive_more",
@@ -5479,7 +5479,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/consensus-state-tracker#d576c906589ec17c2bf4fa73103c9306374ed9c7"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
 dependencies = [
  "derive_more",
  "ibc-client-tendermint",
@@ -5529,7 +5529,7 @@ dependencies = [
 [[package]]
 name = "sov-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/consensus-state-tracker#d576c906589ec17c2bf4fa73103c9306374ed9c7"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
 dependencies = [
  "derive_more",
  "hex",
@@ -5543,7 +5543,7 @@ dependencies = [
 [[package]]
 name = "sov-consensus-state-tracker"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/consensus-state-tracker#d576c906589ec17c2bf4fa73103c9306374ed9c7"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
 dependencies = [
  "anyhow",
  "borsh",
@@ -5560,6 +5560,7 @@ dependencies = [
  "sov-state",
  "tendermint 0.36.0",
  "thiserror",
+ "tracing",
  "uint",
 ]
 
@@ -5584,7 +5585,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/consensus-state-tracker#d576c906589ec17c2bf4fa73103c9306374ed9c7"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
 dependencies = [
  "ahash",
  "anyhow",
@@ -5614,7 +5615,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-proto"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/consensus-state-tracker#d576c906589ec17c2bf4fa73103c9306374ed9c7"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
 dependencies = [
  "ibc-proto",
  "informalsystems-pbjson",
@@ -5626,7 +5627,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-transfer"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/consensus-state-tracker#d576c906589ec17c2bf4fa73103c9306374ed9c7"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
 dependencies = [
  "anyhow",
  "borsh",

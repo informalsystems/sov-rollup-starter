@@ -48,9 +48,9 @@ ibc-app-transfer            = { git = "https://github.com/cosmos/ibc-rs.git", br
 ibc-primitives              = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
 ibc-client-wasm-types       = { git = "https://github.com/cosmos/ibc-rs.git", branch = "rano/downgrade-borsh" }
 
-sov-ibc                     = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "main"  }
-sov-ibc-transfer            = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "main"  }
-sov-celestia-client         = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "main"  }
+sov-ibc                     = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "rano/fix/visible-hash"  }
+sov-ibc-transfer            = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "rano/fix/visible-hash"  }
+sov-celestia-client         = { git = "https://github.com/informalsystems/sovereign-ibc.git", branch = "rano/fix/visible-hash"  }
 
 sha2                            = { git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.8-risczero.0" }
 ed25519-dalek                   = { git = "https://github.com/risc0/curve25519-dalek", tag = "curve25519-4.1.0-risczero.1" }

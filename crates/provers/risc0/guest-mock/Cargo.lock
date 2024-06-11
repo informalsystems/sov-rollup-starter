@@ -2186,7 +2186,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
 dependencies = [
  "borsh",
  "derive_more",
@@ -2205,7 +2205,7 @@ dependencies = [
 [[package]]
 name = "sov-celestia-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
 dependencies = [
  "derive_more",
  "ibc-client-tendermint",
@@ -2236,7 +2236,7 @@ dependencies = [
 [[package]]
 name = "sov-client-types"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
 dependencies = [
  "derive_more",
  "hex",
@@ -2250,7 +2250,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
 dependencies = [
  "ahash",
  "anyhow",
@@ -2277,7 +2277,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-proto"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
 dependencies = [
  "ibc-proto",
  "informalsystems-pbjson",
@@ -2289,7 +2289,7 @@ dependencies = [
 [[package]]
 name = "sov-ibc-transfer"
 version = "0.1.0"
-source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=main#3ffd922a495ae19664edfe009041ede025e95e6f"
+source = "git+https://github.com/informalsystems/sovereign-ibc.git?branch=rano/fix/visible-hash#597cda4794b2a8a2c0f1849b89e17cbfdb9c496f"
 dependencies = [
  "anyhow",
  "borsh",

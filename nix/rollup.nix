@@ -6,8 +6,8 @@
 ,   risc0-circuit
 }:
 let
-    sov-ibc-hash = "sha256-Mi1fZe109dug9uip1fpK1TqvWBHI8hij8Alkrw4UtUo=";
-    ibc-rs-hash = "sha256-AnRsdl3njOCh0o44GU5uDvX4caxcEitH2Ic3sRu/uIs=";
+    sov-ibc-hash = "sha256-xu7uFlf9QRp22D+rrxMjkhWgcGZTPk1Ql4umDFE5P2E=";
+    ibc-rs-hash = "sha256-HJ0LncQieZSe0xI7QrTVnL9kB55+DWo3scvO54Jzp6Y=";
 
     rollup-guest-src = nixpkgs.stdenv.mkDerivation {
         name = "rollup-guest-src";
